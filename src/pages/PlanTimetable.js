@@ -83,7 +83,7 @@ function PlanTimetableContextConsumer(props) {
       //   setCombinations(response.data.message);
       // }
     });
-
+    //
     // const reqbody = { timetableID: "2" };
     // console.log(reqbody);
     // axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
@@ -225,6 +225,13 @@ export default function PlanTimetable() {
         setData(myJson);
         sessionStorage.setItem("coursesData", JSON.stringify(myJson));
       });
+    // axios
+    //   .get("/sendAllCourses/getAllCourses", {})
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     setData(response.data);
+    //   })
+    //   .catch(function (error) {});
   };
 
   useEffect(() => {

@@ -111,6 +111,13 @@ export default function ShareTimetable(props) {
 
   const [data, setData] = useState([]);
   const getData = () => {
+    // axios
+    //   .get("/sendAllCourses/getAllCourses", {})
+    //   .then((response) => {
+    //     // console.log(response.data);
+    //     setData(response.data);
+    //   })
+    //   .catch(function (error) {});
     fetch("output.json", {
       headers: {
         "Content-Type": "application/json",
@@ -159,39 +166,71 @@ export default function ShareTimetable(props) {
 
   var searchParams = new URLSearchParams(useLocation().search);
 
-  const setCombinationsByQuery = (searchParams) => {
+  const setTimetableByQuery = (searchParams) => {
     if (searchParams.toString() && data.length !== 0) {
       const selectedCourses = [];
       for (let p of searchParams.keys()) {
-        selectedCourses.push(data.find((item) => item.courseCode === p));
+        // selectedCourses.push(data.find((item) => item.courseCode === p));
+        console.log(p);
       }
 
       // const selectedCourses = data.filter((item) =>
       //   searchParams.has(item.courseCode)
       // );
 
-      setCourseDivs(
-        selectedCourses.map((item) => {
-          return {
-            course: item,
-            currentIdx: {},
-            isIndexFixed: false,
-          };
-        })
-      );
+      //   setCourseDivs(
+      //     selectedCourses.map((item) => {
+      //       return {
+      //         course: item,
+      //         currentIdx: {},
+      //         isIndexFixed: false,
+      //       };
+      //     })
+      //   );
 
-      const tempCombo = {};
+      //   const tempCombo = {};
 
-      for (let p of searchParams) {
-        tempCombo[p[0]] = p[1];
-      }
-      setIsPlanClicked(true);
-      setCombinations([tempCombo]);
+      //   for (let p of searchParams) {
+      //     tempCombo[p[0]] = p[1];
+      //   }
+      //   setIsPlanClicked(true);
+      //   setCombinations([tempCombo]);
+      // }
     }
+    // const setCombinationsByQuery = (searchParams) => {
+    //   if (searchParams.toString() && data.length !== 0) {
+    //     const selectedCourses = [];
+    //     for (let p of searchParams.keys()) {
+    //       selectedCourses.push(data.find((item) => item.courseCode === p));
+    //     }
+
+    //     // const selectedCourses = data.filter((item) =>
+    //     //   searchParams.has(item.courseCode)
+    //     // );
+
+    //     setCourseDivs(
+    //       selectedCourses.map((item) => {
+    //         return {
+    //           course: item,
+    //           currentIdx: {},
+    //           isIndexFixed: false,
+    //         };
+    //       })
+    //     );
+
+    //     const tempCombo = {};
+
+    //     for (let p of searchParams) {
+    //       tempCombo[p[0]] = p[1];
+    //     }
+    //     setIsPlanClicked(true);
+    //     setCombinations([tempCombo]);
+    //   }
+    // };
   };
-  useEffect(() => {
-    setCombinationsByQuery(searchParams);
-  }, [data]);
+  // useEffect(() => {
+  //   setCombinationsByQuery(searchParams);
+  // }, [data]);
 
   //Backend: this method will retrieve all course indexes then call backend method to return timetables
   //if clash then give a error message

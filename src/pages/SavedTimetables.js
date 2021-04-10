@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
 export default function SavedTimetables() {
   const history = useHistory();
   const location = useLocation();
+  const [timetables, setTimetables] = useState([]);
+  const [allTTsloaded, setAllTTsloaded] = useState(false);
+
   useEffect(() => {
     console.log("retrieve saved time tables");
     // console.log(history);
@@ -61,7 +64,7 @@ export default function SavedTimetables() {
       courseSelected: [
         {
           courseID: "CZ1007",
-          indexNum: "10059",
+          indexNum: 10059,
         },
         {
           courseID: "AAA08B",
@@ -89,6 +92,32 @@ export default function SavedTimetables() {
         },
       ],
       courseClashAllowed: ["AAA08B"],
+    },
+    {
+      fixedTimeSlots: [
+        ["2021-03-02T03:30:00.000Z", "2021-03-02T04:30:00.000Z"],
+        ["2021-03-04T03:30:00.000Z", "2021-03-04T04:30:00.000Z"],
+      ],
+      courseClashAllowed: ["AAA08B"],
+      _id: "6071b4bd74638e4afccbd220",
+      timetableID: "1618064573576",
+      courseSelected: [
+        {
+          courseID: "AAA08B",
+          indexNum: "39677",
+        },
+        {
+          courseID: "CZ1103",
+          indexNum: "10063",
+        },
+      ],
+      courseFixed: [
+        {
+          courseID: "AAA08B",
+          indexNum: "39677",
+        },
+      ],
+      __v: 0,
     },
     // {
     //   timetableID: "1617704070595",
@@ -123,20 +152,75 @@ export default function SavedTimetables() {
     // },
   ];
 
-  const editeddummy = dummy.map((item) => {
-    const courseSelected = {};
-    item.courseSelected.forEach((element) => {
-      courseSelected[element.courseID] = element.indexNum;
-    });
-    const courseFixed = {};
-    item.courseFixed.forEach((element) => {
-      courseFixed[element.courseID] = element.indexNum;
-    });
+  useEffect(() => {
+    // const timetableID = JSON.parse(sessionStorage.getItem("userData"))
+    //   .timetables[0];
+    const userTimetables = JSON.parse(
+      sessionStorage.getItem("userData")
+    ).timetables.map((item) => item.toString());
+    console.log(userTimetables);
+    const tempTimetables = [];
 
-    item.courseSelected = courseSelected;
-    item.courseFixed = courseFixed;
-    return item;
-  });
+    for (let i = 0; i < userTimetables.length; i++) {
+      const timetableID = userTimetables[i];
+
+      const reqbody = { timetableID: timetableID };
+      // console.log(reqbody);
+      axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
+        // console.log(response.data);
+        // console.log(response.data);
+        tempTimetables.push(...response.data);
+        // console.log(tempTimetables);
+        // console.log(i);
+        if (i === userTimetables.length - 1) {
+          setTimetables(editeddummy(tempTimetables));
+        }
+      });
+    }
+    // console.log(tempTimetables);
+  }, []);
+
+  useEffect(() => {
+    console.log(timetables);
+  }, [timetables]);
+
+  // const editeddummy = dummy.map((item) => {
+  //   const courseSelected = {};
+  //   item.courseSelected.forEach((element) => {
+  //     courseSelected[element.courseID] = element.indexNum;
+  //   });
+  //   const courseFixed = {};
+  //   item.courseFixed.forEach((element) => {
+  //     courseFixed[element.courseID] = element.indexNum;
+  //   });
+
+  //   item.courseSelected = courseSelected;
+  //   item.courseFixed = courseFixed;
+  //   return item;
+  // });
+
+  const editeddummy = (tempTT) =>
+    tempTT.map((item) => {
+      // console.log(timetables);
+      const fixedTimeSlots = item.fixedTimeSlots.map((element) =>
+        element.map((timeslot) => new Date(timeslot))
+      );
+      const tcourseSelected = {};
+      // console.log(item);
+      // console.log(item.courseSelected);
+      item.courseSelected.forEach((element) => {
+        tcourseSelected[element.courseID] = element.indexNum;
+      });
+      const courseFixed = {};
+      item.courseFixed.forEach((element) => {
+        courseFixed[element.courseID] = element.indexNum;
+      });
+
+      item.courseSelected = tcourseSelected;
+      item.courseFixed = courseFixed;
+      item.fixedTimeSlots = fixedTimeSlots;
+      return item;
+    });
 
   const redirectToPlan = () => {
     console.log("halo");
@@ -145,7 +229,7 @@ export default function SavedTimetables() {
   return (
     <div className="container">
       <div className="row">
-        {editeddummy.map((item) => (
+        {timetables.map((item) => (
           <div className="col-4">
             <Link
               to={{

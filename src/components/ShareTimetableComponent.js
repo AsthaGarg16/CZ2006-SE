@@ -67,16 +67,13 @@ export default function ShareTimetableComponent(props) {
       courseSelected.push({ courseID: key, indexNum: value });
     }
 
-    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
     const reqbody = {
-      userEmail: userEmail,
       timetableID: Date.now().toString(),
       courseSelected: courseSelected,
       fixedTimeSlots: userDefinedTimeSlots,
       courseFixed: courseFixed,
       courseClashAllowed: allowClashCC,
     };
-    console.log(reqbody);
 
     return reqbody;
   };
@@ -147,10 +144,15 @@ export default function ShareTimetableComponent(props) {
     //     window.location.pathname
     //   }?${tempCombinationArray.join("&")}`
     // );
+    // setLink(
+    //   `${window.location.origin}${
+    //     window.location.pathname
+    //   }?${tempCombinationArray.join("&")}`
+    // );
     setLink(
       `${window.location.origin}${
         window.location.pathname
-      }?${tempCombinationArray.join("&")}`
+      }?timetable=${JSON.stringify(returnCurrentTT())}`
     );
     // combinations[];
   };
