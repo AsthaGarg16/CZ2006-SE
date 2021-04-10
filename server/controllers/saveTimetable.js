@@ -74,4 +74,4 @@ const getsavedTimetable = async (req, res) => {
   }
 };
 
-module.exports = { saveTimetable, getsavedTimetable };
+module.exports = { /*saveTimetable,*/ getsavedTimetable };
