@@ -3,6 +3,9 @@ const User = require('../models/user');
 const QRCode = require('qrcode');
 const { Schema } = require('mongoose');
 const createICS = require('./icsConversion');
+const dis = require('./discussionController');
+var CourseContent = dis.CourseContent;
+
 
 const timetable_index=async(req,res)=>{
     try {
@@ -10,6 +13,31 @@ const timetable_index=async(req,res)=>{
         const email = req.body.email;
         user = await User.findOne({email:email});
         res.status(200).send(user.timetables);
+    }
+    catch (err) {
+        res.status(400).send(err);
+        console.log(err);
+    }
+};
+
+const all_courses=async(req,res)=>{
+    try {
+        courses = await CourseContent.find({});
+        courseList = []
+        for (i=0; i < courses.length; i++) {
+            let temp = courses[i].toJSON()
+            temp = temp.details
+            // console.log("FIRST", temp);
+            temp = temp.slice(0,1)
+            // console.log("SECOND", temp);
+            temp = temp[0]
+            // console.log("THIRD", temp);
+            temp = temp.slice(0,2)
+            // console.log("FOURTH", temp);
+            console.log(temp);
+            courseList.push(temp);
+        }
+        res.status(200).send(courseList);
     }
     catch (err) {
         res.status(400).send(err);
@@ -115,5 +143,6 @@ module.exports={
     // share_QR,
     export_settings,
     download_ics,
-    add_timetable
+    add_timetable,
+    all_courses
 };
