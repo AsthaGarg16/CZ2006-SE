@@ -122,15 +122,34 @@ export default function MoreOptionsComponent(props) {
     // setIsChangeSaved(false);
   };
   let location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
+  const returnTimetableByQuery = (searchParams) => {
+    // console.log(searchParams);
+    if (searchParams.toString()) {
+      for (const [key, value] of searchParams.entries()) {
+        if (key === "timetable") {
+          // console.log(JSON.parse(value));
+          const tempTimetable = JSON.parse(value);
+          const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
+            element.map((timeslot) => new Date(timeslot))
+          );
+          tempTimetable.fixedTimeSlots = fixedTimeSlots;
+          return tempTimetable;
+        }
+      }
+    }
+  };
   useEffect(() => {
     // console.log(location);
-    if (location.state) {
+    const tempTimetable =
+      returnTimetableByQuery(searchParams) || location.state;
+    if (tempTimetable) {
       // console.log("state exists");
 
-      // setCombinations([location.state.courseSelected]);
-      setUserDefinedTimeSlots(location.state.fixedTimeSlots);
-      setAllowClashCC(location.state.courseClashAllowed);
+      // setCombinations([tempTimetable.courseSelected]);
+      setUserDefinedTimeSlots(tempTimetable.fixedTimeSlots);
+      setAllowClashCC(tempTimetable.courseClashAllowed);
     }
   }, []);
 

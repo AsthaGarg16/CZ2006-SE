@@ -137,14 +137,36 @@ export default function ShareTimetable(props) {
     getData();
   }, []);
   let location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const returnTimetableByQuery = (searchParams) => {
+    // console.log(searchParams);
+    if (searchParams.toString() && data.length !== 0) {
+      for (const [key, value] of searchParams.entries()) {
+        if (key === "timetable") {
+          // console.log(JSON.parse(value));
+          const tempTimetable = JSON.parse(value);
+          const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
+            element.map((timeslot) => new Date(timeslot))
+          );
+          tempTimetable.fixedTimeSlots = fixedTimeSlots;
+          return tempTimetable;
+        }
+      }
+    }
+  };
 
   useEffect(() => {
+    // console.log(new URLSearchParams(location.search));
     // console.log(location);
-    if (location.state && data.length != 0) {
+    const tempTimetable =
+      returnTimetableByQuery(searchParams) || location.state;
+    console.log(tempTimetable);
+    if (tempTimetable && data.length != 0) {
       // console.log("state exists");
       const selectedCourses = [];
 
-      for (const courseCode in location.state.courseSelected) {
+      for (const courseCode in tempTimetable.courseSelected) {
         selectedCourses.push(
           data.find((item) => item.courseCode === courseCode)
         );
@@ -155,81 +177,47 @@ export default function ShareTimetable(props) {
           return {
             course: item,
             currentIdx: {},
-            isIndexFixed: item.courseCode in location.state.courseFixed,
+            isIndexFixed: item.courseCode in tempTimetable.courseFixed,
           };
         })
       );
       setIsPlanClicked(true);
-      setCombinations([location.state.courseSelected]);
+      setCombinations([tempTimetable.courseSelected]);
     }
   }, [data]);
 
-  var searchParams = new URLSearchParams(useLocation().search);
+  // const setCombinationsByQuery = (searchParams) => {
+  //   if (searchParams.toString() && data.length !== 0) {
+  //     const selectedCourses = [];
+  //     for (let p of searchParams.keys()) {
+  //       selectedCourses.push(data.find((item) => item.courseCode === p));
+  //     }
 
-  const setTimetableByQuery = (searchParams) => {
-    if (searchParams.toString() && data.length !== 0) {
-      const selectedCourses = [];
-      for (let p of searchParams.keys()) {
-        // selectedCourses.push(data.find((item) => item.courseCode === p));
-        console.log(p);
-      }
+  //     // const selectedCourses = data.filter((item) =>
+  //     //   searchParams.has(item.courseCode)
+  //     // );
 
-      // const selectedCourses = data.filter((item) =>
-      //   searchParams.has(item.courseCode)
-      // );
+  //     setCourseDivs(
+  //       selectedCourses.map((item) => {
+  //         return {
+  //           course: item,
+  //           currentIdx: {},
+  //           isIndexFixed: false,
+  //         };
+  //       })
+  //     );
 
-      //   setCourseDivs(
-      //     selectedCourses.map((item) => {
-      //       return {
-      //         course: item,
-      //         currentIdx: {},
-      //         isIndexFixed: false,
-      //       };
-      //     })
-      //   );
+  //     const tempCombo = {};
 
-      //   const tempCombo = {};
-
-      //   for (let p of searchParams) {
-      //     tempCombo[p[0]] = p[1];
-      //   }
-      //   setIsPlanClicked(true);
-      //   setCombinations([tempCombo]);
-      // }
-    }
-    // const setCombinationsByQuery = (searchParams) => {
-    //   if (searchParams.toString() && data.length !== 0) {
-    //     const selectedCourses = [];
-    //     for (let p of searchParams.keys()) {
-    //       selectedCourses.push(data.find((item) => item.courseCode === p));
-    //     }
-
-    //     // const selectedCourses = data.filter((item) =>
-    //     //   searchParams.has(item.courseCode)
-    //     // );
-
-    //     setCourseDivs(
-    //       selectedCourses.map((item) => {
-    //         return {
-    //           course: item,
-    //           currentIdx: {},
-    //           isIndexFixed: false,
-    //         };
-    //       })
-    //     );
-
-    //     const tempCombo = {};
-
-    //     for (let p of searchParams) {
-    //       tempCombo[p[0]] = p[1];
-    //     }
-    //     setIsPlanClicked(true);
-    //     setCombinations([tempCombo]);
-    //   }
-    // };
-  };
+  //     for (let p of searchParams) {
+  //       tempCombo[p[0]] = p[1];
+  //     }
+  //     setIsPlanClicked(true);
+  //     setCombinations([tempCombo]);
+  //   }
+  // };
   // useEffect(() => {
-  //   setCombinationsByQuery(searchParams);
+  //   setTimetableByQuery(searchParams);
   // }, [data]);
 
   //Backend: this method will retrieve all course indexes then call backend method to return timetables
