@@ -4,13 +4,14 @@ const Schema = mongoose.Schema;
 const course = new Schema({
     courseID: {
         type:String,
-        unique: true
+        unique: false
     },
     indexNum: {
         type:Number,
-        unique: true
+        unique: false
     }
-})
+    
+}, {_id:false});
 
 //defining the schema of timetable
 const timetableSchema = new Schema({
@@ -23,7 +24,10 @@ const timetableSchema = new Schema({
     },
     courseSelected:{
         type: [course],
-        required: true
+        required: true,
+        unique: false,
+        _id:false
+
     },
     // each integer encodes a time slot
     fixedTimeSlots:{
@@ -31,7 +35,9 @@ const timetableSchema = new Schema({
         min: 11
     },
     courseFixed:{
-        type: [course]
+        type: [course],
+        unique: false,
+        _id:false
     },
     courseClashAllowed:{
         type: [String]

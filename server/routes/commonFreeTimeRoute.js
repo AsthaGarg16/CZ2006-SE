@@ -2,7 +2,7 @@
 const express=require('express');
 
 //importing controllers
-const CommonFreeTime = require('../controllers/commonFreeTime');
+const CommonFreeTime = require('../controllers/CommonFreeTimeFinder');
 
 //express router
 const router=express.Router();

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { LeakAddTwoTone, LiveTvTwoTone } from "@material-ui/icons";
+import axios from "axios";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
 
+  const [correctVerificationCode, setCorrectVerificationCode] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setcPassword] = useState("");
   const [currentform, setcurrentform] = useState(0);
@@ -35,22 +37,56 @@ function ForgotPassword() {
         reqbody = {
           email: email,
         };
+        console.log(reqbody);
+        axios
+          .post("/user/forgotPassword/sendCode", reqbody)
+          .then((response) => {
+            console.log(response.data);
+            // console.log(response.data.token);
+            // setToken(response.data.token);
+            // history.push("/planner");
+            setCorrectVerificationCode(response.data.code);
+          })
+          .catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data.message);
+            }
+          });
+        setcurrentform(1);
         break;
       case 1:
-        reqbody = {
-          verificationCode: verificationCode,
-        };
+        if (verificationCode !== correctVerificationCode) {
+          alert("Wrong code");
+        } else {
+          console.log(reqbody);
+          setcurrentform(2);
+        }
+
         break;
       case 2:
         reqbody = {
+          email: email,
           password: password,
         };
+        axios
+          .post("/user/forgotPassword/reset", reqbody)
+          .then((response) => {
+            console.log(response.data);
+            // console.log(response.data.token);
+            // setToken(response.data.token);
+            // history.push("/planner");
+          })
+          .catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data.message);
+            }
+          });
         break;
       default:
         break;
     }
 
-    alert(JSON.stringify(reqbody));
+    // alert(JSON.stringify(reqbody));
   }
 
   switch (currentform) {

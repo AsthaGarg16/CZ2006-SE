@@ -1,7 +1,7 @@
-const { models } = require("mongoose");
-const CourseModal = require("../models/course.js");
+//const { models } = require("mongoose");
+//const CourseModal = require("../models/course.js");
 const DatabaseExam = require("../models/databaseExam");
-const ClashPlanner = require("./ClashPlan.js");
+const ClashPlanner = require("./ClashPlanner.js");
 
 var times = {
   "0830": {},
@@ -45,9 +45,7 @@ timetable = {
   SAT: times,
 };
 
-var temp_timetable = { ...timetable };
-var all_timetables = [];
-var index_comb = [];
+
 
 const send_timetable = async (req, res) => {
   var input_courses = [];
@@ -98,6 +96,9 @@ function delete_empty_slots(all_timetables) {
 }
 
 function plan_timetable(input_courses, clash_courses, free_slots) {
+  var temp_timetable = { ...timetable };
+  var all_timetables = [];
+  var index_comb = [];
   // clash_courses added
   //console.log(free_slots);
   //set all the free time slots
@@ -126,7 +127,6 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
   for (var i = 0; i < input_courses[0]["index"].length; i++) {
     if (
       !check_clash(
-        input_courses[0]["courseCode"],
         input_courses[0]["index"][i],
         temp_timetable
       )
@@ -164,7 +164,6 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
       for (var k = 0; k < all_timetables.length; k++) {
         if (
           check_clash(
-            input_courses[i]["courseCode"],
             indexList[j],
             all_timetables[k]
           )
@@ -212,7 +211,7 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
 
     const clashPlan = new ClashPlanner();
     for (let i = 0; i < all_timetables.length; i++) {
-      let newResult = clashPlan.main(all_timetables[i], clash_courses); //+comb
+      let newResult = clashPlan.plan(all_timetables[i], clash_courses); //+comb
       ["0", "2", "3", "4"].forEach(function (value) {
         for (let r = 0; r < newResult[value].length; r++) {
           result[value].push(
@@ -222,19 +221,23 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
       });
     }
     console.log(result["0"].concat(result["2"], result["3"], result["4"]));
-
-    return result["0"].concat(result["2"], result["3"], result["4"]);
+    index_comb = result["0"].concat(result["2"], result["3"], result["4"]);
+    if (index_comb.length == 0){
+        return ["There is no possible index combination!\n"+
+                "Note that totally at most 4 courses are allowed in clashes\n"+
+                "and at most 2 courses can clash at a time."];
+    }
+    return index_comb;
   } else {
     return index_comb;
   }
 }
 
-function check_clash(courseCode, index, temp_timetable) {
+function check_clash(index, temp_timetable) {
   var lesson = index["lesson"];
   var numLessons = lesson.length;
   var i;
   for (i = 0; i < numLessons; i++) {
-    var timeDetails = lesson[i].time;
     var start = lesson[i].start;
     var duration = lesson[i].duration;
     var day = lesson[i].day;
@@ -286,7 +289,7 @@ function allot_course(courseCode, index, temp_timetable) {
       var t_str = t.toString();
       if (t < 1000) {
         var t_str = "0" + t_str;
-      }
+      }    
       copiedTT[day][t_str] = [
         courseCode,
         index["index_number"],
@@ -382,7 +385,5 @@ function check_exam_clash(input_courses) {
 }
 
 module.exports = {
-  send_timetable,
-  plan_timetable,
-
+  send_timetable
 };

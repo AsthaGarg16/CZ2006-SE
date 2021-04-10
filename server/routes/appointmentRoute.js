@@ -2,7 +2,7 @@
 const express = require("express");
 
 //importing controllers
-const Appointment = require("../controllers/icsToAppointments");
+const Appointment = require("../controllers/IcsToAppointConverter");
 
 //express router
 const router = express.Router();

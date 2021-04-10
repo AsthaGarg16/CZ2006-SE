@@ -267,10 +267,32 @@ function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
 }
 
 function DiscussionDetail(props) {
+
+  // function handleSaveCourse(courseCode) {
+  //   const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+  //   axios
+  //     .post("/saving/savedCourse", {
+  //       userEmail: userEmail,
+  //       courseCode: courseCode
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       if (error.response) {
+  //         alert(error.response.data.message);
+  //       }
+  //     });
+  // }
+
+  function handleSaveCourse(courseCode) {
+    alert(courseCode);
+  }
+
   return (
     <div className="background">
       <div className="container">
-        <div className="row">
+        {/* <div className="row"> */}
           <div key={props.course.id} className="mt-1">
             <Card tag="li">
               <CardBody body className="ml-5">
@@ -278,12 +300,13 @@ function DiscussionDetail(props) {
                   <div className="col-8">
                     <Media heading className="course-detail-courseCode row">
                       <div className="col-9">
+                        <Button onClick={()=>handleSaveCourse(props.course.courseCode)}>Save</Button>
                         <b>{props.course.courseCode}</b>
                       </div>
-                      <div className="col-3">{props.course.numberOfAUs} AU</div>
+                      <div className="col-3">{props.course.courseInfo[0][2]}</div>
                     </Media>
                     <Media heading className="course-detail-courseName row">
-                      {props.course.name}
+                      {props.course.courseInfo[0][1]}
                     </Media>
                   </div>
                   <div className="col-3">
@@ -331,7 +354,7 @@ function DiscussionDetail(props) {
                     <div className="row mb-1">
                       <CircularSlider
                         width={60}
-                        dataIndex={props.course.timeinvestment}
+                        dataIndex={props.course.timeInvestment}
                         label="savings"
                         hideLabelValue={true}
                         verticalOffset="0.5rem"
@@ -345,24 +368,24 @@ function DiscussionDetail(props) {
                         knobDraggable={false}
                       />
                       <div className="rating">
-                        {props.course.timeinvestment}{" "}
+                        {props.course.timeInvestment}{" "}
                       </div>
                     </div>
                   </div>
-                  <Media className="col-1">{props.course.rating}</Media>
+                  {/* <Media className="col-1">{props.course.overallRating}</Media> */}
                 </div>
                 <p>
                   <div className="row">
                     <b className="col-4">Course Description: </b>
-                    <div className="col-8">{props.course.description}</div>
+                    <div className="col-8">{props.course.courseInfo[props.course.courseInfo.length-1]}</div>
                   </div>
                   <div className="row">
-                    <b className="col-4">Prerequisites: </b>
-                    <div className="col-8">{props.course.prerequisites}</div>
+                    <b className="col-4">{props.course.courseInfo[1][0]} </b>
+                    <div className="col-8">{props.course.courseInfo[1][1]}</div>
                   </div>
                   <div className="row">
-                    <b className="col-4">Grading Type: </b>
-                    <div className="col-8">{props.course.gradingType}</div>
+                    <b className="col-4">{props.course.courseInfo[2][0]} </b>
+                    <div className="col-8">{props.course.courseInfo[2][1]}</div>
                   </div>
                   <div className="row">
                     <b className="col-4">Mutually Exclusive With: </b>
@@ -378,14 +401,14 @@ function DiscussionDetail(props) {
               </CardBody>
             </Card>
           </div>
-        </div>
-        <div className="m-1">
-          <div className="row"></div>
+        {/* </div> */}
+        {/* <div className="m-1"> */}
+          {/* <div className="row"></div> */}
           <RenderComments
             courseCode={props.course.code}
-            comments={props.comments}
+            comments={props.course.comments}
           />
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );

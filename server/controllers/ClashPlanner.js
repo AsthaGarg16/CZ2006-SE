@@ -1,4 +1,3 @@
-
 class ClashPlanner {
 
     timetable_MON = {
@@ -146,8 +145,10 @@ class ClashPlanner {
     // no more than 2 courses at each time slot
     // DFS
     //input: full_timetable (fixed index & free time slots & index planned), 
-    plan() {
-        var result_array = {
+    plan(timetable, clash_courses) {
+        this.full_timetable = timetable;
+        this.courseArray = clash_courses; 
+        var result_dic = {
             "0" : [],
             "2" : [],
             "3" : [],
@@ -199,7 +200,7 @@ class ClashPlanner {
                     progress[c] = i;
                     if (c == this.courseArray.length - 1){ // Last course
                         var num_clashCourses = clash_array[c].length;
-                        result_array[num_clashCourses].push([...progress]); // Record an index set
+                        result_dic[num_clashCourses].push([...progress]); // Record an index set
                         //console.log(progress);
                         continue;
                     }
@@ -228,20 +229,20 @@ class ClashPlanner {
         }
 
         // Constructing data to return
-        return this.generateResults(result_array);
+        return this.generateResults(result_dic);
         
     }
 
 
     //
-    generateResults(result_array){
+    generateResults(result_dic){
         let result = {};
-        let catgry = Object.keys(result_array);
+        let catgry = Object.keys(result_dic);
         for (var i = 0; i < catgry.length; i++){
             result[catgry[i]] = [];
-            for (var t = 0; t < result_array[catgry[i]].length; t++){ 
+            for (var t = 0; t < result_dic[catgry[i]].length; t++){ 
                 let index_dic = {};
-                let combination = result_array[catgry[i]][t];
+                let combination = result_dic[catgry[i]][t];
                 for (var c = 0; c < combination.length; c++){
                     index_dic[this.courseArray[c].courseCode] = this.courseArray[c].index[combination[c]].index_number;
                 }
@@ -253,13 +254,6 @@ class ClashPlanner {
         return result;
     }
 
-
-
-    main(timetable, clash_courses) {
-        this.full_timetable = timetable;
-        this.courseArray = clash_courses; 
-        return this.plan();
-    }
 }
 
 module.exports = ClashPlanner;
@@ -273,3 +267,4 @@ module.exports = ClashPlanner;
 //const test = new ClashPlanner();
 //let a = test.main(courses);
 
+// This script can run on its own

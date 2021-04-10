@@ -14,10 +14,19 @@ import { FormatColorResetOutlined } from "@material-ui/icons";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
+import {
+  PlanTimetableContextProvider,
+  usePlanTimetable,
+} from "../context/PlanTimetableContextProvider";
 
 export default function ShareTimetableComponent(props) {
   const { combinations, currentTimeTablePage } = props;
   const [link, setLink] = useState("");
+  const planTimetableContext = usePlanTimetable();
+
+  const courseDivs = planTimetableContext.courseDivs;
+  const userDefinedTimeSlots = planTimetableContext.userDefinedTimeSlots;
+  const allowClashCC = planTimetableContext.allowClashCC;
   // const planTimetableContext = usePlanTimetable();
 
   // const combinations = planTimetableContext.combinations;
@@ -38,6 +47,39 @@ export default function ShareTimetableComponent(props) {
       isModalOpen: !state.isModalOpen,
     });
   }
+  const returnCurrentTT = () => {
+    const courseFixed = [];
+    courseDivs.forEach((courseDiv) => {
+      if (courseDiv.isIndexFixed) {
+        courseFixed.push({
+          courseID: courseDiv.course.courseCode,
+          indexNum: courseDiv.currentIdx.index_number,
+        });
+        // [courseDiv.course.courseCode] = courseDiv.currentIdx.index_number;
+      }
+    });
+
+    const courseSelected = [];
+    // console.log(combinations);
+    for (const [key, value] of Object.entries(
+      combinations[currentTimeTablePage - 1]
+    )) {
+      courseSelected.push({ courseID: key, indexNum: value });
+    }
+
+    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+    const reqbody = {
+      userEmail: userEmail,
+      timetableID: Date.now().toString(),
+      courseSelected: courseSelected,
+      fixedTimeSlots: userDefinedTimeSlots,
+      courseFixed: courseFixed,
+      courseClashAllowed: allowClashCC,
+    };
+    console.log(reqbody);
+
+    return reqbody;
+  };
 
   // function handleLogin(event) {
   //   toggleModal();
@@ -94,7 +136,7 @@ export default function ShareTimetableComponent(props) {
     // console.log(useLocation());
     // console.log(window.location.pathname);
     // console.log(window.location.origin);
-
+    console.log(returnCurrentTT());
     // console.log(combinations);
     const tempCombinationArray = [];
     for (const [key, value] of Object.entries(combinations[selectedPage - 1])) {

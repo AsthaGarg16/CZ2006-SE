@@ -20,9 +20,6 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 
-
-
-
 function PlanTimetableContextConsumer(props) {
   const planTimetableContext = usePlanTimetable();
 
@@ -78,7 +75,21 @@ function PlanTimetableContextConsumer(props) {
     };
     console.log(reqbody);
 
-    // axios.post("/saving/saveTimetable", reqbody).then((response) => {
+
+    axios.put("/saving/saveTimetable", reqbody).then((response) => {
+
+      console.log(response.data);
+      // if (typeof response.data.message[0] === "string") {
+      //   alert(response.data.message[0]);
+      // } else {
+      //   setCombinations(response.data.message);
+      // }
+    });
+
+
+    // const reqbody = { timetableID: "2" };
+    // console.log(reqbody);
+    // axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
     //   console.log(response.data);
     //   // if (typeof response.data.message[0] === "string") {
     //   //   alert(response.data.message[0]);
@@ -236,20 +247,20 @@ export default function PlanTimetable() {
           </div>
           <hr />
           {/* <div className="small-container"> */}
-            <div className="row" style={{ width: 200 }}>
-              <SearchCourseDropdown
-                prompt="Select courses..."
-                id="courseCode"
-                label="courseCode"
-                name="name"
-                options={data.map((item) => ({
-                  ...item,
-                  id: Math.random().toString(36).substr(2, 9),
-                }))}
-                value={value}
-                onChange={(val) => setValue(val)}
-              />
-            </div>
+          <div className="row" style={{ width: 200 }}>
+            <SearchCourseDropdown
+              prompt="Select courses..."
+              id="courseCode"
+              label="courseCode"
+              name="name"
+              options={data.map((item) => ({
+                ...item,
+                id: Math.random().toString(36).substr(2, 9),
+              }))}
+              value={value}
+              onChange={(val) => setValue(val)}
+            />
+          </div>
           {/* </div> */}
           <PlanTimetableContextConsumer course={value} />
           {/* </div> */}

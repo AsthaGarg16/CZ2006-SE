@@ -2,7 +2,7 @@
 const express=require('express');
 
 //importing controllers
-const icsConverter = require('../controllers/icsConversion');
+const icsConverter = require('../controllers/AppointToIcsConverter');
 
 //express router
 const router=express.Router();
