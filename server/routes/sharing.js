@@ -11,6 +11,8 @@ router.get('/link', sharingController.link_share);
 
 router.get('/export', sharingController.export_settings);
 
+router.get('/getCourses', sharingController.all_courses);
+
 router.get('/ics', sharingController.download_ics);
 
 router.post('/addTimetable', sharingController.add_timetable);

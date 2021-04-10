@@ -44,6 +44,7 @@ const saveTimetable = async (req, res) => {
       } else {
         finalMessage = true;
 
+
         res.status(200).send("Success");
       }
     }

@@ -10,18 +10,21 @@ import axios from "axios";
 
 function DiscussionForum(props) {
   const [selectedCourse, setSelectedCourse] = useState(null);
-
   const [value, setValue] = useState(null);
+  const [topCourses, setTopCourses] = useState(null);
 
   const handleCourseSelect = (course) => {
     setSelectedCourse(course);
   };
 
-  function fetchTopRetedCourse(values) {
+  function fetchTopRatedCourse(values) {
     axios
-      .get("/discuss/top_course", {})
+      .get("/discuss/top_course", {
+
+      })
       .then((response) => {
         console.log(response);
+        setTopCourses(response.data)
       })
       .catch(function (error) {
         if (error.response) {
@@ -32,16 +35,11 @@ function DiscussionForum(props) {
 
   useEffect(() => {
     console.log("FETCHING")
-    fetchTopRetedCourse()
+    fetchTopRatedCourse()
   }, [])
 
-  const topRatedCourse = props.courses.map((course) => {
+  const topRatedCourse = topCourses?topCourses.map((course) => {
     return (
-      // <div
-      //   key={course.id}
-      //   onClick={() => handleCourseSelect(course)}
-      //   className="col-12 mt-1"
-      // >
       <Card
         tag="li"
         key={course.id}
@@ -50,7 +48,6 @@ function DiscussionForum(props) {
       >
         <CardBody>
           <Link to={`/discuss/${course.courseCode}`}>
-            {/* <Media body className="ml-5"> */}
             <div className="row">
               <Media heading className="col-8">
                 <b>{course.courseCode}</b>
@@ -62,7 +59,7 @@ function DiscussionForum(props) {
                 <div className="row mb-1">
                   <CircularSlider
                     width={60}
-                    dataIndex={course.averageRating}
+                    dataIndex={course.overallRating?course.overallRating.toPrecision(2):5.0}
                     label="savings"
                     hideLabelValue={true}
                     verticalOffset="0.5rem"
@@ -75,19 +72,19 @@ function DiscussionForum(props) {
                     max={10}
                     knobDraggable={false}
                   />
-                  <div className="rating">{course.averageRating} </div>
+                  <div className="rating">{course.overallRating?course.overallRating.toPrecision(2):5.0} </div>
                 </div>
               </div>
             </div>
-            <Media heading>{course.name}</Media>
-            <p>{course.description}</p>
-            {/* </Media> */}
+            <Media heading>{course.courseInfo[0][1]}</Media>
+            {/* <Media heading>{course.name}</Media> */}
+            {/* <p>{course.description}</p> */}
+            <p>{course.courseInfo[course.courseInfo.length-1]}</p>
           </Link>
         </CardBody>
       </Card>
-      // </div>
     );
-  });
+  }):[];
 
   const history = useHistory();
 
@@ -141,7 +138,7 @@ function DiscussionForum(props) {
           </MDBContainer> */}
           {/* </Card> */}
         </div>
-        {selectedCourse && <DiscussionDetail course={selectedCourse} />}
+        {/* {selectedCourse && <DiscussionDetail course={selectedCourse} />} */}
       </div>
     </div>
   );

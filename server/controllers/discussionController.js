@@ -223,5 +223,6 @@ module.exports={
     get_top_courses,
     add_reply,
     update_course_page,
-    add_course_page
+    add_course_page,
+    CourseContent
 }

@@ -20,6 +20,7 @@ const saveCourses = require("./routes/saveCourse");
 const appointmentRoute = require("./routes/appointmentRoute");
 const commonFreeTimeRoute = require("./routes/commonFreeTimeRoute");
 const icsStringRoute = require("./routes/icsStringRoute");
+const courseList = require("./routes/sendCourseList");
 
 app.use(express.json({ extended: false }));
 
@@ -39,6 +40,7 @@ app.use("/icsString", icsStringRoute);
 app.use("/discuss", discussion);
 app.use("/share", sharing);
 app.use("/sendAllCourses", sendAllCourses);
+app.use("/sendCourseList", courseList);
 
 app.listen(5000, () => console.log("Server up and running"));
 app.use((req, res) => {

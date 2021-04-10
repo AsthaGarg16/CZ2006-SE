@@ -1,7 +1,10 @@
 const express = require('express');
 const sharingController = require('../controllers/discussionController');
+const cList=require('../controllers/courseList');
 
 const router = express.Router();
+
+router.get('/getCourseList', cList);
 
 router.get('/get_schools', sharingController.discussion_index);
 

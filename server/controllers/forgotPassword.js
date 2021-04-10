@@ -3,6 +3,7 @@ const UserModal = require("../models/user");
 var nodemailer = require("nodemailer");
 
 const sendEmail = async (req, res) => {
+
   console.log(req.body);
   const { userEmail } = req.body.email;
   process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
@@ -22,6 +23,7 @@ const sendEmail = async (req, res) => {
       "Please use the following code to reset your password for your MyCal account: " +
       r,
   };
+
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
