@@ -42,17 +42,15 @@ const CourseDiv = function (props) {
         <div className="col-3">
           <MUIButton
             variant="outlined"
-            color="secondary"
             className={classes.button}
             startIcon={<CloseIcon />}
             onClick={deleteElement}
-            style={{ width: "40px", minWidth: "40px" }}
+            style={{ width: "10px", minWidth: "20px" }}
           ></MUIButton>
         </div>
         <div className="col-3">
           <MUIButton
             variant={isIndexFixed ? "contained" : "outlined"}
-            color="primary"
             className={classes.button}
             startIcon={<FlagIcon />}
             onClick={() => {
@@ -60,14 +58,14 @@ const CourseDiv = function (props) {
                 ? alert("You cannot fix an empty index!")
                 : setIsIndexFixed(!isIndexFixed);
             }}
-            style={{ width: "40px", minWidth: "40px" }}
+            style={{ width: "20px", minWidth: "20px" }}
           ></MUIButton>
         </div>
       </div>
       <div className="row">
         <div className="col-2">
           <FormControl className={classes.formControl} disabled={isIndexFixed}>
-            <InputLabel
+            <InputLabel 
               htmlFor="index-native-simple"
               style={{ color: "white" }}
             >
@@ -404,7 +402,7 @@ export default function ShareTimetable(props) {
 
   return (
     <>
-      <Button
+      <Button className = 'add'
         onClick={() => {
           addCourseDiv(props.course, {});
         }}
@@ -417,7 +415,6 @@ export default function ShareTimetable(props) {
             key={idx}
             className="row"
             style={{
-              border: "2px solid black",
               borderRadius: "5px",
               background: resourcesData[idx]
                 ? resourcesData[idx].color

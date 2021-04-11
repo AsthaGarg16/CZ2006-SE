@@ -183,8 +183,8 @@ function PlanTimetableContextConsumer(props) {
             combinations={combinations}
             currentTimeTablePage={currentTimeTablePage}
           />
-          <Button onClick={saveCurrentTT}>Save Current Timetable</Button>
-          <Button onClick={downloadfile}>Download</Button>
+          <Button className = 'savebutton' onClick={saveCurrentTT}>Save Current Timetable</Button>
+          <Button className = 'downbutton' onClick={downloadfile}>Download</Button>
         </div>
         <PlannerCalendarComponent
           timeTableData={occupiedTimeSlots}

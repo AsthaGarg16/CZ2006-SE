@@ -157,8 +157,8 @@ export default function ShareTimetableComponent(props) {
 
   return (
     <>
-      <Button outline onClick={toggleModal}>
-        <span className="fa fa-sign-in fa-lg"></span> Share Timetable
+      <Button className="share"  onClick={toggleModal}>
+        {/*<span className="fa fa-sign-in fa-lg"></span>*/} Share Timetable
       </Button>
       <Modal
         size="lg"

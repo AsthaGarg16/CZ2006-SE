@@ -37,6 +37,7 @@ const timetableSchema = new Schema({
     courseFixed:{
         type: [course],
         unique: false,
+        required:false,
         _id:false
     },
     courseClashAllowed:{

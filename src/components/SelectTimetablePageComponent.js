@@ -14,7 +14,7 @@ export default function SelectTimetablePageComponent({
     updateTimeTablePageNum(parseInt(event.target.value));
   };
 
-  return (
+  return (<div className = 'page'>
     <FormControl variant="outlined">
       <InputLabel htmlFor="outlined-page-native-simple">Page</InputLabel>
       <Select native value={value} onChange={handleChange} label="Page">
@@ -29,6 +29,6 @@ export default function SelectTimetablePageComponent({
           );
         })}
       </Select>
-    </FormControl>
+    </FormControl></div>
   );
 }
