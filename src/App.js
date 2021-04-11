@@ -26,9 +26,9 @@ function AppContextConsumer() {
   const appContext = useApp();
   const setToken = appContext.setToken;
 
-  function fetchTopRatedCourse(values) {
+  function fetchAllCourse(values) {
     axios
-      .get("/discuss/top_course", {
+      .get("/sendCourseList/getCourseList", {
 
       })
       .then((response) => {
@@ -43,8 +43,8 @@ function AppContextConsumer() {
   }
 
   useEffect(() => {
-    console.log("FETCHING")
-    fetchTopRatedCourse()
+    console.log("FETCHING all courses")
+    fetchAllCourse()
   }, [])
 
   const CourseWithId = ({ match }) => {
