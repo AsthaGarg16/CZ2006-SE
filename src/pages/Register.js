@@ -62,11 +62,12 @@ export default function Register({ setToken }) {
   }
 
   return (
-    <div>
+    <div className='createContainer'>
+    <h3 className = 'register' >Create Account</h3>
       <Form onSubmit={handleSubmit}>
+      <div className = 'form-control2'>
         <Form.Group size="lg" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <br />
+          <label>Email</label>
           <Form.Control
             autoFocus
             type="email"
@@ -74,58 +75,60 @@ export default function Register({ setToken }) {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
           />
-        </Form.Group>
+        </Form.Group> </div>
+        <div className = 'form-control2'>
         <Form.Group size="lg" controlId="username">
-          <Form.Label>Username</Form.Label>
-          <br />
+          <label>Username</label>
           <Form.Control
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter username"
           />
-        </Form.Group>
+         </Form.Group>  </div>
+        <div className = 'form-control2'>
         <Form.Group size="lg" controlId="cos">
-          <Form.Label>Course of study</Form.Label>
-          <br />
+          <label>Course of study</label>
           <Form.Control
             type="text"
             value={cos}
             onChange={(e) => setCos(e.target.value)}
             placeholder="Enter Course of study"
           />
-        </Form.Group>
+        </Form.Group> 
+        </div>
+        <div className = 'form-control2'>
         <Form.Group size="lg" controlId="yos">
-          <Form.Label>Year of study (number)</Form.Label>
-          <br />
+          <label>Year of study (number)</label>
           <Form.Control
             type="number"
             value={yos}
             onChange={(e) => setYos(e.target.value)}
             placeholder="Enter Year of study"
           />
-        </Form.Group>
+        </Form.Group> 
+        </div>
+        <div className = 'form-control2'>
         <Form.Group size="lg" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <br />
+          <label>Password</label>
           <Form.Control
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
           />
-        </Form.Group>
+        </Form.Group></div>
+        <div className = 'form-control2'>
         <Form.Group size="lg" controlId="password">
-          <Form.Label>Confirm Password</Form.Label>
-          <br />
+          <label>Confirm Password</label>
           <Form.Control
             type="password"
             value={cpassword}
             onChange={(e) => setcPassword(e.target.value)}
             placeholder="Confirm password"
           />
-        </Form.Group>
-        <Button
+        </Form.Group></div>
+        <Button className = 'btn btn2-block'
           block
           size="lg"
           type="submit"
