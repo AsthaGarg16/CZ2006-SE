@@ -128,7 +128,6 @@ a {
 hr {
   font-weight: 800;
   color: black;
-  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -264,7 +263,34 @@ hr {
   top: 1px;
   right: 15px;
   height: 40px;
+  width: 180px;
 }
+
+#planner-index-plan-button{
+  height: 40px;
+  width: 180px;
+}
+
+#planner-search-course-dropdown{
+  margin-bottom: 8px;
+}
+
+#planner-index-div{
+  width: 180px;
+  margin-top: 8px;
+}
+
+#course-added-div{
+  width: 180px;
+}
+
+.course-added-div-delete-button{
+  margin-top: 5px;
+  margin-left: 55px;
+  margin-right:5px;
+}
+
+
 
 /* .login-from {
   width: 100%;
@@ -325,8 +351,7 @@ hr {
 }
 
 .navbar-toggle {
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);  background-color: #1b0b3f;
-  width: 100%;
+  background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgb(24, 0, 88) 100%);  width: 100%;
   height: 80px;
   display: flex;
   justify-content: start;
@@ -506,6 +531,20 @@ hr {
   left:200px;
   bottom: 10px;
   width: 100px;
+}
+
+.common-page-button{
+  height: 40px;
+  width: 160px;
+  text-align: center;
+}
+
+.common-timetable-button{
+  width: 232px;
+}
+
+.mt-8{
+  padding-top: 24px;
 }
 
 .share{
