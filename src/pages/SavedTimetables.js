@@ -21,8 +21,6 @@ export default function SavedTimetables() {
   const [timetables, setTimetables] = useState([]);
   const [savedCourses, setSavedCourses] = useState([]);
 
-  const [allTTsloaded, setAllTTsloaded] = useState(false);
-
   useEffect(() => {
     console.log("retrieve saved time tables");
     // console.log(history);
@@ -238,6 +236,7 @@ export default function SavedTimetables() {
       // console.log();
     });
   }, []);
+
   return (
     <div className="container">
       <div className="row">
@@ -264,12 +263,7 @@ export default function SavedTimetables() {
       <div className="row">
         {savedCourses.map((item) => (
           <div className="col-4">
-            <Link
-            // to={{
-            //   pathname: location.state ? "/findcommon" : "/planner",
-            //   state: item,
-            // }}
-            >
+            <Link to={"/discuss/" + item}>
               <Paper
                 elevation={5}
                 style={{ height: "200px", wordWrap: "break-word" }}
