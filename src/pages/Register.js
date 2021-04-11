@@ -27,7 +27,11 @@ export default function Register({ setToken }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (password !== cpassword) {
+    if (password.length < 6) {
+      alert(
+        "The password must contain at least 6 characters. Please try again."
+      );
+    } else if (password !== cpassword) {
       alert("Password doesn't match!");
     } else {
       const reqbody = {
@@ -43,7 +47,7 @@ export default function Register({ setToken }) {
         .then((response) => {
           console.log(response.data);
           setToken(response.data.token);
-          alert("Registered successfully!");
+          alert("Your account is registered successfully!");
           sessionStorage.setItem(
             "userData",
             JSON.stringify({ timetables: [] })
