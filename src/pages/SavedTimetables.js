@@ -230,9 +230,10 @@ export default function SavedTimetables() {
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
 
     const reqbody = { email: userEmail };
+
     axios.post("/saveCourse/getSavedCourses", reqbody).then((response) => {
       console.log(response);
-      setSavedCourses(response.data[0].savedCourse);
+      setSavedCourses(response.data[0] ? response.data[0].savedCourse : []);
       // console.log();
     });
   }, []);
