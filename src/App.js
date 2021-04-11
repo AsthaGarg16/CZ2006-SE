@@ -28,12 +28,13 @@ function AppContextConsumer() {
 
   function fetchAllCourse(values) {
     axios
+
       .get("/sendCourseList/getCourseList", {
 
       })
       .then((response) => {
         console.log(response);
-        setCourses(response.data) //Change to all courses afterward
+        setCourses(response.data); //Change to all courses afterward
       })
       .catch(function (error) {
         if (error.response) {
@@ -43,6 +44,7 @@ function AppContextConsumer() {
   }
 
   useEffect(() => {
+
     console.log("FETCHING all courses")
     fetchAllCourse()
   }, [])
@@ -87,7 +89,10 @@ function AppContextConsumer() {
           <Route path="/planner" component={Planner} />
           {/* <Route path="/share" component={Share} /> */}
           <Route path="/forgotpwd" component={ForgotPassword} />
-          <Route path="/register" component={Register} />
+          <Route
+            path="/register"
+            component={() => <Register setToken={setToken} />}
+          />
           <Route path="/savedtimetables" component={SavedTimetables} />
         </Switch>
       </Router>

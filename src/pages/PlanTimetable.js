@@ -65,9 +65,10 @@ function PlanTimetableContextConsumer(props) {
     }
 
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+    const timetableID = Date.now().toString();
     const reqbody = {
       userEmail: userEmail,
-      timetableID: Date.now().toString(),
+      timetableID: timetableID,
       courseSelected: courseSelected,
       fixedTimeSlots: userDefinedTimeSlots,
       courseFixed: courseFixed,
@@ -77,6 +78,11 @@ function PlanTimetableContextConsumer(props) {
 
     axios.put("/saving/saveTimetable", reqbody).then((response) => {
       console.log(response.data);
+      const userData = JSON.parse(sessionStorage.getItem("userData"));
+      const tempTimetables = [...userData.timetables] || [];
+      tempTimetables.push(parseInt(timetableID));
+      userData.timetables = tempTimetables;
+      sessionStorage.setItem("userData", JSON.stringify(userData));
       // if (typeof response.data.message[0] === "string") {
       //   alert(response.data.message[0]);
       // } else {
