@@ -163,6 +163,11 @@ hr {
   position: relative;
   left: 200px;
 }
+.register{
+  position: relative;
+  left: 150px;
+  bottom: 20px;
+}
 
 .login_container {
   background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
@@ -173,6 +178,16 @@ hr {
   /* position: relative;
    right: 10px; 
    bottom:800px; */
+  padding: 30px; 
+  border-radius: 10px; 
+}    
+
+.createContainer {
+  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  max-width: 600px;
+  margin: 50px auto;
+  height: 600px;
+  right: 80px;
   padding: 30px;
   border-radius: 10px;
 }
@@ -185,6 +200,36 @@ hr {
   margin: 20px 0;
   max-width: 600px;
   display: block;
+}
+
+.form-control2 {
+  justify-content: space-between;
+  margin: 10px 0;
+  max-width: 600px;
+  height: 65px;
+  display: block;
+  position: relative;
+  top:5px 
+}
+.form-control2 label {
+  display: block;
+  position: relative;
+  color: #0d1137;
+  bottom: 30px;
+  right: 10px;
+}
+
+.form-control2 input {
+  width: 550px;
+  height: 38px;
+  margin: 5px;
+  padding: 3px 7px;
+  font-size: 17px;
+  position: relative;
+  bottom: 44px;
+  right:18px;
+  border-radius: 8px;
+
 }
 .form-control label {
   display: block;
@@ -216,6 +261,20 @@ hr {
 }
 
 .form-control-check input {
+  flex: 2;
+  height: 20px;
+}
+.form-control2-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-control2-check label {
+  flex: 1;
+}
+
+.form-contro2-check input {
   flex: 2;
   height: 20px;
 }
