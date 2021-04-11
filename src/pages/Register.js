@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useHistory } from "react-router-dom";
 
 import { SentimentVerySatisfiedTwoTone } from "@material-ui/icons";
 import axios from "axios";
 
-
-export default function Register() {
+export default function Register({ setToken }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setcPassword] = useState("");
   const [cos, setCos] = useState(""); //course of study
   const [yos, setYos] = useState(""); //year of study
+  const history = useHistory();
 
   function validateForm() {
     return (
@@ -41,6 +42,13 @@ export default function Register() {
         .post("/user/register", reqbody)
         .then((response) => {
           console.log(response.data);
+          setToken(response.data.token);
+          alert("Registered successfully!");
+          sessionStorage.setItem(
+            "userData",
+            JSON.stringify({ timetables: [] })
+          );
+          history.push("/login");
           // console.log(response.data.token);
           // setToken(response.data.token);
           // history.push("/planner");
