@@ -307,7 +307,21 @@ function DiscussionDetail(props) {
   // }
 
   function handleSaveCourse(courseCode) {
-    alert(courseCode);
+    // alert(courseCode);
+    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+    const reqbody = { email: userEmail, savedCourses: courseCode };
+    console.log(reqbody);
+
+    axios
+      .put("/saveCourse/saveCourses", reqbody)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // alert(error.response.data.message);
+        }
+      });
   }
 
   const dummy = [
@@ -511,10 +525,10 @@ function CommentForm(props) {
     setIsModalOpen((prevState) => !prevState);
   }
 
-  function handleSubmit(values) {
-    const userId = JSON.parse(sessionStorage.getItem("userData"))._id;
-    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-  }
+  // function handleSubmit(values) {
+  //   const userId = JSON.parse(sessionStorage.getItem("userData"))._id;
+  //   const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+  // }
 
   function handleSubmit(values) {
     // console.log();
