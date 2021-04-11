@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
-
 import PlannerCalendarComponent from "../components/PlannerCalendarComponent";
-
 import SelectTimetablePageComponent from "../components/SelectTimetablePageComponent";
-import { Button } from "reactstrap";
+import Button from "@material-ui/core/Button";
 import MUIButton from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -52,25 +50,20 @@ function ToggleButtonNotEmpty(props) {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={2}>
-      <Grid item sm={12} md={6}>
-        <div className={classes.toggleContainer}>
-          <ToggleButtonGroup
-            value={week}
-            exclusive
-            onChange={handleWeek}
-            aria-label="text alignment"
-          >
-            <ToggleButton value="currentweek" aria-label="left aligned">
-              Current Week
-            </ToggleButton>
-            <ToggleButton value="nextweek" aria-label="justified">
-              Next Week
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </div>
-      </Grid>
-    </Grid>
+    <ToggleButtonGroup
+      value={week}
+      exclusive
+      onChange={handleWeek}
+      aria-label="text alignment"
+      className="toggle-button"
+    >
+      <ToggleButton value="currentweek" aria-label="left aligned">
+        Current Week
+      </ToggleButton>
+      <ToggleButton value="nextweek" aria-label="justified">
+        Next Week
+      </ToggleButton>
+    </ToggleButtonGroup>
   );
 }
 
@@ -314,67 +307,78 @@ export default function FindCommon() {
       <div className="container">
         <div className="page-title col-12">
           <b>Find Common Time Slots</b>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-2">
-          <h4>Timetables</h4>
-          <input
-            className={classes.input}
-            id="contained-button-file"
-            multiple
-            type="file"
-            name="file"
-            accept=".ics"
-            onChange={submitFiles}
-          />
-          <label htmlFor="contained-button-file">
-            <MUbutton
-              variant="contained"
-              color="default"
-              component="span"
-              startIcon={<CloudUploadIcon />}
-            >
-              Upload .ics files
-            </MUbutton>
-          </label>
-
-          <Button onClick={generateCommonFreeTimeSlots}>
-            Generate Common Free Time Slots
-          </Button>
-
-          {selectedICSfiles.map((item, idx) => {
-            return (
-              <GetTimetableData
-                selectedICSfile={item}
-                deleteElement={() => deleteElement(idx)}
-                chooseICSfile={chooseICSfile.bind(this, idx)}
-                idx={idx}
+          <div className="row">
+            <div className="col-2">
+              <h4>Timetables</h4>
+              <input
+                className={classes.input}
+                id="contained-button-file"
+                multiple
+                type="file"
+                name="file"
+                accept=".ics"
+                onChange={submitFiles}
               />
-            );
-          })}
-        </div>
+              <label htmlFor="contained-button-file">
+                <MUbutton
+                  variant="contained"
+                  color="default"
+                  component="span"
+                  startIcon={<CloudUploadIcon />}
+                >
+                  Upload .ics files
+                </MUbutton>
+              </label>
 
-        <div className="col-10">
-          <ToggleButtonNotEmpty
-            setWeekView={setWeekView}
-          ></ToggleButtonNotEmpty>
+              {selectedICSfiles.map((item, idx) => {
+                return (
+                  <GetTimetableData
+                    selectedICSfile={item}
+                    deleteElement={() => deleteElement(idx)}
+                    chooseICSfile={chooseICSfile.bind(this, idx)}
+                    idx={idx}
+                  />
+                );
+              })}
+            </div>
+            <div className="col-10">
+              <div className="row">
+                <div className="toggle-button col-3">
+                  <ToggleButtonNotEmpty setWeekView={setWeekView} />
+                </div>
+                <div className="toggle-button mt-5 col-3">
+                  <SelectTimetablePageComponent
+                    combinations={[
+                      ...selectedICSfiles,
+                      {
+                        page: "Common Free Time Slots",
+                        results: commonFreeTimeSlots,
+                      },
+                    ]}
+                    updateTimeTablePageNum={updateTimeTablePageNum}
+                  />
+                </div>
+                <div className="toggle-button col-3">
+                  <Button onClick={generateCommonFreeTimeSlots}>
+                    Generate Common Free Time Slots
+                  </Button>
+                </div>
+              </div>
 
-          <SelectTimetablePageComponent
-            combinations={[
-              ...selectedICSfiles,
-              { page: "Common Free Time Slots", results: commonFreeTimeSlots },
-            ]}
-            updateTimeTablePageNum={updateTimeTablePageNum}
-          />
-          <PlannerCalendarComponent
-            timeTableData={
-              currentPage !== selectedICSfiles.length + 1
-                ? selectedICSfiles[currentPage - 1].results[weekView]
-                : commonFreeTimeSlots[weekView]
-            }
-            currentDate={newdate.toISOString()}
-          />
+              <div className="common-page-container">
+                {/* <div className="ml-5 mt-5 mr-5 mb-5"> */}
+                <PlannerCalendarComponent
+                  timeTableData={
+                    currentPage !== selectedICSfiles.length + 1
+                      ? selectedICSfiles[currentPage - 1].results[weekView]
+                      : commonFreeTimeSlots[weekView]
+                  }
+                  currentDate={newdate.toISOString()}
+                />
+                {/* </div> */}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
