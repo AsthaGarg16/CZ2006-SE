@@ -25,13 +25,31 @@ function AppContextConsumer() {
   const [comments, setComments] = useState(COMMENTS);
   const appContext = useApp();
   const setToken = appContext.setToken;
+  const [topCourses, setTopCourses] = useState([]);
+
+  function fetchTopRatedCourse() {
+    axios
+      .get("/discuss/top_course", {})
+      .then((response) => {
+        console.log(response);
+        setTopCourses(response.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          alert(error.response.data.message);
+        }
+      });
+  }
+
+  useEffect(() => {
+    console.log("FETCHING top rated courses");
+    fetchTopRatedCourse();
+  }, []);
 
   function fetchAllCourse(values) {
     axios
 
-      .get("/sendCourseList/getCourseList", {
-
-      })
+      .get("/sendCourseList/getCourseList", {})
       .then((response) => {
         console.log(response);
         setCourses(response.data); //Change to all courses afterward
@@ -44,16 +62,15 @@ function AppContextConsumer() {
   }
 
   useEffect(() => {
-
-    console.log("FETCHING all courses")
-    fetchAllCourse()
-  }, [])
+    console.log("FETCHING all courses");
+    fetchAllCourse();
+  }, []);
 
   const CourseWithId = ({ match }) => {
     return (
       <DiscussionDetail
         course={
-          courses.filter(
+          topCourses.filter(
             //(course) => course.id === parseInt(match.params.id, 10)
             (course) => course.courseCode === match.params.courseCode
           )[0]

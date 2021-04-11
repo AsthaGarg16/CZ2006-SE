@@ -267,6 +267,27 @@ function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
 }
 
 function DiscussionDetail(props) {
+  // console.log("--debug--");
+
+  // console.log(props);
+  // console.log("--debug--");
+  const { course } = props;
+  console.log(course.comments);
+  const courseTitle = course.courseInfo[0][1];
+  const courseAU = course.courseInfo[0][2];
+  const courseDescription = course.courseInfo[course.courseInfo.length - 1];
+  const remarks = {};
+  let prevColName = ""; //previous col name
+  //loop through courseinfo to get all remarks info
+  course.courseInfo.slice(1, course.courseInfo.length - 1).forEach((item) => {
+    if (item.length === 2) {
+      remarks[item[0]] = [item[1]];
+      prevColName = item[0];
+    } else if (item.length == 1) {
+      remarks[prevColName].push(item[0]);
+    }
+  });
+  // console.log(remarks);
 
   // function handleSaveCourse(courseCode) {
   //   const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
@@ -289,125 +310,185 @@ function DiscussionDetail(props) {
     alert(courseCode);
   }
 
+  const dummy = [
+    {
+      _id: "60698ef2a1849e93cc1fb606",
+      commentID: 1617530610088,
+      commentBody: "This course is not so useful",
+      replies: [],
+    },
+    {
+      _id: "60699049a1849e93cc1fb614",
+      replies: [
+        {
+          _id: "60699049a1849e93cc1fb615",
+          studentID: "U1923232F",
+          replyID: 1617530953669,
+          replyBody: "Nice!",
+        },
+      ],
+    },
+    {
+      _id: "60699055a1849e93cc1fb616",
+      replies: [
+        {
+          _id: "60699055a1849e93cc1fb617",
+          studentID: "U1923232F",
+          replyID: 1617530965229,
+          replyBody: "Very Nice!",
+        },
+      ],
+    },
+    {
+      _id: "606c523f9e786c3ff4289e53",
+      commentID: 1617711679654,
+      commentBody: "zipeng",
+      replies: [],
+    },
+  ];
+
   return (
     <div className="background">
       <div className="container">
         {/* <div className="row"> */}
-          <div key={props.course.id} className="mt-1">
-            <Card tag="li">
-              <CardBody body className="ml-5">
-                <div className="row">
-                  <div className="col-8">
-                    <Media heading className="course-detail-courseCode row">
-                      <div className="col-9">
-                        <Button onClick={()=>handleSaveCourse(props.course.courseCode)}>Save</Button>
-                        <b>{props.course.courseCode}</b>
-                      </div>
-                      {/* <div className="col-3">{props.course.courseInfo[0][2]}</div> */}
-                    </Media>
-                    <Media heading className="course-detail-courseName row">
-                      {/* {props.course.courseInfo[0][1]} */}
-                    </Media>
+        <div key={course.id} className="mt-1">
+          <Card tag="li">
+            <CardBody body className="ml-5">
+              <div className="row">
+                <div className="col-8">
+                  <Media heading className="course-detail-courseCode row">
+                    <div className="col-9">
+                      <Button
+                        onClick={() => handleSaveCourse(course.courseCode)}
+                      >
+                        Save
+                      </Button>
+                      <b>{course.courseCode}</b>
+                    </div>
+                    {/* <div className="col-3">{course.courseInfo[0][2]}</div> */}
+                  </Media>
+                  <Media heading className="course-detail-courseName row">
+                    {/* {course.courseInfo[0][1]} */}
+                  </Media>
+                </div>
+                {/* <Button onClick={() => alert(course.courseInfo)}>click</Button> */}
+                <div className="col-3">
+                  <p className="row mt-2 mb-5">Usefulness:</p>
+                  <p className="row mt-2 mb-5">Easiness:</p>
+                  <p className="row mt-2 mb-5">Time Investment:</p>
+                </div>
+                <div className="col-1">
+                  <div className="row mb-1">
+                    <CircularSlider
+                      width={60}
+                      dataIndex={course.usefulness}
+                      label="savings"
+                      hideLabelValue={true}
+                      verticalOffset="0.5rem"
+                      progressSize={8}
+                      trackColor="#fffff"
+                      progressColorFrom="#228B22"
+                      progressColorTo="#39FF14"
+                      trackSize={8}
+                      min={0}
+                      max={10}
+                      knobDraggable={false}
+                    />
+                    <div className="rating">{course.usefulness} </div>
                   </div>
-                  <Button onClick={()=>alert((props.course.details))}>click</Button>
-                  <div className="col-3">
-                    <p className="row mt-2 mb-5">Usefulness:</p>
-                    <p className="row mt-2 mb-5">Easiness:</p>
-                    <p className="row mt-2 mb-5">Time Investment:</p>
+                  <div className="row mb-1">
+                    <CircularSlider
+                      width={60}
+                      dataIndex={course.easiness}
+                      label="savings"
+                      hideLabelValue={true}
+                      verticalOffset="0.5rem"
+                      progressSize={8}
+                      trackColor="#fffff"
+                      progressColorFrom="#228B22"
+                      progressColorTo="#39FF14"
+                      trackSize={8}
+                      min={0}
+                      max={10}
+                      knobDraggable={false}
+                    />
+                    <div className="rating">{course.easiness} </div>
                   </div>
-                  <div className="col-1">
-                    <div className="row mb-1">
-                      <CircularSlider
-                        width={60}
-                        dataIndex={props.course.usefulness}
-                        label="savings"
-                        hideLabelValue={true}
-                        verticalOffset="0.5rem"
-                        progressSize={8}
-                        trackColor="#fffff"
-                        progressColorFrom="#228B22"
-                        progressColorTo="#39FF14"
-                        trackSize={8}
-                        min={0}
-                        max={10}
-                        knobDraggable={false}
-                      />
-                      <div className="rating">{props.course.usefulness} </div>
-                    </div>
-                    <div className="row mb-1">
-                      <CircularSlider
-                        width={60}
-                        dataIndex={props.course.easiness}
-                        label="savings"
-                        hideLabelValue={true}
-                        verticalOffset="0.5rem"
-                        progressSize={8}
-                        trackColor="#fffff"
-                        progressColorFrom="#228B22"
-                        progressColorTo="#39FF14"
-                        trackSize={8}
-                        min={0}
-                        max={10}
-                        knobDraggable={false}
-                      />
-                      <div className="rating">{props.course.easiness} </div>
-                    </div>
-                    <div className="row mb-1">
-                      <CircularSlider
-                        width={60}
-                        dataIndex={props.course.timeInvestment}
-                        label="savings"
-                        hideLabelValue={true}
-                        verticalOffset="0.5rem"
-                        progressSize={8}
-                        trackColor="#fffff"
-                        progressColorFrom="#228B22"
-                        progressColorTo="#39FF14"
-                        trackSize={8}
-                        min={0}
-                        max={10}
-                        knobDraggable={false}
-                      />
-                      <div className="rating">
-                        {props.course.timeInvestment}{" "}
-                      </div>
-                    </div>
+                  <div className="row mb-1">
+                    <CircularSlider
+                      width={60}
+                      dataIndex={course.timeInvestment}
+                      label="savings"
+                      hideLabelValue={true}
+                      verticalOffset="0.5rem"
+                      progressSize={8}
+                      trackColor="#fffff"
+                      progressColorFrom="#228B22"
+                      progressColorTo="#39FF14"
+                      trackSize={8}
+                      min={0}
+                      max={10}
+                      knobDraggable={false}
+                    />
+                    <div className="rating">{course.timeInvestment} </div>
                   </div>
                 </div>
-                <p>
-                  <div className="row">
-                    <b className="col-4">Course Description: </b>
-                    {/* <div className="col-8">{props.details[props.details.length-1]}</div> */}
+              </div>
+              <p>
+                <div className="row">
+                  <b className="col-4">Course Title: </b>
+                  <div className="col-8">{courseTitle}</div>
+                </div>
+                <div className="row">
+                  <b className="col-4">AU: </b>
+                  <div className="col-8">{courseAU}</div>
+                </div>
+                <div className="row">
+                  <b className="col-4">Course Description: </b>
+                  <div className="col-8">{courseDescription}</div>
+                </div>
+                {/* <div className="row">
+                  <b className="col-4">Remarks: </b>
+                  <div className="col-8">
+                    {course.courseInfo.slice(1, course.courseInfo.length)}
                   </div>
-                  <div className="row">
-                    {/* <b className="col-4">{props.course.courseInfo[1][0]} </b> */}
-                    {/* <div className="col-8">{props.course.courseInfo[1][1]}</div> */}
-                  </div>
-                  <div className="row">
-                    {/* <b className="col-4">{props.course.courseInfo[2][0]} </b> */}
-                    {/* <div className="col-8">{props.course.courseInfo[2][1]}</div> */}
-                  </div>
-                  <div className="row">
-                    <b className="col-4">Mutually Exclusive With: </b>
-                    <div className="col-8">
-                      {props.course.mutuallyExclusive}
+                </div> */}
+
+                {Object.keys(remarks).map((key) => {
+                  return (
+                    <div className="row">
+                      <b className="col-4">{key}</b>
+                      <div className="col-8">{remarks[key]}</div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <b className="col-4">Exam Schedule:</b>
-                    <div className="col-8">{props.course.examSchedule}</div>
-                  </div>
-                </p>
-              </CardBody>
-            </Card>
-          </div>
+                  );
+                })}
+                {/* <div className="row">
+                  <b className="col-4">{course.courseInfo[1][0]} </b>
+                  <div className="col-8">{course.courseInfo[1][1]}</div>
+                </div>
+                <div className="row">
+                  <b className="col-4">{course.courseInfo[2][0]} </b>
+                  <div className="col-8">{course.courseInfo[2][1]}</div>
+                </div>
+                <div className="row">
+                  <b className="col-4">Mutually Exclusive With: </b>
+                  <div className="col-8">{course.mutuallyExclusive}</div>
+                </div>
+                <div className="row">
+                  <b className="col-4">Exam Schedule:</b>
+                  <div className="col-8">{course.examSchedule}</div>
+                </div> */}
+              </p>
+            </CardBody>
+          </Card>
+        </div>
         {/* </div> */}
         {/* <div className="m-1"> */}
-          {/* <div className="row"></div> */}
-          <RenderComments
-            courseCode={props.course.code}
-            comments={props.course.comments}
-          />
+        {/* <div className="row"></div> */}
+        <RenderComments
+          courseCode={course.courseCode}
+          comments={course.comments}
+        />
         {/* </div> */}
       </div>
     </div>
@@ -430,49 +511,51 @@ function CommentForm(props) {
     setIsModalOpen((prevState) => !prevState);
   }
 
-  // function handleSubmit(values) {
-  //   const userId = JSON.parse(sessionStorage.getItem("userData"))._id;
-  //   const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-  //   axios
-  //     .post("/discuss/comment", {
-  //       courseCode: props.courseCode,
-  //       studentId: userId,
-  //       commentBody: values.comment,
-  //       studentRated: userEmail,
-  //       usefulness: usefulness,
-  //       easiness: easiness,
-  //       timeInvestment: timeinvestment,
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       if (error.response) {
-  //         alert(error.response.data.message);
-  //       }
-  //     });
-  // }
+  function handleSubmit(values) {
+    const userId = JSON.parse(sessionStorage.getItem("userData"))._id;
+    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+  }
 
   function handleSubmit(values) {
-    console.log();
-    const userid = JSON.parse(sessionStorage.getItem("userData"))._id;
+    // console.log();
+    const reqbody = {};
+
+    const userName = JSON.parse(sessionStorage.getItem("userData")).name;
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-    alert(
-      "CourseCode: " +
-        props.courseCode +
-        "Email:" +
-        userEmail +
-        "User ID:" +
-        userid +
-        " Usefulness: " +
-        usefulness +
-        " Easiness: " +
-        easiness +
-        "Time Investment " +
-        timeinvestment +
-        " Comment: " +
-        values.comment
-    );
+    axios
+      .post("/discuss/comment", {
+        courseCode: props.courseCode,
+        studentId: userName,
+        commentBody: values.comment,
+        studentsRated: userEmail,
+        usefulness: usefulness,
+        easiness: easiness,
+        timeInvestment: timeinvestment,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          alert(error.response.data.message);
+        }
+      });
+    // alert(
+    //   "CourseCode: " +
+    //     props.courseCode +
+    //     "Email:" +
+    //     userEmail +
+    //     "User ID:" +
+    //     userId +
+    //     " Usefulness: " +
+    //     usefulness +
+    //     " Easiness: " +
+    //     easiness +
+    //     "Time Investment " +
+    //     timeinvestment +
+    //     " Comment: " +
+    //     values.comment
+    // );
   }
 
   return (
