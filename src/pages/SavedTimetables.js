@@ -19,7 +19,7 @@ export default function SavedTimetables() {
   const history = useHistory();
   const location = useLocation();
   const [timetables, setTimetables] = useState([]);
-  const [allTTsloaded, setAllTTsloaded] = useState(false);
+  const [savedCourses, setSavedCourses] = useState([]);
 
   useEffect(() => {
     console.log("retrieve saved time tables");
@@ -226,6 +226,17 @@ export default function SavedTimetables() {
     console.log("halo");
   };
 
+  useEffect(() => {
+    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+
+    const reqbody = { email: userEmail };
+    axios.post("/saveCourse/getSavedCourses", reqbody).then((response) => {
+      console.log(response);
+      setSavedCourses(response.data[0].savedCourse);
+      // console.log();
+    });
+  }, []);
+
   return (
     <div className="container">
       <div className="row">
@@ -243,6 +254,21 @@ export default function SavedTimetables() {
               >
                 <h5>{new Date(parseInt(item.timetableID)).toString()}</h5>
                 <p>{JSON.stringify(item.courseSelected)}</p>
+              </Paper>
+            </Link>
+          </div>
+        ))}
+      </div>
+      <div className="row">Saved Courses</div>
+      <div className="row">
+        {savedCourses.map((item) => (
+          <div className="col-4">
+            <Link to={"/discuss/" + item}>
+              <Paper
+                elevation={5}
+                style={{ height: "200px", wordWrap: "break-word" }}
+              >
+                <h5>{item}</h5>
               </Paper>
             </Link>
           </div>
