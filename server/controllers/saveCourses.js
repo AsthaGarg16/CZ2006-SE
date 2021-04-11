@@ -48,6 +48,18 @@ const saveCourses = async (req, res) => {
   }
 };
 
+const getSavedCourses = async (req, res) => {
+  try {
+    const email = req.body.email;
+
+    const result = await savedCourse.find({ email: email });
+    console.log(result);
+    res.status(200).send(result);
+  } catch {
+    res.status(400).send("err");
+  }
+};
+
 const removeSavedCourses = async (req, res) => {
   savedCourse.update(
     { email: req.body.userEmail },
@@ -68,5 +80,6 @@ const removeSavedCourses = async (req, res) => {
 
 module.exports = {
   saveCourses,
+  getSavedCourses,
   removeSavedCourses,
 };
