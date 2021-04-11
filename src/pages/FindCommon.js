@@ -58,10 +58,18 @@ function ToggleButtonNotEmpty(props) {
       onChange={handleWeek}
       aria-label="text alignment"
     >
-      <ToggleButton className="common-page-button" value="currentweek" aria-label="left aligned">
+      <ToggleButton
+        className="common-page-button"
+        value="currentweek"
+        aria-label="left aligned"
+      >
         Current Week
       </ToggleButton>
-      <ToggleButton className="common-page-button" value="nextweek" aria-label="justified">
+      <ToggleButton
+        className="common-page-button"
+        value="nextweek"
+        aria-label="justified"
+      >
         Next Week
       </ToggleButton>
     </ToggleButtonGroup>
@@ -311,9 +319,7 @@ export default function FindCommon() {
         </div>
         <hr />
         <div className="row">
-          <div className="col-2">
-            <h4>Timetables</h4>
-          </div>
+          <div className="col-2"></div>
           <div className="col-4">
             <ToggleButtonNotEmpty
               setWeekView={setWeekView}
@@ -334,6 +340,7 @@ export default function FindCommon() {
         </div>
         <div className="row mt-8">
           <div className="col-2">
+            <h4>Timetables</h4>
             <input
               className={classes.input}
               id="contained-button-file"
@@ -349,13 +356,17 @@ export default function FindCommon() {
                 color="default"
                 component="span"
                 startIcon={<CloudUploadIcon />}
-                className="common-page-button" 
+                className="common-page-button"
               >
                 Upload .ics files
               </MUbutton>
             </label>
 
-            <Button onClick={generateCommonFreeTimeSlots} id="generate-common" className="common-page-button" >
+            <Button
+              onClick={generateCommonFreeTimeSlots}
+              id="generate-common"
+              className="common-page-button"
+            >
               Generate
             </Button>
 

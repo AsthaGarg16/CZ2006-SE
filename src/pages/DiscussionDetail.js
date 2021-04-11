@@ -394,7 +394,7 @@ function DiscussionDetail(props) {
       <div className="background">
         <div className="container">
           {/* <div className="row"> */}
-          <div key={course.id} className="mt-1">
+          <div key={course.id}>
             <Card tag="li">
               <CardBody body className="ml-5">
                 <div className="row">
