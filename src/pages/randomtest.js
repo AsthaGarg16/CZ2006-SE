@@ -92,3 +92,4 @@ const testing = {
   ],
   week: 12,
 };
+console.log({ name: "liew" } || { name: "asd" });

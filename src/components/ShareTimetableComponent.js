@@ -18,6 +18,7 @@ import {
   PlanTimetableContextProvider,
   usePlanTimetable,
 } from "../context/PlanTimetableContextProvider";
+var QRCode = require("qrcode.react");
 
 export default function ShareTimetableComponent(props) {
   const { combinations, currentTimeTablePage } = props;
@@ -48,35 +49,36 @@ export default function ShareTimetableComponent(props) {
     });
   }
   const returnCurrentTT = () => {
-    const courseFixed = [];
+    // const courseFixed = [];
+    // courseDivs.forEach((courseDiv) => {
+    //   if (courseDiv.isIndexFixed) {
+    //     courseFixed.push({
+    //       courseID: courseDiv.course.courseCode,
+    //       indexNum: courseDiv.currentIdx.index_number,
+    //     });
+    //     // [courseDiv.course.courseCode] = courseDiv.currentIdx.index_number;
+    //   }
+    // });
+
+    // const courseSelected = [];
+    // // console.log(combinations);
+    // for (const [key, value] of Object.entries(
+    //   combinations[currentTimeTablePage - 1]
+    // )) {
+    //   courseSelected.push({ courseID: key, indexNum: value });
+    // }
+    const courseFixed = { ...combinations[currentTimeTablePage - 1] };
     courseDivs.forEach((courseDiv) => {
-      if (courseDiv.isIndexFixed) {
-        courseFixed.push({
-          courseID: courseDiv.course.courseCode,
-          indexNum: courseDiv.currentIdx.index_number,
-        });
-        // [courseDiv.course.courseCode] = courseDiv.currentIdx.index_number;
-      }
+      if (courseDiv.isIndexFixed)
+        delete courseFixed[courseDiv.course.courseCode];
     });
-
-    const courseSelected = [];
-    // console.log(combinations);
-    for (const [key, value] of Object.entries(
-      combinations[currentTimeTablePage - 1]
-    )) {
-      courseSelected.push({ courseID: key, indexNum: value });
-    }
-
-    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
     const reqbody = {
-      userEmail: userEmail,
-      timetableID: Date.now().toString(),
-      courseSelected: courseSelected,
+      // timetableID: Date.now().toString(),
+      courseSelected: combinations[currentTimeTablePage - 1],
       fixedTimeSlots: userDefinedTimeSlots,
       courseFixed: courseFixed,
       courseClashAllowed: allowClashCC,
     };
-    console.log(reqbody);
 
     return reqbody;
   };
@@ -147,10 +149,15 @@ export default function ShareTimetableComponent(props) {
     //     window.location.pathname
     //   }?${tempCombinationArray.join("&")}`
     // );
+    // setLink(
+    //   `${window.location.origin}${
+    //     window.location.pathname
+    //   }?${tempCombinationArray.join("&")}`
+    // );
     setLink(
       `${window.location.origin}${
         window.location.pathname
-      }?${tempCombinationArray.join("&")}`
+      }?timetable=${JSON.stringify(returnCurrentTT())}`
     );
     // combinations[];
   };
@@ -175,6 +182,8 @@ export default function ShareTimetableComponent(props) {
           <a href={link} target="_blank">
             {link}
           </a>
+          <br></br>
+          <QRCode size={256} value={link} imageSettings={{ width: 30 }} />
         </ModalBody>
       </Modal>
     </>

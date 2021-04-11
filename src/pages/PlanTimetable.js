@@ -65,9 +65,10 @@ function PlanTimetableContextConsumer(props) {
     }
 
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+    const timetableID = Date.now().toString();
     const reqbody = {
       userEmail: userEmail,
-      timetableID: Date.now().toString(),
+      timetableID: timetableID,
       courseSelected: courseSelected,
       fixedTimeSlots: userDefinedTimeSlots,
       courseFixed: courseFixed,
@@ -75,18 +76,20 @@ function PlanTimetableContextConsumer(props) {
     };
     console.log(reqbody);
 
-
     axios.put("/saving/saveTimetable", reqbody).then((response) => {
-
       console.log(response.data);
+      const userData = JSON.parse(sessionStorage.getItem("userData"));
+      const tempTimetables = [...userData.timetables] || [];
+      tempTimetables.push(parseInt(timetableID));
+      userData.timetables = tempTimetables;
+      sessionStorage.setItem("userData", JSON.stringify(userData));
       // if (typeof response.data.message[0] === "string") {
       //   alert(response.data.message[0]);
       // } else {
       //   setCombinations(response.data.message);
       // }
     });
-
-
+    //
     // const reqbody = { timetableID: "2" };
     // console.log(reqbody);
     // axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
@@ -228,6 +231,13 @@ export default function PlanTimetable() {
         setData(myJson);
         sessionStorage.setItem("coursesData", JSON.stringify(myJson));
       });
+    // axios
+    //   .get("/sendAllCourses/getAllCourses", {})
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     setData(response.data);
+    //   })
+    //   .catch(function (error) {});
   };
 
   useEffect(() => {

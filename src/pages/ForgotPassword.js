@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { LeakAddTwoTone, LiveTvTwoTone } from "@material-ui/icons";
@@ -28,6 +29,7 @@ function ForgotPassword() {
   //   1: { function: validateVerificationCode, text: "Submit verification code" },
   //   2: { function: validatePassword, text: "Reset password" },
   // };
+  const history = useHistory();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -72,6 +74,8 @@ function ForgotPassword() {
           .post("/user/forgotPassword/reset", reqbody)
           .then((response) => {
             console.log(response.data);
+            alert(response.data.message);
+            history.push("/login");
             // console.log(response.data.token);
             // setToken(response.data.token);
             // history.push("/planner");
