@@ -10,14 +10,6 @@ import {
   PlanTimetableContextProvider,
   usePlanTimetable,
 } from "../context/PlanTimetableContextProvider";
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useParams,
-  useLocation,
-} from "react-router-dom";
 import axios from "axios";
 
 function PlanTimetableContextConsumer(props) {
@@ -186,8 +178,8 @@ function PlanTimetableContextConsumer(props) {
             combinations={combinations}
             currentTimeTablePage={currentTimeTablePage}
           />
-          <Button className = 'savebutton' onClick={saveCurrentTT}>Save Current Timetable</Button>
-          <Button className = 'downbutton' onClick={downloadfile}>Download</Button>
+          <Button onClick={saveCurrentTT} style={{ height: 40, width:240, marginRight: "10px"}}>Save Current Timetable</Button>
+          <Button onClick={downloadfile} style={{ height: 40, width:140 }}>Download</Button>
         </div>
         <PlannerCalendarComponent
           timeTableData={occupiedTimeSlots}
@@ -257,7 +249,7 @@ export default function PlanTimetable() {
           </div>
           <hr />
           {/* <div className="small-container"> */}
-          <div className="row" style={{ width: 200 }}>
+          <div className="row" id="planner-search-course-dropdown" style={{ width: 180 }}>
             <SearchCourseDropdown
               prompt="Select courses..."
               id="courseCode"
