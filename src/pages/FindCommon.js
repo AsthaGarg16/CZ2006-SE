@@ -88,15 +88,21 @@ const GetTimetableData = function (props) {
         wordWrap: "break-word",
       }}
     >
-      <h5>{"Timetable" + (idx + 1)}</h5>
-      <MUIButton
-        variant="outlined"
-        color="secondary"
-        startIcon={<CloseIcon />}
-        onClick={deleteElement}
-        style={{ width: "40px", minWidth: "40px" }}
-      ></MUIButton>
-
+      <div className="common-page-button ics-file-detail row">
+        <div className="ics-file-detail-timetable">
+          {"Timetable " + (idx + 1)}{" "}
+        </div>{" "}
+        <div className="remove-ics-file-button">
+          <MUIButton
+            variant="outlined"
+            color="secondary"
+            startIcon={<CloseIcon />}
+            onClick={deleteElement}
+            style={{ width: "40px", minWidth: "40px" }}
+          />
+        </div>
+      </div>
+      
       <input type="file" name="file" accept=".ics" onChange={chooseICSfile} />
       <p>{selectedICSfile.fileName || "No file chosen"}</p>
     </Paper>

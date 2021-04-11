@@ -18,7 +18,16 @@ import Slider from "@material-ui/core/Slider";
 import { Control, LocalForm } from "react-redux-form";
 import CircularSlider from "@fseehawer/react-circular-slider";
 import { Link, useParams } from "react-router-dom";
-
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import Paper from "@material-ui/core/Paper";
+import TableRow from "@material-ui/core/TableRow";
+import { HiOutlineSave } from "react-icons/hi";
+import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
 
 function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
@@ -312,7 +321,7 @@ function DiscussionDetail(props) {
         remarks[item[0]] = [item[1]];
         prevColName = item[0];
       } else if (item.length == 1) {
-        remarks[prevColName].push(item[0]);
+        remarks[prevColName].push(" " + item[0]);
       }
     });
     // console.log(remarks);
@@ -334,10 +343,10 @@ function DiscussionDetail(props) {
     //     });
     // }
 
-    function handleSaveCourse(courseCode) {
+    function handleSaveCourse(course) {
       // alert(courseCode);
       const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-      const reqbody = { email: userEmail, savedCourses: courseCode };
+      const reqbody = { email: userEmail, savedCourses: course };
       console.log(reqbody);
 
       axios
@@ -396,26 +405,33 @@ function DiscussionDetail(props) {
           {/* <div className="row"> */}
           <div key={course.id}>
             <Card tag="li">
-              <CardBody body className="ml-5">
-                <div className="row">
-                  <div className="col-8">
-                    <Media heading className="course-detail-courseCode row">
-                      <div className="col-9">
-                        <Button
-                          onClick={() => handleSaveCourse(course.courseCode)}
-                        >
-                          Save
-                        </Button>
-                        <b>{course.courseCode}</b>
-                      </div>
-                      {/* <div className="col-3">{course.courseInfo[0][2]}</div> */}
-                    </Media>
-                    <Media heading className="course-detail-courseName row">
-                      {/* {course.courseInfo[0][1]} */}
-                    </Media>
-                  </div>
+              <CardBody body className="ml-5 mr-5">
+                {/* <div className="row"> */}
+                <div>
+                  {/* <div> */}
+                  <Button
+                    className="discuss-detail-save-button"
+                    onClick={() => handleSaveCourse(course)}
+                  >
+                    <span>
+                      <HiOutlineSave />
+                    </span>
+                  </Button>
+                  <Button
+                    className="discuss-detail-save-button"
+                    onClick={() => handleSaveCourse(course)}
+                  >
+                    <span>
+                      <AiOutlineDelete />
+                    </span>
+                  </Button>
+                  <b className="course-detail-courseCode col-10">
+                    {course.courseCode} - {courseTitle}
+                  </b>
+
+                  {/* </div> */}
                   {/* <Button onClick={() => alert(course.courseInfo)}>click</Button> */}
-                  <div className="col-3">
+                  {/* <div className="col-3">
                     <p className="row mt-2 mb-5">Usefulness:</p>
                     <p className="row mt-2 mb-5">Easiness:</p>
                     <p className="row mt-2 mb-5">Time Investment:</p>
@@ -474,10 +490,10 @@ function DiscussionDetail(props) {
                         knobDraggable={false}
                       />
                       <div className="rating">{course.timeInvestment} </div>
-                    </div>
-                  </div>
+                    </div> 
+                  </div> */}
                 </div>
-                <p>
+                {/* <p>
                   <div className="row">
                     <b className="col-4">Course Title: </b>
                     <div className="col-8">{courseTitle}</div>
@@ -490,13 +506,6 @@ function DiscussionDetail(props) {
                     <b className="col-4">Course Description: </b>
                     <div className="col-8">{courseDescription}</div>
                   </div>
-                  {/* <div className="row">
-                  <b className="col-4">Remarks: </b>
-                  <div className="col-8">
-                    {course.courseInfo.slice(1, course.courseInfo.length)}
-                  </div>
-                </div> */}
-
                   {Object.keys(remarks).map((key) => {
                     return (
                       <div className="row">
@@ -505,23 +514,73 @@ function DiscussionDetail(props) {
                       </div>
                     );
                   })}
-                  {/* <div className="row">
-                  <b className="col-4">{course.courseInfo[1][0]} </b>
-                  <div className="col-8">{course.courseInfo[1][1]}</div>
-                </div>
-                <div className="row">
-                  <b className="col-4">{course.courseInfo[2][0]} </b>
-                  <div className="col-8">{course.courseInfo[2][1]}</div>
-                </div>
-                <div className="row">
-                  <b className="col-4">Mutually Exclusive With: </b>
-                  <div className="col-8">{course.mutuallyExclusive}</div>
-                </div>
-                <div className="row">
-                  <b className="col-4">Exam Schedule:</b>
-                  <div className="col-8">{course.examSchedule}</div>
-                </div> */}
-                </p>
+                </p> */}
+                <TableContainer component={Paper}>
+                  <Table aria-label="simple table">
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>
+                          <b>Course Description:</b>
+                        </TableCell>
+                        <TableCell>
+                          <div className="discussion-forum-table">
+                            {courseDescription}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>
+                          <b>Number of AUs:</b>
+                        </TableCell>
+                        <TableCell>{courseAU}</TableCell>
+                      </TableRow>
+                      {Object.keys(remarks).map((key) => {
+                        return (
+                          <TableRow className="row">
+                            <TableCell>
+                              <b>{key}</b>
+                            </TableCell>
+                            <TableCell>
+                              <div className="discussion-forum-table">
+                                {remarks[key]}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                      <TableRow>
+                        <TableCell>
+                          <b>Usefulness:</b>
+                        </TableCell>
+                        <TableCell>
+                          <div className="discussion-forum-table">
+                            {course.usefulness}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>
+                          <b>Easiness:</b>
+                        </TableCell>
+                        <TableCell>
+                          <div className="discussion-forum-table">
+                            {course.easiness}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>
+                          <b>Time Investment:</b>
+                        </TableCell>
+                        <TableCell>
+                          <div className="discussion-forum-table">
+                            {course.timeInvestment}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </CardBody>
             </Card>
           </div>

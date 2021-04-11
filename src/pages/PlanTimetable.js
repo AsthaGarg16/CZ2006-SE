@@ -10,6 +10,7 @@ import {
   PlanTimetableContextProvider,
   usePlanTimetable,
 } from "../context/PlanTimetableContextProvider";
+import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 
 function PlanTimetableContextConsumer(props) {
@@ -178,8 +179,15 @@ function PlanTimetableContextConsumer(props) {
             combinations={combinations}
             currentTimeTablePage={currentTimeTablePage}
           />
-          <Button onClick={saveCurrentTT} style={{ height: 40, width:240, marginRight: "10px"}}>Save Current Timetable</Button>
-          <Button onClick={downloadfile} style={{ height: 40, width:140 }}>Download</Button>
+          <Button
+            onClick={saveCurrentTT}
+            style={{ height: 40, width: 240, marginRight: "10px" }}
+          >
+            Save Current Timetable
+          </Button>
+          <Button onClick={downloadfile} style={{ height: 40, width: 140 }}>
+            Download
+          </Button>
         </div>
         <PlannerCalendarComponent
           timeTableData={occupiedTimeSlots}
@@ -249,7 +257,11 @@ export default function PlanTimetable() {
           </div>
           <hr />
           {/* <div className="small-container"> */}
-          <div className="row" id="planner-search-course-dropdown" style={{ width: 180 }}>
+          <div
+            className="row"
+            id="planner-search-course-dropdown"
+            style={{ width: 180 }}
+          >
             <SearchCourseDropdown
               prompt="Select courses..."
               id="courseCode"

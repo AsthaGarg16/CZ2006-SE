@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
+import { Button } from "reactstrap";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -260,10 +267,11 @@ export default function SavedTimetables() {
           </div>
         ))}
       </div>
-      <div className="row">Saved Courses</div>
+      {/* <div className="row">Saved Courses</div>
       <div className="row">
         {savedCourses.map((item) => (
           <div className="col-4">
+            <Button onClick={() => alert(item)}></Button>
             <Link to={"/discuss/" + item}>
               <Paper
                 elevation={5}
@@ -274,7 +282,25 @@ export default function SavedTimetables() {
             </Link>
           </div>
         ))}
-      </div>
+      </div> */}
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Saved Course</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {savedCourses.map((item) => (
+              <TableRow key={item}>
+                <TableCell component="th" scope="row">
+                  <Link to={"/discuss/" + item}>{item}</Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }

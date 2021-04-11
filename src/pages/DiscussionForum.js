@@ -112,7 +112,7 @@ function DiscussionForum(props) {
         </div>
         <hr />
         <div className="row">
-          <div className="col-10">
+          <div id="discussion-search-course-dropdown">
             <SearchCourseDropdown
               prompt="Select courses..."
               id="courseCode"
@@ -126,8 +126,8 @@ function DiscussionForum(props) {
               onChange={(val) => setValue(val)}
             />
           </div>
-          <div className="col-2">
-            <Button onClick={() => handleSearchCourse(value)}>Search</Button>
+          <div>
+            <Button id="discuss-search-course-button" onClick={() => handleSearchCourse(value)}>Search</Button>
           </div>
         </div>
         <div className="row">
