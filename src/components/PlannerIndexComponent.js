@@ -39,16 +39,14 @@ const CourseDiv = function (props) {
     <>
       <div className="row" style={{ color: "white" }}>
         <div className="col-4">{courseCode}</div>
-        <div className="col-3">
+        <div className="course-added-div-delete-button">
           <MUIButton
             variant="outlined"
             className={classes.button}
             startIcon={<CloseIcon />}
             onClick={deleteElement}
-            style={{ width: "10px", minWidth: "20px" }}
+            style={{ width: "10px", minWidth: "15px" }}
           ></MUIButton>
-        </div>
-        <div className="col-3">
           <MUIButton
             variant={isIndexFixed ? "contained" : "outlined"}
             className={classes.button}
@@ -65,7 +63,7 @@ const CourseDiv = function (props) {
       <div className="row">
         <div className="col-2">
           <FormControl className={classes.formControl} disabled={isIndexFixed}>
-            <InputLabel 
+            <InputLabel
               htmlFor="index-native-simple"
               style={{ color: "white" }}
             >
@@ -429,7 +427,8 @@ export default function ShareTimetable(props) {
 
   return (
     <>
-      <Button className = 'add'
+      <Button
+        className="add"
         onClick={() => {
           addCourseDiv(props.course, {});
         }}
@@ -441,6 +440,7 @@ export default function ShareTimetable(props) {
           <div
             key={idx}
             className="row"
+            id="planner-index-div"
             style={{
               borderRadius: "5px",
               background: resourcesData[idx]
@@ -462,6 +462,7 @@ export default function ShareTimetable(props) {
       })}
       <Button
         className="btn-warning"
+        id="planner-index-plan-button"
         onClick={() => {
           planCourse(courseDivs);
         }}
