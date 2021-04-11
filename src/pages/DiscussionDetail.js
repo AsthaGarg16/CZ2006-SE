@@ -303,12 +303,13 @@ function DiscussionDetail(props) {
                         <Button onClick={()=>handleSaveCourse(props.course.courseCode)}>Save</Button>
                         <b>{props.course.courseCode}</b>
                       </div>
-                      <div className="col-3">{props.course.courseInfo[0][2]}</div>
+                      {/* <div className="col-3">{props.course.courseInfo[0][2]}</div> */}
                     </Media>
                     <Media heading className="course-detail-courseName row">
-                      {props.course.courseInfo[0][1]}
+                      {/* {props.course.courseInfo[0][1]} */}
                     </Media>
                   </div>
+                  <Button onClick={()=>alert((props.course.details))}>click</Button>
                   <div className="col-3">
                     <p className="row mt-2 mb-5">Usefulness:</p>
                     <p className="row mt-2 mb-5">Easiness:</p>
@@ -372,20 +373,19 @@ function DiscussionDetail(props) {
                       </div>
                     </div>
                   </div>
-                  {/* <Media className="col-1">{props.course.overallRating}</Media> */}
                 </div>
                 <p>
                   <div className="row">
                     <b className="col-4">Course Description: </b>
-                    <div className="col-8">{props.course.courseInfo[props.course.courseInfo.length-1]}</div>
+                    {/* <div className="col-8">{props.details[props.details.length-1]}</div> */}
                   </div>
                   <div className="row">
-                    <b className="col-4">{props.course.courseInfo[1][0]} </b>
-                    <div className="col-8">{props.course.courseInfo[1][1]}</div>
+                    {/* <b className="col-4">{props.course.courseInfo[1][0]} </b> */}
+                    {/* <div className="col-8">{props.course.courseInfo[1][1]}</div> */}
                   </div>
                   <div className="row">
-                    <b className="col-4">{props.course.courseInfo[2][0]} </b>
-                    <div className="col-8">{props.course.courseInfo[2][1]}</div>
+                    {/* <b className="col-4">{props.course.courseInfo[2][0]} </b> */}
+                    {/* <div className="col-8">{props.course.courseInfo[2][1]}</div> */}
                   </div>
                   <div className="row">
                     <b className="col-4">Mutually Exclusive With: </b>
