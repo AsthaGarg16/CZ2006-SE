@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Media, Card, Button, CardBody } from "reactstrap";
 import DiscussionDetail from "./DiscussionDetail";
-// import { COURSES } from "./discussionData";
 import { Link } from "react-router-dom";
 import CircularSlider from "@fseehawer/react-circular-slider";
 import SearchCourseDropdown from "../components/SearchCourseDropdown";
@@ -73,6 +72,7 @@ function DiscussionForum(props) {
                     knobDraggable={false}
                   />
                   <div className="rating">{course.overallRating?course.overallRating.toPrecision(2):5.0} </div>
+                  
                 </div>
               </div>
             </div>
@@ -81,6 +81,7 @@ function DiscussionForum(props) {
             {/* <p>{course.description}</p> */}
             <p>{course.courseInfo[course.courseInfo.length-1]}</p>
           </Link>
+          {/* <Button onClick={()=>alert(typeof(course))}>Click</Button> */}
         </CardBody>
       </Card>
     );
@@ -138,7 +139,7 @@ function DiscussionForum(props) {
           </MDBContainer> */}
           {/* </Card> */}
         </div>
-        {/* {selectedCourse && <DiscussionDetail course={selectedCourse} />} */}
+        {selectedCourse && <DiscussionDetail course={selectedCourse} />}
       </div>
     </div>
   );
