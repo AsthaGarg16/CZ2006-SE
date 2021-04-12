@@ -92,4 +92,4 @@ const testing = {
   ],
   week: 12,
 };
-console.log({ name: "liew" } || { name: "asd" });
+console.log(new Date(Date.now()).toLocaleString());

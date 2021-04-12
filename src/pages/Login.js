@@ -87,17 +87,18 @@ export default function Login({ setToken }) {
             <input className = 'pass'type='password' placeholder = 'Enter Password' required onChange={(e)=> setPassword(e.target.value)}/>
         </div>
         <input type = 'submit' value = 'Login'className ='btn2 btn2-block'/> 
-       <span className = 'span2'class="psw">
+        <div className = 'span2'>
+       <span class="psw">
            <a href="#" onClick={forgotPwd}>
-             Forgot password?<br/>
+            <b><u> Forgot password?</u></b>
            </a>
          </span>
-         <span className = 'span2'class="psw">
-          <text/> Or{" "}<br/>
+         <span class="psw">
+          <text/> Or{" "}
            <a href="#" onClick={register}>
-             Create account
+           <b><u>Create account</u></b>
            </a>
-         </span>
+         </span></div>
      </form>
      </div>
      

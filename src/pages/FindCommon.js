@@ -102,8 +102,8 @@ const GetTimetableData = function (props) {
           />
         </div>
       </div>
-      
-      <input type="file" name="file" accept=".ics" onChange={chooseICSfile} />
+
+      {/* <input type="file" name="file" accept=".ics" onChange={chooseICSfile} /> */}
       <p>{selectedICSfile.fileName || "No file chosen"}</p>
     </Paper>
   );
@@ -152,7 +152,7 @@ export default function FindCommon() {
     } else if (end < now) {
       return 14; // Teaching weeks have ended
     }
-    for (let i = 0; i < 13; i++) {
+    for (let i = 0; i < 14; i++) {
       if (now < teaching_weeks[i]) {
         return i;
         // i = 0 means before week1
@@ -261,8 +261,11 @@ export default function FindCommon() {
     console.log(selectedICSfiles);
     for (let i = 0; i < selectedICSfiles.length; i++) {
       if (selectedICSfiles[i].results.length !== 0) {
-        reqbody.appointmentList[0].push(...selectedICSfiles[i].results[0]);
-        reqbody.appointmentList[1].push(...selectedICSfiles[i].results[1]);
+        selectedICSfiles[i].results.forEach((item, idx) => {
+          reqbody.appointmentList[idx].push(...item);
+        });
+        // reqbody.appointmentList[0].push(...selectedICSfiles[i].results[0]);
+        // reqbody.appointmentList[1].push(...selectedICSfiles[i].results[1]);
       }
     }
     reqbody.week = getWeek();

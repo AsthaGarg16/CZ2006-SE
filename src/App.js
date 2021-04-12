@@ -26,30 +26,29 @@ function AppContextConsumer() {
   const [comments, setComments] = useState(COMMENTS);
   const appContext = useApp();
   const setToken = appContext.setToken;
-  const [topCourses, setTopCourses] = useState([]);
+  // const [topCourses, setTopCourses] = useState([]);
 
-  function fetchTopRatedCourse() {
-    axios
-      .get("/discuss/top_course", {})
-      .then((response) => {
-        console.log(response);
-        setTopCourses(response.data);
-      })
-      .catch(function (error) {
-        if (error.response) {
-          alert(error.response.data.message);
-        }
-      });
-  }
+  // function fetchTopRatedCourse() {
+  //   axios
+  //     .get("/discuss/top_course", {})
+  //     .then((response) => {
+  //       console.log(response);
+  //       setTopCourses(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       if (error.response) {
+  //         alert(error.response.data.message);
+  //       }
+  //     });
+  // }
 
-  useEffect(() => {
-    console.log("FETCHING top rated courses");
-    fetchTopRatedCourse();
-  }, []);
+  // useEffect(() => {
+  //   console.log("FETCHING top rated courses");
+  //   fetchTopRatedCourse();
+  // }, []);
 
   function fetchAllCourse(values) {
     axios
-
       .get("/sendCourseList/getCourseList", {})
       .then((response) => {
         console.log(response);
@@ -67,25 +66,25 @@ function AppContextConsumer() {
     fetchAllCourse();
   }, []);
 
-  const CourseWithId = ({ match }) => {
-    return (
-      <DiscussionDetail
-        course={
-          topCourses.filter(
-            //(course) => course.id === parseInt(match.params.id, 10)
-            (course) => course.courseCode === match.params.courseCode
-          )[0]
-        }
-        // comments={course.comments}
-        // comments={course.comments.filter(
-        //   (comment) => comment.courseCode === match.params.courseCode
-        // )}
-        // comments={courses.comments.filter(
-        //   (comment) => comment.courseCode === match.params.courseCode
-        // )}
-      />
-    );
-  };
+  // const CourseWithId = ({ match }) => {
+  //   return (
+  //     <DiscussionDetail
+  //       // course={
+  //       //   topCourses.filter(
+  //       //     //(course) => course.id === parseInt(match.params.id, 10)
+  //       //     (course) => course.courseCode === match.params.courseCode
+  //       //   )[0]
+  //       // }
+  //       // comments={course.comments}
+  //       // comments={course.comments.filter(
+  //       //   (comment) => comment.courseCode === match.params.courseCode
+  //       // )}
+  //       // comments={courses.comments.filter(
+  //       //   (comment) => comment.courseCode === match.params.courseCode
+  //       // )}
+  //     />
+  //   );
+  // };
 
   return (
     <>
@@ -102,7 +101,7 @@ function AppContextConsumer() {
             path="/discuss"
             component={() => <Discuss courses={courses} />}
           />
-          <Route path="/discuss/:courseCode" component={CourseWithId} />
+          <Route path="/discuss/:courseCode" component={DiscussionDetail} />
           <Route path="/findcommon" component={Common} />
           <Route path="/planner" component={Planner} />
           {/* <Route path="/share" component={Share} /> */}

@@ -57,7 +57,7 @@ const send_timetable = async (req, res) => {
   free_slots = req.body.free_slots;
   var exam_result = [];
   var flag = false;
-  exam_result = check_exam_clash(input_courses);
+  exam_result = await check_exam_clash(input_courses);
   console.log(exam_result);
   for (i = 0; i < exam_result.length; i++) {
     if (exam_result[i]["clash"] == 0) {
@@ -323,10 +323,11 @@ async function get_exam_details(courseCode, DatabaseExam) {
   return examobj;
 }
 
-function check_exam_clash(input_courses) {
+async function check_exam_clash(input_courses) {
   var exam_result = [];
   for (i = 0; i < input_courses.length; i++) {
-    exami = get_exam_details(input_courses[i]["courseCode"], DatabaseExam);
+    exami = await get_exam_details(input_courses[i]["courseCode"], DatabaseExam);
+    console.log(exami);
     if (exami == -1) {
       exami_date = -1;
       exami_time = -1;
@@ -340,9 +341,11 @@ function check_exam_clash(input_courses) {
       exami_date = exami["date"];
       exami_time = exami["time"];
       exami_duration = exami["duration"];
+      console.log(exami_duration);
     }
     for (j = i + 1; j < input_courses.length; j++) {
-      exam = get_exam_details(input_courses[j]["courseCode"], DatabaseExam);
+      exam =  await get_exam_details(input_courses[j]["courseCode"], DatabaseExam);
+      console.log(exam);
       if (exam == -1) {
         exam_date = -1;
         exam_time = -1;
@@ -360,7 +363,7 @@ function check_exam_clash(input_courses) {
       if (exami_date == exam_date) {
         if (
           exami_time <= exam_time &&
-          parseint(exami_time) + exami_duration >= exam_time
+          parseInt(exami_time) + exami_duration >= exam_time
         ) {
           exam_result["clash"] = 0; //0 = true(clash), 1 = false(no clash)
           exam_result["course1"] = input_courses[i]["courseCode"];
@@ -368,7 +371,7 @@ function check_exam_clash(input_courses) {
           return exam_result;
         } else if (
           exam_time <= exami_time &&
-          parseint(exam_time) + exami_duration >= exami_time
+          parseInt(exam_time) + exami_duration >= exami_time
         ) {
           exam_result["clash"] = 0; //0 = true(clash), 1 = false(no clash)
           exam_result["course1"] = input_courses[i]["courseCode"];
