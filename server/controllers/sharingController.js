@@ -2,7 +2,7 @@ const Timetable = require('../models/timetable');
 const User = require('../models/user');
 const QRCode = require('qrcode');
 const { Schema } = require('mongoose');
-const createICS = require('./icsConversion');
+const createICS = require('./AppointToIcsConverter');
 const dis = require('./discussionController');
 var CourseContent = dis.CourseContent;
 
