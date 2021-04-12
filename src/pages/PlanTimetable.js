@@ -250,6 +250,7 @@ export default function PlanTimetable() {
   return (
     <PlanTimetableContextProvider>
       <div className="background">
+      <div className="empty-space"></div>
         <div className="container">
           {/* <div className="row"> */}
           <div className="page-title col-12">
@@ -279,6 +280,7 @@ export default function PlanTimetable() {
           <PlanTimetableContextConsumer course={value} />
           {/* </div> */}
         </div>
+        <div className="empty-space"></div>
       </div>
     </PlanTimetableContextProvider>
   );

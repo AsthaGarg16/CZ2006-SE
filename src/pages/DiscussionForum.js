@@ -6,6 +6,7 @@ import CircularSlider from "@fseehawer/react-circular-slider";
 import SearchCourseDropdown from "../components/SearchCourseDropdown";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { resourcesData } from "../components/resources";
 
 function DiscussionForum(props) {
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -42,11 +43,12 @@ function DiscussionForum(props) {
             tag="li"
             key={course.id}
             onClick={() => handleCourseSelect(course)}
-            className="col-12 mt-1"
+            className="col-12 mt-3"
           >
             <CardBody>
               <Link to={`/discuss/${course.courseCode}`}>
                 <div className="row">
+              
                   <Media heading className="col-8">
                     <b>{course.courseCode}</b>
                   </Media>
@@ -85,7 +87,7 @@ function DiscussionForum(props) {
                 <Media heading>{course.courseInfo[0][1]}</Media>
                 {/* <Media heading>{course.name}</Media> */}
                 {/* <p>{course.description}</p> */}
-                <p>{course.courseInfo[course.courseInfo.length - 1]}</p>
+                <p className="home-paragraph">{course.courseInfo[course.courseInfo.length - 1]}</p>
               </Link>
               {/* <Button onClick={()=>alert(typeof(course))}>Click</Button> */}
             </CardBody>
@@ -106,6 +108,7 @@ function DiscussionForum(props) {
 
   return (
     <div className="background">
+      <div className="empty-space"></div>
       <div className="container">
         <div className="page-title col-12">
           <b>Discussion Forum</b>
@@ -127,7 +130,12 @@ function DiscussionForum(props) {
             />
           </div>
           <div>
-            <Button id="discuss-search-course-button" onClick={() => handleSearchCourse(value)}>Search</Button>
+            <Button
+              id="discuss-search-course-button"
+              onClick={() => handleSearchCourse(value)}
+            >
+              Search
+            </Button>
           </div>
         </div>
         <div className="row">
@@ -148,6 +156,7 @@ function DiscussionForum(props) {
         </div>
         {/* {selectedCourse && <DiscussionDetail course={selectedCourse} />} */}
       </div>
+      <div className="empty-space"></div>
     </div>
   );
 }

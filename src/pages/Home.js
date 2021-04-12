@@ -3,6 +3,7 @@ import React from "react";
 function Home() {
   return (
     <div className="background">
+      <div className="empty-space"></div>
       <div className="container">
         <div className="page-title">
           <b>Home</b>
@@ -65,6 +66,7 @@ function Home() {
           </p>
         </div>
       </div>
+      <div className="empty-space"></div>
     </div>
   );
 }
