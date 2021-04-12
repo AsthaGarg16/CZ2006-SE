@@ -33,7 +33,7 @@ export default function SavedTimetables() {
 
   useEffect(() => {
     console.log("retrieve saved time tables");
-    // console.log(history);
+
     console.log(location);
 
     if (location.state) {
@@ -44,8 +44,6 @@ export default function SavedTimetables() {
   const classes = useStyles();
 
   useEffect(() => {
-    // const timetableID = JSON.parse(sessionStorage.getItem("userData"))
-    //   .timetables[0];
     const userTimetables = JSON.parse(
       sessionStorage.getItem("userData")
     ).timetables.map((item) => item.toString());
@@ -56,41 +54,16 @@ export default function SavedTimetables() {
       const timetableID = userTimetables[i];
 
       const reqbody = { timetableID: timetableID };
-      // console.log(reqbody);
+
       axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
-        // console.log(response.data);
-        // console.log(response.data);
         tempTimetables.push(...response.data);
-        // console.log(tempTimetables);
-        // console.log(i);
+
         if (i === userTimetables.length - 1) {
           setTimetables(editeddummy(tempTimetables));
         }
       });
     }
-    // console.log(tempTimetables);
   }, []);
-
-  useEffect(() => {
-    // console.log("wht");
-    // console.log(timetables);
-    // console.log("wht");
-  }, [timetables]);
-
-  // const editeddummy = dummy.map((item) => {
-  //   const courseSelected = {};
-  //   item.courseSelected.forEach((element) => {
-  //     courseSelected[element.courseID] = element.indexNum;
-  //   });
-  //   const courseFixed = {};
-  //   item.courseFixed.forEach((element) => {
-  //     courseFixed[element.courseID] = element.indexNum;
-  //   });
-
-  //   item.courseSelected = courseSelected;
-  //   item.courseFixed = courseFixed;
-  //   return item;
-  // });
 
   const editeddummy = (tempTT) => {
     return tempTT.map((item) => {
@@ -133,6 +106,7 @@ export default function SavedTimetables() {
         // onClick={() => handleCourseSelect(course)}
         className="col-12 mt-1"
       >
+        <button>delete</button>
         <CardBody>
           <Link to={`/discuss/${course.courseCode}`}>
             <div className="row">
@@ -188,63 +162,22 @@ export default function SavedTimetables() {
     const reqbody = { email: userEmail };
 
     axios.post("/saveCourse/getSavedCourses", reqbody).then((response) => {
-      // console.log(response);
-      // setSavedCourses(response.data[0] ? response.data[0].savedCourse : []);
       if (response.data[0]) {
-        // console.log("fetch course");
-        // console.log(response.data[0].savedCourse);
         setSavedCourses(response.data[0].savedCourse);
       }
     });
   }, []);
 
-  //   response.data[0].savedCourse.forEach((courseCode, idx) => {
-  //     // console.log(idx);
-
-  //     axios
-  //       .post("/discuss/course", { courseCode: courseCode })
-  //       .then((response2) => {
-  //         // console.log(response2);
-  //         tempRealSaveCourses.push(response2.data);
-  //         // console.log(tempRealSaveCourses);
-  //         if (idx === response.data[0].savedCourse.length - 1) {
-  //           // console.log("debug");
-  //           console.log(idx);
-  //           // console.log(tempRealSaveCourses);
-  //           // console.log("debug");
-  //           setSavedCourses(tempRealSaveCourses);
-  //         }
-  //       })
-  //       .catch(function (error) {
-  //         if (error.response2) {
-  //           alert(error.response2.data.message);
-  //         }
-  //       });
-  //   });
-  // }
-
-  // console.log();
-
   useEffect(() => {
     if (savedCourses.length !== 0) {
-      // console.log("length" + savedCourses.length);
-      // const tempRealSaveCourses = [];
       savedCourses.forEach((courseCode, idx) => {
-        // console.log(idx);
-
         axios
           .post("/discuss/course", { courseCode: courseCode })
           .then((response) => {
-            // console.log(response);
             setRealSavedCourses((prevCourses) => [
               ...prevCourses,
               response.data,
             ]);
-            // tempRealSaveCourses.push(response.data);
-            // console.log(tempRealSaveCourses);
-            // if (idx === savedCourses.length - 1) {
-            //   setRealSavedCourses(tempRealSaveCourses);
-            // }
           })
           .catch(function (error) {
             if (error.response) {
@@ -254,6 +187,23 @@ export default function SavedTimetables() {
       });
     }
   }, [savedCourses]);
+
+  const removeSavedCourse = (courseCode) => {
+    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+
+    const reqbody = { userEmail: userEmail, savedCourse: courseCode };
+    axios
+      .patch("/saveCourse/removeSavedCourses", reqbody)
+      .then((response) => {
+        console.log(response.data);
+        // alert(response.data.message);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // alert(error.response.data.message);
+        }
+      });
+  };
 
   return (
     <div className="container">
@@ -277,29 +227,7 @@ export default function SavedTimetables() {
           </div>
         ))}
       </div>
-      {/* <div className="row">Saved Courses</div>
-      <div className="row">
-        {savedCourses.map((item) => (
-          <div className="col-4">
-            <Button onClick={() => alert(item)}></Button>
-            <Link to={"/discuss/" + item}>
-              <Paper
-                elevation={5}
-                style={{ height: "200px", wordWrap: "break-word" }}
-              >
-                <h5>{item}</h5>
-              </Paper>
-            </Link>
-          </div>
-        ))}
-      </div> */}
-      {/* {savedCourses.map((course) => (
-        // <CourseCard course={course} />
-        <div>{course}</div>
-      ))} */}
-      {/* {savedCourses.map((item) => (
-        <div>item.courseCode</div>
-      ))} */}
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -311,9 +239,7 @@ export default function SavedTimetables() {
             {realSavedCourses.map((course) => (
               <TableRow key={course.CourseCode}>
                 <TableCell component="th" scope="row">
-                  {/* {CourseCard(course)} */}
                   <CourseCard course={course} />
-                  {/* <Link to={"/discuss/" + item}>{item}</Link> */}
                 </TableCell>
               </TableRow>
             ))}
