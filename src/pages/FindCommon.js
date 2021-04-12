@@ -322,6 +322,7 @@ export default function FindCommon() {
   newdate.setDate(getMonday(newdate).getDate() + weekView * 7);
   return (
     <div className="background">
+      <div className="empty-space"></div>
       <div className="container">
         <div className="page-title col-12">
           <b>Find Common Time Slots</b>
@@ -405,6 +406,7 @@ export default function FindCommon() {
           </div>
         </div>
       </div>
+      <div className="empty-space"></div>
     </div>
   );
 }
