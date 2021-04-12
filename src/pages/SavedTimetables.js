@@ -11,6 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 import { Media, Card, Button, CardBody } from "reactstrap";
 import CircularSlider from "@fseehawer/react-circular-slider";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,10 +94,10 @@ export default function SavedTimetables() {
     console.log("halo");
   };
 
-  useEffect(() => {
-    console.log("why");
-    console.log(savedCourses);
-  }, [savedCourses]);
+  // useEffect(() => {
+  //   console.log("why");
+  //   console.log(savedCourses);
+  // }, [savedCourses]);
 
   const CourseCard = ({ course }) => {
     return (
@@ -106,7 +107,15 @@ export default function SavedTimetables() {
         // onClick={() => handleCourseSelect(course)}
         className="col-12 mt-1"
       >
-        <button>delete</button>
+        <Button
+          className="discuss-detail-save-button"
+          onClick={() => removeSavedCourse(course.courseCode)}
+        >
+          <span>
+            <AiOutlineDelete />
+          </span>
+        </Button>
+
         <CardBody>
           <Link to={`/discuss/${course.courseCode}`}>
             <div className="row">
@@ -156,7 +165,7 @@ export default function SavedTimetables() {
     );
   };
 
-  useEffect(() => {
+  const fetchSavedCourses = () => {
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
 
     const reqbody = { email: userEmail };
@@ -166,10 +175,16 @@ export default function SavedTimetables() {
         setSavedCourses(response.data[0].savedCourse);
       }
     });
+  };
+
+  useEffect(() => {
+    fetchSavedCourses();
   }, []);
 
   useEffect(() => {
+    console.log("set real saved courses");
     if (savedCourses.length !== 0) {
+      setRealSavedCourses((prevCourses) => []);
       savedCourses.forEach((courseCode, idx) => {
         axios
           .post("/discuss/course", { courseCode: courseCode })
@@ -185,6 +200,8 @@ export default function SavedTimetables() {
             }
           });
       });
+    } else {
+      setRealSavedCourses((prevCourses) => []);
     }
   }, [savedCourses]);
 
@@ -196,6 +213,11 @@ export default function SavedTimetables() {
       .patch("/saveCourse/removeSavedCourses", reqbody)
       .then((response) => {
         console.log(response.data);
+        fetchSavedCourses();
+        // setTimeout(function () {
+        //   alert(response.data);
+        // }, 1);
+
         // alert(response.data.message);
       })
       .catch(function (error) {

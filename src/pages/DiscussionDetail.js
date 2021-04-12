@@ -27,33 +27,45 @@ import TableHead from "@material-ui/core/TableHead";
 import Paper from "@material-ui/core/Paper";
 import TableRow from "@material-ui/core/TableRow";
 import { HiOutlineSave } from "react-icons/hi";
-import { AiOutlineDelete } from "react-icons/ai";
+// import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
 import { SignalCellularNull } from "@material-ui/icons";
 
-function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
+function RenderComments({
+  courseCode,
+  comments,
+  fetchCoursePage /*, postComment, dishId */,
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedComment, setSelectedComment] = useState("something");
+  const [selectedComment, setSelectedComment] = useState(
+    comments.length === 0 ? "" : comments[0]
+  );
 
   function toggleModal() {
     setIsModalOpen((prevState) => !prevState);
   }
 
   function handleReplySubmit(values) {
-    const userid = JSON.parse(sessionStorage.getItem("userData"))._id;
-    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-    alert(
-      "User Email: " +
-        userEmail +
-        "User ID: " +
-        userid +
-        " Reply: " +
-        values.reply +
-        "Comment ID: " +
-        selectedComment.id +
-        "Course code: " +
-        selectedComment.courseCode
-    );
+    const userName = JSON.parse(sessionStorage.getItem("userData")).name;
+    // const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+    // console.log(selectedComment.comm);
+    axios
+      .post("/discuss/reply", {
+        courseCode: courseCode,
+        commentID: selectedComment.commentID,
+        studentID: userName,
+        replyBody: values.reply,
+      })
+      .then((response) => {
+        console.log(response.data);
+        fetchCoursePage(courseCode);
+        setIsModalOpen(false);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          alert(error.response.data.message);
+        }
+      });
   }
 
   // function handleReplySubmit(values) {
@@ -95,13 +107,13 @@ function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
               </CardHeader>
               <CardBody>
                 <p>
-                  <b>{selectedComment.author}</b>
+                  <b>{selectedComment.studentID}</b>
                   <br></br>
                   <Card className="bg-light mt-2">
-                    <CardBody>{selectedComment.comment}</CardBody>
+                    <CardBody>{selectedComment.commentBody}</CardBody>
                   </Card>
                 </p>
-                <Row htmlFor="usefulness" className="mt-2">
+                {/* <Row htmlFor="usefulness" className="mt-2">
                   <Typography
                     className="col-4"
                     id="usefulness-slider"
@@ -160,27 +172,27 @@ function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
                     min={0}
                     max={10}
                   />
-                </Row>
+                </Row> */}
               </CardBody>
             </Card>
             <Row>
               {(() => {
-                if (selectedComment.reply != null) {
+                if (selectedComment.replies != null) {
                   return (
                     <div className="col-12">
                       <Card className="mt-5">
                         <CardHeader className="card-header reply">
                           <b>Reply from others</b>
                         </CardHeader>
-                        {selectedComment.reply.map((reply) => {
+                        {selectedComment.replies.map((reply) => {
                           return (
                             <CardBody className="">
                               <Card className="bg-light" key={reply.id}>
                                 <CardBody>
                                   <p>
-                                    <b>{reply.author}</b>
+                                    <b>{reply.studentID}</b>
                                     <br></br>
-                                    {reply.content}
+                                    {reply.replyBody}
                                   </p>
                                 </CardBody>
                               </Card>
@@ -246,6 +258,7 @@ function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
             <CommentForm
               className="col-3"
               courseCode={courseCode} /*postComment={postComment}*/
+              fetchCoursePage={fetchCoursePage}
             />
           </div>
         </CardHeader>
@@ -263,9 +276,9 @@ function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
                   >
                     <CardBody>
                       <p className="ml-2">
-                        <b>{comment.author} </b>
+                        <b>{comment.studentID} </b>
                       </p>
-                      <p className="ml-2">{comment.comment}</p>
+                      <p className="ml-2">{comment.commentBody}</p>
                     </CardBody>
                   </Card>
                 </Tooltip>
@@ -362,18 +375,20 @@ function DiscussionDetail(props) {
     //     });
     // }
 
-    function handleSaveCourse(course) {
+    function handleSaveCourse(courseCode) {
       // alert(courseCode);
-      if (JSON.parse(sessionStorage.getItem("token"))) {
+      console.log(courseCode);
+      if (sessionStorage.getItem("token")) {
         const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-        const reqbody = { email: userEmail, savedCourses: course };
+        const reqbody = { email: userEmail, savedCourses: courseCode };
         console.log(reqbody);
 
         axios
           .put("/saveCourse/saveCourses", reqbody)
           .then((response) => {
             console.log(response.data);
-            alert(response.data.message);
+            alert("Course saved!");
+            // alert(response.data.message);
           })
           .catch(function (error) {
             if (error.response) {
@@ -384,43 +399,6 @@ function DiscussionDetail(props) {
         alert("Please login before saving courses.");
       }
     }
-
-    const dummy = [
-      {
-        _id: "60698ef2a1849e93cc1fb606",
-        commentID: 1617530610088,
-        commentBody: "This course is not so useful",
-        replies: [],
-      },
-      {
-        _id: "60699049a1849e93cc1fb614",
-        replies: [
-          {
-            _id: "60699049a1849e93cc1fb615",
-            studentID: "U1923232F",
-            replyID: 1617530953669,
-            replyBody: "Nice!",
-          },
-        ],
-      },
-      {
-        _id: "60699055a1849e93cc1fb616",
-        replies: [
-          {
-            _id: "60699055a1849e93cc1fb617",
-            studentID: "U1923232F",
-            replyID: 1617530965229,
-            replyBody: "Very Nice!",
-          },
-        ],
-      },
-      {
-        _id: "606c523f9e786c3ff4289e53",
-        commentID: 1617711679654,
-        commentBody: "zipeng",
-        replies: [],
-      },
-    ];
 
     return (
       <div className="background">
@@ -434,20 +412,20 @@ function DiscussionDetail(props) {
                   {/* <div> */}
                   <Button
                     className="discuss-detail-save-button"
-                    onClick={() => handleSaveCourse(course)}
+                    onClick={() => handleSaveCourse(course.courseCode)}
                   >
                     <span>
                       <HiOutlineSave />
                     </span>
                   </Button>
-                  <Button
+                  {/* <Button
                     className="discuss-detail-save-button"
-                    onClick={() => handleSaveCourse(course)}
+                    onClick={() => handleSaveCourse(course.courseCode)}
                   >
                     <span>
                       <AiOutlineDelete />
                     </span>
-                  </Button>
+                  </Button> */}
                   <b className="course-detail-courseCode col-10">
                     {course.courseCode} - {courseTitle}
                   </b>
@@ -611,6 +589,7 @@ function DiscussionDetail(props) {
           {/* <div className="m-1"> */}
           {/* <div className="row"></div> */}
           <RenderComments
+            fetchCoursePage={fetchCoursePage}
             courseCode={course.courseCode}
             comments={course.comments}
           />
@@ -653,7 +632,7 @@ function CommentForm(props) {
     axios
       .post("/discuss/comment", {
         courseCode: props.courseCode,
-        studentId: userName,
+        studentID: userName,
         commentBody: values.comment,
         studentsRated: userEmail,
         usefulness: usefulness,
@@ -662,6 +641,7 @@ function CommentForm(props) {
       })
       .then((response) => {
         console.log(response.data);
+        props.fetchCoursePage(props.courseCode);
       })
       .catch(function (error) {
         if (error.response) {
