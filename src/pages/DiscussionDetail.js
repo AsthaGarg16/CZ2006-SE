@@ -110,7 +110,12 @@ function RenderComments({
                   <b>{selectedComment.studentID}</b>
                   <br></br>
                   <Card className="bg-light mt-2">
-                    <CardBody>{selectedComment.commentBody}</CardBody>
+                    <CardBody>
+                      {selectedComment.commentBody}
+                      <br />
+                      Posted on:
+                      {new Date(selectedComment.commentID).toLocaleString()}
+                    </CardBody>
                   </Card>
                 </p>
                 {/* <Row htmlFor="usefulness" className="mt-2">
@@ -190,9 +195,12 @@ function RenderComments({
                               <Card className="bg-light" key={reply.id}>
                                 <CardBody>
                                   <p>
-                                    <b>{reply.studentID}</b>
+                                    <b>{reply.studentID} </b>
                                     <br></br>
                                     {reply.replyBody}
+                                    <br />
+                                    Posted on:
+                                    {new Date(reply.replyID).toLocaleString()}
                                   </p>
                                 </CardBody>
                               </Card>
@@ -276,9 +284,12 @@ function RenderComments({
                   >
                     <CardBody>
                       <p className="ml-2">
-                        <b>{comment.studentID} </b>
+                        <b>{comment.studentID}</b>
                       </p>
-                      <p className="ml-2">{comment.commentBody}</p>
+                      <p className="ml-2">
+                        {comment.commentBody} <br />
+                        Posted on {new Date(comment.commentID).toLocaleString()}
+                      </p>
                     </CardBody>
                   </Card>
                 </Tooltip>
