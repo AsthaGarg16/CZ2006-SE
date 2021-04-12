@@ -5,6 +5,7 @@ const Schools = require('../models/schools');
 const mongoose = require('mongoose');
 const { async } = require('node-ical');
 const Schema = mongoose.Schema;
+const Comments = require('../models/allComments');
 var CourseContent = mongoose.model('CourseContent', new Schema(), 'CourseContent');
 
 
@@ -138,6 +139,11 @@ const update_course_page=async(req,res)=>{
 
         if (!studentHasComment) {
             // console.log(use, req.body.usefulness, (req.body.usefulness-use), temp.numReviews, (req.body.usefulness-use)/numRev);
+            
+            await Comments.updateOne(
+                {}
+            )
+
             await Discussion.updateOne(
                 {
                     courseCode:req.body.courseCode
