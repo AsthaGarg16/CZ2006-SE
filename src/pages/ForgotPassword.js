@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { LeakAddTwoTone, LiveTvTwoTone } from "@material-ui/icons";
@@ -7,6 +8,7 @@ import axios from "axios";
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
+  const [limits, setLimits] = useState(3);
 
   const [correctVerificationCode, setCorrectVerificationCode] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +30,7 @@ function ForgotPassword() {
   //   1: { function: validateVerificationCode, text: "Submit verification code" },
   //   2: { function: validatePassword, text: "Reset password" },
   // };
+  const history = useHistory();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -42,6 +45,7 @@ function ForgotPassword() {
           .post("/user/forgotPassword/sendCode", reqbody)
           .then((response) => {
             console.log(response.data);
+            alert(response.data.message);
             // console.log(response.data.token);
             // setToken(response.data.token);
             // history.push("/planner");
@@ -56,7 +60,15 @@ function ForgotPassword() {
         break;
       case 1:
         if (verificationCode !== correctVerificationCode) {
-          alert("Wrong code");
+          if (limits === 1) {
+            setLimits(3);
+            alert("Limits exceeded to enter the verification code.");
+            setcurrentform(0);
+            break;
+          }
+          setLimits((prevlimit) => prevlimit - 1);
+
+          alert("Wrong code. Please try again.");
         } else {
           console.log(reqbody);
           setcurrentform(2);
@@ -64,23 +76,34 @@ function ForgotPassword() {
 
         break;
       case 2:
-        reqbody = {
-          email: email,
-          password: password,
-        };
-        axios
-          .post("/user/forgotPassword/reset", reqbody)
-          .then((response) => {
-            console.log(response.data);
-            // console.log(response.data.token);
-            // setToken(response.data.token);
-            // history.push("/planner");
-          })
-          .catch(function (error) {
-            if (error.response) {
-              console.log(error.response.data.message);
-            }
-          });
+        if (password.length < 6) {
+          alert(
+            "The password must contain at least 6 characters. Please try again."
+          );
+        } else if (password !== cpassword) {
+          alert("The passwords do not match. Please try again.");
+        } else {
+          reqbody = {
+            email: email,
+            password: password,
+          };
+          axios
+            .post("/user/forgotPassword/reset", reqbody)
+            .then((response) => {
+              console.log(response.data);
+              alert(response.data.message);
+              history.push("/login");
+              // console.log(response.data.token);
+              // setToken(response.data.token);
+              // history.push("/planner");
+            })
+            .catch(function (error) {
+              if (error.response) {
+                console.log(error.response.data.message);
+              }
+            });
+        }
+
         break;
       default:
         break;

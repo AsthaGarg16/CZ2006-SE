@@ -14,15 +14,16 @@ export default function SelectTimetablePageComponent({
     updateTimeTablePageNum(parseInt(event.target.value));
   };
 
-  return (<div className = 'page'>
+  return (<div>
     <FormControl variant="outlined">
       <InputLabel htmlFor="outlined-page-native-simple">Page</InputLabel>
-      <Select native value={value} onChange={handleChange} label="Page">
+      <Select native value={value} onChange={handleChange} label="Page" className="common-page-button common-timetable-button">
         {combinations.map((combination, idx) => {
           return (
             <option
               key={Math.random().toString(36).substr(2, 9)}
               value={idx + 1}
+              className="change-height"
             >
               {combination.page ? combination.page : idx + 1}
             </option>

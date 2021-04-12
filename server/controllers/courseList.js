@@ -13,17 +13,18 @@ const getCourseList = async(req,res)=>{
             
         });
         
+        res.status(201).send(allCourses);
         // var cList=await getCourses(allCourses);
         var courseList =[];
-        for(i=0;i<allCourses.length;i++)
-        {
-            var course=[];
-            course.push(allCourses[i]["details"][0][0]);
-            course.push(allCourses[i]["details"][0][1]);
-            courseList.push(course);
-        }
+        // for(i=0;i<allCourses.length;i++)
+        // {
+        //     var course=[];
+        //     course.push(allCourses[i]["details"][0][0]);
+        //     course.push(allCourses[i]["details"][0][1]);
+        //     courseList.push(course);
+        // }
         // return courseList;
-        res.status(201).send(courseList);
+        // res.status(201).send(courseList);
         
 }
     catch{

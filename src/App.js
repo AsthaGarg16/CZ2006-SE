@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Planner from "./pages/PlanTimetable";
@@ -25,15 +26,14 @@ function AppContextConsumer() {
   const [comments, setComments] = useState(COMMENTS);
   const appContext = useApp();
   const setToken = appContext.setToken;
+  const [topCourses, setTopCourses] = useState([]);
 
-  function fetchTopRatedCourse(values) {
+  function fetchTopRatedCourse() {
     axios
-      .get("/discuss/top_course", {
-
-      })
+      .get("/discuss/top_course", {})
       .then((response) => {
         console.log(response);
-        setCourses(response.data) //Change to all courses afterward
+        setTopCourses(response.data);
       })
       .catch(function (error) {
         if (error.response) {
@@ -43,15 +43,35 @@ function AppContextConsumer() {
   }
 
   useEffect(() => {
-    console.log("FETCHING")
-    fetchTopRatedCourse()
-  }, [])
+    console.log("FETCHING top rated courses");
+    fetchTopRatedCourse();
+  }, []);
+
+  function fetchAllCourse(values) {
+    axios
+
+      .get("/sendCourseList/getCourseList", {})
+      .then((response) => {
+        console.log(response);
+        setCourses(response.data); //Change to all courses afterward
+      })
+      .catch(function (error) {
+        if (error.response) {
+          alert(error.response.data.message);
+        }
+      });
+  }
+
+  useEffect(() => {
+    console.log("FETCHING all courses");
+    fetchAllCourse();
+  }, []);
 
   const CourseWithId = ({ match }) => {
     return (
       <DiscussionDetail
         course={
-          courses.filter(
+          topCourses.filter(
             //(course) => course.id === parseInt(match.params.id, 10)
             (course) => course.courseCode === match.params.courseCode
           )[0]
@@ -87,9 +107,13 @@ function AppContextConsumer() {
           <Route path="/planner" component={Planner} />
           {/* <Route path="/share" component={Share} /> */}
           <Route path="/forgotpwd" component={ForgotPassword} />
-          <Route path="/register" component={Register} />
+          <Route
+            path="/register"
+            component={() => <Register setToken={setToken} />}
+          />
           <Route path="/savedtimetables" component={SavedTimetables} />
         </Switch>
+        <Footer />
       </Router>
     </>
   );

@@ -10,14 +10,7 @@ import {
   PlanTimetableContextProvider,
   usePlanTimetable,
 } from "../context/PlanTimetableContextProvider";
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useParams,
-  useLocation,
-} from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 
 function PlanTimetableContextConsumer(props) {
@@ -65,9 +58,10 @@ function PlanTimetableContextConsumer(props) {
     }
 
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+    const timetableID = Date.now().toString();
     const reqbody = {
       userEmail: userEmail,
-      timetableID: Date.now().toString(),
+      timetableID: timetableID,
       courseSelected: courseSelected,
       fixedTimeSlots: userDefinedTimeSlots,
       courseFixed: courseFixed,
@@ -75,18 +69,20 @@ function PlanTimetableContextConsumer(props) {
     };
     console.log(reqbody);
 
-
     axios.put("/saving/saveTimetable", reqbody).then((response) => {
-
       console.log(response.data);
+      const userData = JSON.parse(sessionStorage.getItem("userData"));
+      const tempTimetables = [...userData.timetables] || [];
+      tempTimetables.push(parseInt(timetableID));
+      userData.timetables = tempTimetables;
+      sessionStorage.setItem("userData", JSON.stringify(userData));
       // if (typeof response.data.message[0] === "string") {
       //   alert(response.data.message[0]);
       // } else {
       //   setCombinations(response.data.message);
       // }
     });
-
-
+    //
     // const reqbody = { timetableID: "2" };
     // console.log(reqbody);
     // axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
@@ -183,8 +179,15 @@ function PlanTimetableContextConsumer(props) {
             combinations={combinations}
             currentTimeTablePage={currentTimeTablePage}
           />
-          <Button onClick={saveCurrentTT}>Save Current Timetable</Button>
-          <Button onClick={downloadfile}>Download</Button>
+          <Button
+            onClick={saveCurrentTT}
+            style={{ height: 40, width: 240, marginRight: "10px" }}
+          >
+            Save Current Timetable
+          </Button>
+          <Button onClick={downloadfile} style={{ height: 40, width: 140 }}>
+            Download
+          </Button>
         </div>
         <PlannerCalendarComponent
           timeTableData={occupiedTimeSlots}
@@ -228,6 +231,13 @@ export default function PlanTimetable() {
         setData(myJson);
         sessionStorage.setItem("coursesData", JSON.stringify(myJson));
       });
+    // axios
+    //   .get("/sendAllCourses/getAllCourses", {})
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     setData(response.data);
+    //   })
+    //   .catch(function (error) {});
   };
 
   useEffect(() => {
@@ -247,7 +257,11 @@ export default function PlanTimetable() {
           </div>
           <hr />
           {/* <div className="small-container"> */}
-          <div className="row" style={{ width: 200 }}>
+          <div
+            className="row"
+            id="planner-search-course-dropdown"
+            style={{ width: 180 }}
+          >
             <SearchCourseDropdown
               prompt="Select courses..."
               id="courseCode"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
@@ -13,6 +13,7 @@ import AddFreeTimeSlotsComponent from "./AddFreeTimeSlotsComponent";
 import AllowClashCheckBoxesComponent from "./AllowClashCheckBoxesComponent";
 import { usePlanTimetable } from "../context/PlanTimetableContextProvider";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import { Button } from "reactstrap";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -122,15 +123,34 @@ export default function MoreOptionsComponent(props) {
     // setIsChangeSaved(false);
   };
   let location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
+  const returnTimetableByQuery = (searchParams) => {
+    // console.log(searchParams);
+    if (searchParams.toString()) {
+      for (const [key, value] of searchParams.entries()) {
+        if (key === "timetable") {
+          // console.log(JSON.parse(value));
+          const tempTimetable = JSON.parse(value);
+          const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
+            element.map((timeslot) => new Date(timeslot))
+          );
+          tempTimetable.fixedTimeSlots = fixedTimeSlots;
+          return tempTimetable;
+        }
+      }
+    }
+  };
   useEffect(() => {
     // console.log(location);
-    if (location.state) {
+    const tempTimetable =
+      returnTimetableByQuery(searchParams) || location.state;
+    if (tempTimetable) {
       // console.log("state exists");
 
-      // setCombinations([location.state.courseSelected]);
-      setUserDefinedTimeSlots(location.state.fixedTimeSlots);
-      setAllowClashCC(location.state.courseClashAllowed);
+      // setCombinations([tempTimetable.courseSelected]);
+      setUserDefinedTimeSlots(tempTimetable.fixedTimeSlots);
+      setAllowClashCC(tempTimetable.courseClashAllowed);
     }
   }, []);
 
@@ -141,8 +161,8 @@ export default function MoreOptionsComponent(props) {
   };
 
   return (
-    <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+    <> 
+      <Button className = 'more' variant="outlined"  onClick={handleClickOpen}>
         More Options
       </Button>
       <Dialog

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Media, Card, Button, CardBody } from "reactstrap";
 import DiscussionDetail from "./DiscussionDetail";
-// import { COURSES } from "./discussionData";
 import { Link } from "react-router-dom";
 import CircularSlider from "@fseehawer/react-circular-slider";
 import SearchCourseDropdown from "../components/SearchCourseDropdown";
@@ -19,12 +18,10 @@ function DiscussionForum(props) {
 
   function fetchTopRatedCourse(values) {
     axios
-      .get("/discuss/top_course", {
-
-      })
+      .get("/discuss/top_course", {})
       .then((response) => {
         console.log(response);
-        setTopCourses(response.data)
+        setTopCourses(response.data);
       })
       .catch(function (error) {
         if (error.response) {
@@ -34,57 +31,68 @@ function DiscussionForum(props) {
   }
 
   useEffect(() => {
-    console.log("FETCHING")
-    fetchTopRatedCourse()
-  }, [])
+    console.log("FETCHING");
+    fetchTopRatedCourse();
+  }, []);
 
-  const topRatedCourse = topCourses?topCourses.map((course) => {
-    return (
-      <Card
-        tag="li"
-        key={course.id}
-        onClick={() => handleCourseSelect(course)}
-        className="col-12 mt-1"
-      >
-        <CardBody>
-          <Link to={`/discuss/${course.courseCode}`}>
-            <div className="row">
-              <Media heading className="col-8">
-                <b>{course.courseCode}</b>
-              </Media>
-              <div className="col-3">
-                <p className="row mt-2">Average Rating:</p>
-              </div>
-              <div className="col-1">
-                <div className="row mb-1">
-                  <CircularSlider
-                    width={60}
-                    dataIndex={course.overallRating?course.overallRating.toPrecision(2):5.0}
-                    label="savings"
-                    hideLabelValue={true}
-                    verticalOffset="0.5rem"
-                    progressSize={8}
-                    trackColor="#fffff"
-                    progressColorFrom="#228B22"
-                    progressColorTo="#39FF14"
-                    trackSize={8}
-                    min={0}
-                    max={10}
-                    knobDraggable={false}
-                  />
-                  <div className="rating">{course.overallRating?course.overallRating.toPrecision(2):5.0} </div>
+  const topRatedCourse = topCourses
+    ? topCourses.map((course) => {
+        return (
+          <Card
+            tag="li"
+            key={course.id}
+            onClick={() => handleCourseSelect(course)}
+            className="col-12 mt-1"
+          >
+            <CardBody>
+              <Link to={`/discuss/${course.courseCode}`}>
+                <div className="row">
+                  <Media heading className="col-8">
+                    <b>{course.courseCode}</b>
+                  </Media>
+                  <div className="col-3">
+                    <p className="row mt-2">Average Rating:</p>
+                  </div>
+                  <div className="col-1">
+                    <div className="row mb-1">
+                      <CircularSlider
+                        width={60}
+                        dataIndex={
+                          course.overallRating
+                            ? course.overallRating.toPrecision(2)
+                            : 5.0
+                        }
+                        label="savings"
+                        hideLabelValue={true}
+                        verticalOffset="0.5rem"
+                        progressSize={8}
+                        trackColor="#fffff"
+                        progressColorFrom="#228B22"
+                        progressColorTo="#39FF14"
+                        trackSize={8}
+                        min={0}
+                        max={10}
+                        knobDraggable={false}
+                      />
+                      <div className="rating">
+                        {course.overallRating
+                          ? course.overallRating.toPrecision(2)
+                          : 5.0}{" "}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <Media heading>{course.courseInfo[0][1]}</Media>
-            {/* <Media heading>{course.name}</Media> */}
-            {/* <p>{course.description}</p> */}
-            <p>{course.courseInfo[course.courseInfo.length-1]}</p>
-          </Link>
-        </CardBody>
-      </Card>
-    );
-  }):[];
+                <Media heading>{course.courseInfo[0][1]}</Media>
+                {/* <Media heading>{course.name}</Media> */}
+                {/* <p>{course.description}</p> */}
+                <p>{course.courseInfo[course.courseInfo.length - 1]}</p>
+              </Link>
+              {/* <Button onClick={()=>alert(typeof(course))}>Click</Button> */}
+            </CardBody>
+          </Card>
+        );
+      })
+    : [];
 
   const history = useHistory();
 
@@ -104,7 +112,7 @@ function DiscussionForum(props) {
         </div>
         <hr />
         <div className="row">
-          <div className="col-10">
+          <div id="discussion-search-course-dropdown">
             <SearchCourseDropdown
               prompt="Select courses..."
               id="courseCode"
@@ -118,8 +126,8 @@ function DiscussionForum(props) {
               onChange={(val) => setValue(val)}
             />
           </div>
-          <div className="col-2">
-            <Button onClick={() => handleSearchCourse(value)}>Search</Button>
+          <div>
+            <Button id="discuss-search-course-button" onClick={() => handleSearchCourse(value)}>Search</Button>
           </div>
         </div>
         <div className="row">

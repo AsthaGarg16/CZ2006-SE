@@ -1,17 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const course = new Schema({
+const course = new Schema(
+  {
     courseID: {
-        type:String,
-        unique: false
+      type: String,
+      unique: false,
     },
     indexNum: {
-        type:Number,
-        unique: false
-    }
-    
-}, {_id:false});
+      type: String,
+      unique: false,
+    },
+  },
+  { _id: false }
+);
 
 //defining the schema of timetable
 const timetableSchema = new Schema({
@@ -37,6 +39,7 @@ const timetableSchema = new Schema({
     courseFixed:{
         type: [course],
         unique: false,
+        required:false,
         _id:false
     },
     courseClashAllowed:{
@@ -45,5 +48,5 @@ const timetableSchema = new Schema({
 });
 
 //making the mongoose model and exporting it
-const Timetable= mongoose.model('Timetable', timetableSchema);
-module.exports=Timetable;
+const Timetable = mongoose.model("Timetable", timetableSchema);
+module.exports = Timetable;

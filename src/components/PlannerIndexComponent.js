@@ -39,20 +39,16 @@ const CourseDiv = function (props) {
     <>
       <div className="row" style={{ color: "white" }}>
         <div className="col-4">{courseCode}</div>
-        <div className="col-3">
+        <div className="course-added-div-delete-button">
           <MUIButton
             variant="outlined"
-            color="secondary"
             className={classes.button}
             startIcon={<CloseIcon />}
             onClick={deleteElement}
-            style={{ width: "40px", minWidth: "40px" }}
+            style={{ width: "10px", minWidth: "15px" }}
           ></MUIButton>
-        </div>
-        <div className="col-3">
           <MUIButton
             variant={isIndexFixed ? "contained" : "outlined"}
-            color="primary"
             className={classes.button}
             startIcon={<FlagIcon />}
             onClick={() => {
@@ -60,7 +56,7 @@ const CourseDiv = function (props) {
                 ? alert("You cannot fix an empty index!")
                 : setIsIndexFixed(!isIndexFixed);
             }}
-            style={{ width: "40px", minWidth: "40px" }}
+            style={{ width: "20px", minWidth: "20px" }}
           ></MUIButton>
         </div>
       </div>
@@ -111,6 +107,13 @@ export default function ShareTimetable(props) {
 
   const [data, setData] = useState([]);
   const getData = () => {
+    // axios
+    //   .get("/sendAllCourses/getAllCourses", {})
+    //   .then((response) => {
+    //     // console.log(response.data);
+    //     setData(response.data);
+    //   })
+    //   .catch(function (error) {});
     fetch("output.json", {
       headers: {
         "Content-Type": "application/json",
@@ -130,14 +133,36 @@ export default function ShareTimetable(props) {
     getData();
   }, []);
   let location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const returnTimetableByQuery = (searchParams) => {
+    // console.log(searchParams);
+    if (searchParams.toString() && data.length !== 0) {
+      for (const [key, value] of searchParams.entries()) {
+        if (key === "timetable") {
+          // console.log(JSON.parse(value));
+          const tempTimetable = JSON.parse(value);
+          const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
+            element.map((timeslot) => new Date(timeslot))
+          );
+          tempTimetable.fixedTimeSlots = fixedTimeSlots;
+          return tempTimetable;
+        }
+      }
+    }
+  };
 
   useEffect(() => {
+    // console.log(new URLSearchParams(location.search));
     // console.log(location);
-    if (location.state && data.length != 0) {
+    const tempTimetable =
+      returnTimetableByQuery(searchParams) || location.state;
+    console.log(tempTimetable);
+    if (tempTimetable && data.length != 0) {
       // console.log("state exists");
       const selectedCourses = [];
 
-      for (const courseCode in location.state.courseSelected) {
+      for (const courseCode in tempTimetable.courseSelected) {
         selectedCourses.push(
           data.find((item) => item.courseCode === courseCode)
         );
@@ -148,50 +173,48 @@ export default function ShareTimetable(props) {
           return {
             course: item,
             currentIdx: {},
-            isIndexFixed: item.courseCode in location.state.courseFixed,
+            isIndexFixed: item.courseCode in tempTimetable.courseFixed,
           };
         })
       );
       setIsPlanClicked(true);
-      setCombinations([location.state.courseSelected]);
+      setCombinations([tempTimetable.courseSelected]);
     }
   }, [data]);
 
-  var searchParams = new URLSearchParams(useLocation().search);
+  // const setCombinationsByQuery = (searchParams) => {
+  //   if (searchParams.toString() && data.length !== 0) {
+  //     const selectedCourses = [];
+  //     for (let p of searchParams.keys()) {
+  //       selectedCourses.push(data.find((item) => item.courseCode === p));
+  //     }
 
-  const setCombinationsByQuery = (searchParams) => {
-    if (searchParams.toString() && data.length !== 0) {
-      const selectedCourses = [];
-      for (let p of searchParams.keys()) {
-        selectedCourses.push(data.find((item) => item.courseCode === p));
-      }
+  //     // const selectedCourses = data.filter((item) =>
+  //     //   searchParams.has(item.courseCode)
+  //     // );
 
-      // const selectedCourses = data.filter((item) =>
-      //   searchParams.has(item.courseCode)
-      // );
+  //     setCourseDivs(
+  //       selectedCourses.map((item) => {
+  //         return {
+  //           course: item,
+  //           currentIdx: {},
+  //           isIndexFixed: false,
+  //         };
+  //       })
+  //     );
 
-      setCourseDivs(
-        selectedCourses.map((item) => {
-          return {
-            course: item,
-            currentIdx: {},
-            isIndexFixed: false,
-          };
-        })
-      );
+  //     const tempCombo = {};
 
-      const tempCombo = {};
-
-      for (let p of searchParams) {
-        tempCombo[p[0]] = p[1];
-      }
-      setIsPlanClicked(true);
-      setCombinations([tempCombo]);
-    }
-  };
-  useEffect(() => {
-    setCombinationsByQuery(searchParams);
-  }, [data]);
+  //     for (let p of searchParams) {
+  //       tempCombo[p[0]] = p[1];
+  //     }
+  //     setIsPlanClicked(true);
+  //     setCombinations([tempCombo]);
+  //   }
+  // };
+  // useEffect(() => {
+  //   setTimetableByQuery(searchParams);
+  // }, [data]);
 
   //Backend: this method will retrieve all course indexes then call backend method to return timetables
   //if clash then give a error message
@@ -405,6 +428,7 @@ export default function ShareTimetable(props) {
   return (
     <>
       <Button
+        className="add"
         onClick={() => {
           addCourseDiv(props.course, {});
         }}
@@ -416,8 +440,8 @@ export default function ShareTimetable(props) {
           <div
             key={idx}
             className="row"
+            id="planner-index-div"
             style={{
-              border: "2px solid black",
               borderRadius: "5px",
               background: resourcesData[idx]
                 ? resourcesData[idx].color
@@ -438,6 +462,7 @@ export default function ShareTimetable(props) {
       })}
       <Button
         className="btn-warning"
+        id="planner-index-plan-button"
         onClick={() => {
           planCourse(courseDivs);
         }}
