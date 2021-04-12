@@ -43,14 +43,14 @@ const CourseDiv = function (props) {
           <MUIButton
             variant="outlined"
             className={classes.button}
-            startIcon={<CloseIcon />}
+            startIcon={<CloseIcon id="course-div-delete-button" />}
             onClick={deleteElement}
             style={{ width: "10px", minWidth: "15px" }}
           ></MUIButton>
           <MUIButton
             variant={isIndexFixed ? "contained" : "outlined"}
             className={classes.button}
-            startIcon={<FlagIcon />}
+            startIcon={<FlagIcon id="course-div-flag-button" />}
             onClick={() => {
               currentIdx === undefined || Object.keys(currentIdx).length === 0
                 ? alert("You cannot fix an empty index!")

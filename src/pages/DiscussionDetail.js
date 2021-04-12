@@ -107,77 +107,17 @@ function RenderComments({
               </CardHeader>
               <CardBody>
                 <p>
-                  <b>{selectedComment.studentID}</b>
+                  <b>{selectedComment.studentID}</b>&emsp;
+                  {new Date(selectedComment.commentID).toLocaleString()}
                   <br></br>
                   <Card className="bg-light mt-2">
                     <CardBody>
                       {selectedComment.commentBody}
                       <br />
-                      Posted on:
-                      {new Date(selectedComment.commentID).toLocaleString()}
+                      {/* Posted on: */}
                     </CardBody>
                   </Card>
                 </p>
-                {/* <Row htmlFor="usefulness" className="mt-2">
-                  <Typography
-                    className="col-4"
-                    id="usefulness-slider"
-                    gutterBottom
-                  >
-                    Usefulness:
-                  </Typography>
-                  <Slider
-                    value={selectedComment.usefulness}
-                    className="col-7"
-                    defaultValue={5}
-                    aria-labelledby="usefulness-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks={true}
-                    min={0}
-                    max={10}
-                  />
-                </Row>
-                <Row htmlFor="usefulness" className="mt-2">
-                  <Typography
-                    className="col-4"
-                    id="usefulness-slider"
-                    gutterBottom
-                  >
-                    Easiness:
-                  </Typography>
-                  <Slider
-                    value={selectedComment.easiness}
-                    className="col-7"
-                    defaultValue={5}
-                    aria-labelledby="usefulness-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks={true}
-                    min={0}
-                    max={10}
-                  />
-                </Row>
-                <Row htmlFor="usefulness" className="mt-2">
-                  <Typography
-                    className="col-4"
-                    id="usefulness-slider"
-                    gutterBottom
-                  >
-                    Time Investment:
-                  </Typography>
-                  <Slider
-                    value={selectedComment.timeinvestment}
-                    className="col-7"
-                    defaultValue={5}
-                    aria-labelledby="usefulness-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks={true}
-                    min={0}
-                    max={10}
-                  />
-                </Row> */}
               </CardBody>
             </Card>
             <Row>
@@ -261,14 +201,16 @@ function RenderComments({
           </ModalBody>
         </Modal>
         <CardHeader className="comment-header">
-          <div className="row">
-            <h4 className="col-9">Comments</h4>
+          {/* <div className="row"> */}
+          {/* <h4>Comments</h4> */}
+          <b className="larger-font">Comments</b>
+          <div className="float-to-right">
             <CommentForm
-              className="col-3"
               courseCode={courseCode} /*postComment={postComment}*/
               fetchCoursePage={fetchCoursePage}
             />
           </div>
+          {/* </div> */}
         </CardHeader>
         <ul className="list-unstyled">
           {comments.map((comment) => {
@@ -282,13 +224,14 @@ function RenderComments({
                       toggleModal();
                     }}
                   >
-                    <CardBody>
+                    <CardBody className="bg-light">
                       <p className="ml-2">
-                        <b>{comment.studentID}</b>
+                        <b>{comment.studentID}</b>&emsp;
+                        {new Date(comment.commentID).toLocaleString()}
                       </p>
                       <p className="ml-2">
                         {comment.commentBody} <br />
-                        Posted on {new Date(comment.commentID).toLocaleString()}
+                        {/* Posted on  */}
                       </p>
                     </CardBody>
                   </Card>
@@ -413,120 +356,25 @@ function DiscussionDetail(props) {
 
     return (
       <div className="background">
+        <div className="empty-space"></div>
         <div className="container">
-          {/* <div className="row"> */}
           <div key={course.id}>
             <Card tag="li">
               <CardBody body className="ml-5 mr-5">
-                {/* <div className="row"> */}
-                <div>
-                  {/* <div> */}
+                <div className="mt-5">
                   <Button
+                    outline
                     className="discuss-detail-save-button"
                     onClick={() => handleSaveCourse(course.courseCode)}
                   >
-                    <span>
+                    <span style={{ color: "black" }}>
                       <HiOutlineSave />
                     </span>
                   </Button>
-                  {/* <Button
-                    className="discuss-detail-save-button"
-                    onClick={() => handleSaveCourse(course.courseCode)}
-                  >
-                    <span>
-                      <AiOutlineDelete />
-                    </span>
-                  </Button> */}
                   <b className="course-detail-courseCode col-10">
                     {course.courseCode} - {courseTitle}
                   </b>
-
-                  {/* </div> */}
-                  {/* <Button onClick={() => alert(course.courseInfo)}>click</Button> */}
-                  {/* <div className="col-3">
-                    <p className="row mt-2 mb-5">Usefulness:</p>
-                    <p className="row mt-2 mb-5">Easiness:</p>
-                    <p className="row mt-2 mb-5">Time Investment:</p>
-                  </div>
-                  <div className="col-1">
-                    <div className="row mb-1">
-                      <CircularSlider
-                        width={60}
-                        dataIndex={course.usefulness}
-                        label="savings"
-                        hideLabelValue={true}
-                        verticalOffset="0.5rem"
-                        progressSize={8}
-                        trackColor="#fffff"
-                        progressColorFrom="#228B22"
-                        progressColorTo="#39FF14"
-                        trackSize={8}
-                        min={0}
-                        max={10}
-                        knobDraggable={false}
-                      />
-                      <div className="rating">{course.usefulness} </div>
-                    </div>
-                    <div className="row mb-1">
-                      <CircularSlider
-                        width={60}
-                        dataIndex={course.easiness}
-                        label="savings"
-                        hideLabelValue={true}
-                        verticalOffset="0.5rem"
-                        progressSize={8}
-                        trackColor="#fffff"
-                        progressColorFrom="#228B22"
-                        progressColorTo="#39FF14"
-                        trackSize={8}
-                        min={0}
-                        max={10}
-                        knobDraggable={false}
-                      />
-                      <div className="rating">{course.easiness} </div>
-                    </div>
-                    <div className="row mb-1">
-                      <CircularSlider
-                        width={60}
-                        dataIndex={course.timeInvestment}
-                        label="savings"
-                        hideLabelValue={true}
-                        verticalOffset="0.5rem"
-                        progressSize={8}
-                        trackColor="#fffff"
-                        progressColorFrom="#228B22"
-                        progressColorTo="#39FF14"
-                        trackSize={8}
-                        min={0}
-                        max={10}
-                        knobDraggable={false}
-                      />
-                      <div className="rating">{course.timeInvestment} </div>
-                    </div> 
-                  </div> */}
                 </div>
-                {/* <p>
-                  <div className="row">
-                    <b className="col-4">Course Title: </b>
-                    <div className="col-8">{courseTitle}</div>
-                  </div>
-                  <div className="row">
-                    <b className="col-4">AU: </b>
-                    <div className="col-8">{courseAU}</div>
-                  </div>
-                  <div className="row">
-                    <b className="col-4">Course Description: </b>
-                    <div className="col-8">{courseDescription}</div>
-                  </div>
-                  {Object.keys(remarks).map((key) => {
-                    return (
-                      <div className="row">
-                        <b className="col-4">{key}</b>
-                        <div className="col-8">{remarks[key]}</div>
-                      </div>
-                    );
-                  })}
-                </p> */}
                 <TableContainer component={Paper}>
                   <Table aria-label="simple table">
                     <TableBody>
@@ -596,16 +444,13 @@ function DiscussionDetail(props) {
               </CardBody>
             </Card>
           </div>
-          {/* </div> */}
-          {/* <div className="m-1"> */}
-          {/* <div className="row"></div> */}
           <RenderComments
             fetchCoursePage={fetchCoursePage}
             courseCode={course.courseCode}
             comments={course.comments}
           />
-          {/* </div> */}
         </div>
+        <div className="empty-space"></div>
       </div>
     );
   } else {
@@ -751,10 +596,10 @@ function CommentForm(props) {
             </Row>
 
             <Row classname="form-group">
-              <Label htmlFor="comment" md={12}>
+              <Label htmlFor="comment" md={12} className="col-4">
                 Comment
               </Label>
-              <Col md={12}>
+              <div className="col-12">
                 <Control.textarea
                   model=".comment"
                   id="comment"
@@ -762,11 +607,11 @@ function CommentForm(props) {
                   rows="6"
                   className="form-control"
                 />
-              </Col>
+              </div>
             </Row>
             <Row className="form-group">
               <Col md={{ size: 10 }}>
-                <Button type="submit" color="primary">
+                <Button type="submit" color="primary" className="col-4">
                   Submit
                 </Button>
               </Col>
@@ -774,9 +619,9 @@ function CommentForm(props) {
           </LocalForm>
         </ModalBody>
       </Modal>
-      <Button className="submit-comment-button" outline onClick={toggleModal}>
+      <Button outline className="submit-comment-button" onClick={toggleModal}>
         Submit Comment
-      </Button>{" "}
+      </Button>
     </div>
   );
 }
