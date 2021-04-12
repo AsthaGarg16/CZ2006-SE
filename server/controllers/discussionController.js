@@ -25,6 +25,25 @@ const discussion_index=async(req,res)=>{
     }
 };
 
+const create_first_comment=async(req,res)=>{
+    try {
+
+        const com = new Comments({
+            refID: 1,
+            comments: []
+        })
+        com.save().then((result)=>{
+            console.log(result);})
+             .catch((err)=>{
+                 console.log(err);});
+        res.status(200).send(com);
+    }
+    catch {
+        console.log(err);
+        res.status(400).send(err); 
+    }
+};
+
 const get_top_courses=async(req,res)=>{
     try {
         const school = req.body.school;
@@ -80,6 +99,20 @@ const add_reply=async(req,res)=>{
 
         console.log(reply)
 
+        // await Comments.update(
+        //     {
+        //         refID: 1,
+        //         "comments.commentID": req.body.commentID
+        //     },
+        //     {
+        //         $push:{
+        //             comments:{
+        //                 "comments.$.replies": reply
+        //             }
+        //         }
+        //     }
+        // )
+
         await Discussion.update(
             {
                 courseCode:req.body.courseCode,
@@ -93,6 +126,7 @@ const add_reply=async(req,res)=>{
         );
 
         temp = await Discussion.findOne({courseCode:courseCode});
+        // temp = await Comments.find({});
         res.status(200).send(temp);
 
     }
@@ -141,7 +175,16 @@ const update_course_page=async(req,res)=>{
             // console.log(use, req.body.usefulness, (req.body.usefulness-use), temp.numReviews, (req.body.usefulness-use)/numRev);
             
             await Comments.updateOne(
-                {}
+                {refID: 1},
+                {
+                    $push:{
+                        comments:{
+                            studentID: req.body.studentID,
+                            commentID:commentID,
+                            commentBody:req.body.commentBody
+                        }
+                    }
+                }
             )
 
             await Discussion.updateOne(
@@ -169,6 +212,8 @@ const update_course_page=async(req,res)=>{
             );
         }
         temp = await Discussion.findOne({courseCode:courseCode});
+        // temp = await Comments.find({});
+
         res.status(200).send(temp);
     }
     catch (err){
@@ -230,5 +275,6 @@ module.exports={
     add_reply,
     update_course_page,
     add_course_page,
-    CourseContent
+    CourseContent,
+    create_first_comment
 }

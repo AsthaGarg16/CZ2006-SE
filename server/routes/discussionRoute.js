@@ -18,4 +18,6 @@ router.post('/reply', sharingController.add_reply);
 
 router.post('/add', sharingController.add_course_page);
 
+router.post('/tempComment', sharingController.create_first_comment);
+
 module.exports=router;

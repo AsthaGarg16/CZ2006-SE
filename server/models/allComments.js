@@ -17,7 +17,7 @@ const reply = new Schema({
 });
 
 //definining the schema of a comment
-const comments = new Schema({
+const comment = new Schema({
     studentID:{
         type: String,
         required: true
@@ -38,10 +38,9 @@ const allComments = new Schema({
         type: Number,
         default: 1
     },
-    comments: [comment],
-    default: []
+    comments: [comment]
 })
 
 //making the mongoose model and exporting it
-const Comments= mongoose.model('comments', comments, 'Comments');
+const Comments= mongoose.model('comments', allComments, 'Comments');
 module.exports= Comments;
