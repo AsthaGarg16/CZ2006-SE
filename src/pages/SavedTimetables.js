@@ -9,7 +9,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
-import { Button } from "reactstrap";
+import { Media, Card, Button, CardBody } from "reactstrap";
+import CircularSlider from "@fseehawer/react-circular-slider";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -27,6 +29,7 @@ export default function SavedTimetables() {
   const location = useLocation();
   const [timetables, setTimetables] = useState([]);
   const [savedCourses, setSavedCourses] = useState([]);
+  const [realSavedCourses, setRealSavedCourses] = useState([]);
 
   useEffect(() => {
     console.log("retrieve saved time tables");
@@ -39,125 +42,6 @@ export default function SavedTimetables() {
   }, []);
 
   const classes = useStyles();
-
-  const dummy = [
-    {
-      timetableID: "1617868015223",
-      courseSelected: [
-        {
-          courseID: "AAA08B",
-          indexNum: "39676",
-        },
-        {
-          courseID: "AAA18G",
-          indexNum: "39652",
-        },
-        {
-          courseID: "AAA28J",
-          indexNum: "39682",
-        },
-      ],
-      fixedTimeSlots: [],
-      courseFixed: [
-        {
-          courseID: "AAA18G",
-          indexNum: "39652",
-        },
-      ],
-      courseClashAllowed: [],
-    },
-    {
-      timetableID: "1617869004855",
-      courseSelected: [
-        {
-          courseID: "CZ1007",
-          indexNum: 10059,
-        },
-        {
-          courseID: "AAA08B",
-          indexNum: "",
-        },
-        {
-          courseID: "CZ1103",
-          indexNum: "10064",
-        },
-      ],
-      fixedTimeSlots: [
-        [
-          new Date("2021-03-02T01:45:00.000Z"),
-          new Date("2021-03-02T02:45:00.000Z"),
-        ],
-        [
-          new Date("2021-03-05T03:45:00.000Z"),
-          new Date("2021-03-05T04:45:00.000Z"),
-        ],
-      ],
-      courseFixed: [
-        {
-          courseID: "CZ1103",
-          indexNum: "10064",
-        },
-      ],
-      courseClashAllowed: ["AAA08B"],
-    },
-    {
-      fixedTimeSlots: [
-        ["2021-03-02T03:30:00.000Z", "2021-03-02T04:30:00.000Z"],
-        ["2021-03-04T03:30:00.000Z", "2021-03-04T04:30:00.000Z"],
-      ],
-      courseClashAllowed: ["AAA08B"],
-      _id: "6071b4bd74638e4afccbd220",
-      timetableID: "1618064573576",
-      courseSelected: [
-        {
-          courseID: "AAA08B",
-          indexNum: "39677",
-        },
-        {
-          courseID: "CZ1103",
-          indexNum: "10063",
-        },
-      ],
-      courseFixed: [
-        {
-          courseID: "AAA08B",
-          indexNum: "39677",
-        },
-      ],
-      __v: 0,
-    },
-    // {
-    //   timetableID: "1617704070595",
-    //   courseSelected: {
-    //     AAA08B: "39676",
-    //   },
-    //   fixedTimeSlots: [
-    //     [
-    //       new Date("2021-03-03T01:15:00.000Z"),
-    //       new Date("2021-03-03T02:15:00.000Z"),
-    //     ],
-    //   ],
-    //   courseFixed: {},
-    //   courseClashAllowed: [],
-    // },
-    // {
-    //   timetableID: "1617776472165",
-    //   courseSelected: {
-    //     CZ1016: "10061",
-    //     AAA18G: "39652",
-    //   },
-    //   fixedTimeSlots: [
-    //     [
-    //       new Date("2021-03-03T03:45:00.000Z"),
-    //       new Date("2021-03-03T04:45:00.000Z"),
-    //     ],
-    //   ],
-    //   courseFixed: {
-    //     AAA18G: "39652",
-    //   },
-    //   courseClashAllowed: ["CZ1016"],
-    // },
-  ];
 
   useEffect(() => {
     // const timetableID = JSON.parse(sessionStorage.getItem("userData"))
@@ -188,7 +72,9 @@ export default function SavedTimetables() {
   }, []);
 
   useEffect(() => {
-    console.log(timetables);
+    // console.log("wht");
+    // console.log(timetables);
+    // console.log("wht");
   }, [timetables]);
 
   // const editeddummy = dummy.map((item) => {
@@ -206,8 +92,8 @@ export default function SavedTimetables() {
   //   return item;
   // });
 
-  const editeddummy = (tempTT) =>
-    tempTT.map((item) => {
+  const editeddummy = (tempTT) => {
+    return tempTT.map((item) => {
       // console.log(timetables);
       const fixedTimeSlots = item.fixedTimeSlots.map((element) =>
         element.map((timeslot) => new Date(timeslot))
@@ -228,9 +114,72 @@ export default function SavedTimetables() {
       item.fixedTimeSlots = fixedTimeSlots;
       return item;
     });
+  };
 
   const redirectToPlan = () => {
     console.log("halo");
+  };
+
+  useEffect(() => {
+    console.log("why");
+    console.log(savedCourses);
+  }, [savedCourses]);
+
+  const CourseCard = ({ course }) => {
+    return (
+      <Card
+        tag="li"
+        key={course.id}
+        // onClick={() => handleCourseSelect(course)}
+        className="col-12 mt-1"
+      >
+        <CardBody>
+          <Link to={`/discuss/${course.courseCode}`}>
+            <div className="row">
+              <Media heading className="col-8">
+                <b>{course.courseCode}</b>
+              </Media>
+              <div className="col-3">
+                <p className="row mt-2">Average Rating:</p>
+              </div>
+              <div className="col-1">
+                <div className="row mb-1">
+                  <CircularSlider
+                    width={60}
+                    dataIndex={
+                      course.overallRating
+                        ? course.overallRating.toPrecision(2)
+                        : 5.0
+                    }
+                    label="savings"
+                    hideLabelValue={true}
+                    verticalOffset="0.5rem"
+                    progressSize={8}
+                    trackColor="#fffff"
+                    progressColorFrom="#228B22"
+                    progressColorTo="#39FF14"
+                    trackSize={8}
+                    min={0}
+                    max={10}
+                    knobDraggable={false}
+                  />
+                  <div className="rating">
+                    {course.overallRating
+                      ? course.overallRating.toPrecision(2)
+                      : 5.0}{" "}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Media heading>{course.courseInfo[0][1]}</Media>
+            {/* <Media heading>{course.name}</Media> */}
+            {/* <p>{course.description}</p> */}
+            <p>{course.courseInfo[course.courseInfo.length - 1]}</p>
+          </Link>
+          {/* <Button onClick={()=>alert(typeof(course))}>Click</Button> */}
+        </CardBody>
+      </Card>
+    );
   };
 
   useEffect(() => {
@@ -239,11 +188,72 @@ export default function SavedTimetables() {
     const reqbody = { email: userEmail };
 
     axios.post("/saveCourse/getSavedCourses", reqbody).then((response) => {
-      console.log(response);
-      setSavedCourses(response.data[0] ? response.data[0].savedCourse : []);
-      // console.log();
+      // console.log(response);
+      // setSavedCourses(response.data[0] ? response.data[0].savedCourse : []);
+      if (response.data[0]) {
+        // console.log("fetch course");
+        // console.log(response.data[0].savedCourse);
+        setSavedCourses(response.data[0].savedCourse);
+      }
     });
   }, []);
+
+  //   response.data[0].savedCourse.forEach((courseCode, idx) => {
+  //     // console.log(idx);
+
+  //     axios
+  //       .post("/discuss/course", { courseCode: courseCode })
+  //       .then((response2) => {
+  //         // console.log(response2);
+  //         tempRealSaveCourses.push(response2.data);
+  //         // console.log(tempRealSaveCourses);
+  //         if (idx === response.data[0].savedCourse.length - 1) {
+  //           // console.log("debug");
+  //           console.log(idx);
+  //           // console.log(tempRealSaveCourses);
+  //           // console.log("debug");
+  //           setSavedCourses(tempRealSaveCourses);
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         if (error.response2) {
+  //           alert(error.response2.data.message);
+  //         }
+  //       });
+  //   });
+  // }
+
+  // console.log();
+
+  useEffect(() => {
+    if (savedCourses.length !== 0) {
+      // console.log("length" + savedCourses.length);
+      // const tempRealSaveCourses = [];
+      savedCourses.forEach((courseCode, idx) => {
+        // console.log(idx);
+
+        axios
+          .post("/discuss/course", { courseCode: courseCode })
+          .then((response) => {
+            // console.log(response);
+            setRealSavedCourses((prevCourses) => [
+              ...prevCourses,
+              response.data,
+            ]);
+            // tempRealSaveCourses.push(response.data);
+            // console.log(tempRealSaveCourses);
+            // if (idx === savedCourses.length - 1) {
+            //   setRealSavedCourses(tempRealSaveCourses);
+            // }
+          })
+          .catch(function (error) {
+            if (error.response) {
+              alert(error.response.data.message);
+            }
+          });
+      });
+    }
+  }, [savedCourses]);
 
   return (
     <div className="container">
@@ -283,6 +293,13 @@ export default function SavedTimetables() {
           </div>
         ))}
       </div> */}
+      {/* {savedCourses.map((course) => (
+        // <CourseCard course={course} />
+        <div>{course}</div>
+      ))} */}
+      {/* {savedCourses.map((item) => (
+        <div>item.courseCode</div>
+      ))} */}
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -291,10 +308,12 @@ export default function SavedTimetables() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {savedCourses.map((item) => (
-              <TableRow key={item}>
+            {realSavedCourses.map((course) => (
+              <TableRow key={course.CourseCode}>
                 <TableCell component="th" scope="row">
-                  <Link to={"/discuss/" + item}>{item}</Link>
+                  {/* {CourseCard(course)} */}
+                  <CourseCard course={course} />
+                  {/* <Link to={"/discuss/" + item}>{item}</Link> */}
                 </TableCell>
               </TableRow>
             ))}

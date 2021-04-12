@@ -29,6 +29,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { HiOutlineSave } from "react-icons/hi";
 import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
+import { SignalCellularNull } from "@material-ui/icons";
 
 function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -278,14 +279,31 @@ function RenderComments({ courseCode, comments /*, postComment, dishId */ }) {
 }
 
 function DiscussionDetail(props) {
-  const [topCourses, setTopCourses] = useState([]);
+  // const [topCourses, setTopCourses] = useState([]);
 
-  function fetchTopRatedCourse() {
+  const [course, setCourse] = useState(null);
+
+  // function fetchTopRatedCourse() {
+  //   axios
+  //     .get("/discuss/top_course", {})
+  //     .then((response) => {
+  //       console.log(response);
+  //       setTopCourses(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       if (error.response) {
+  //         alert(error.response.data.message);
+  //       }
+  //     });
+  // }
+
+  function fetchCoursePage(courseCode) {
+    console.log(courseCode);
     axios
-      .get("/discuss/top_course", {})
+      .post("/discuss/course", { courseCode: courseCode })
       .then((response) => {
         console.log(response);
-        setTopCourses(response.data);
+        setCourse(response.data);
       })
       .catch(function (error) {
         if (error.response) {
@@ -293,20 +311,21 @@ function DiscussionDetail(props) {
         }
       });
   }
+
   const params = useParams();
   useEffect(() => {
-    console.log("FETCHING top courses");
+    console.log("FETCHING course");
     // console.log(params);
-    fetchTopRatedCourse();
+    fetchCoursePage(params.courseCode);
   }, []);
   // console.log("--debug--");
 
   // console.log(props);
   // console.log("--debug--");
   // const { course } = props;
-  const course =
-    props.course ||
-    topCourses.find((item) => item.courseCode === params.courseCode);
+  // const course =
+  //   props.course ||
+  //   topCourses.find((item) => item.courseCode === params.courseCode);
 
   if (course) {
     console.log(course.comments);
@@ -345,21 +364,25 @@ function DiscussionDetail(props) {
 
     function handleSaveCourse(course) {
       // alert(courseCode);
-      const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-      const reqbody = { email: userEmail, savedCourses: course };
-      console.log(reqbody);
+      if (JSON.parse(sessionStorage.getItem("token"))) {
+        const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+        const reqbody = { email: userEmail, savedCourses: course };
+        console.log(reqbody);
 
-      axios
-        .put("/saveCourse/saveCourses", reqbody)
-        .then((response) => {
-          console.log(response.data);
-          alert(response.data.message);
-        })
-        .catch(function (error) {
-          if (error.response) {
-            // alert(error.response.data.message);
-          }
-        });
+        axios
+          .put("/saveCourse/saveCourses", reqbody)
+          .then((response) => {
+            console.log(response.data);
+            alert(response.data.message);
+          })
+          .catch(function (error) {
+            if (error.response) {
+              // alert(error.response.data.message);
+            }
+          });
+      } else {
+        alert("Please login before saving courses.");
+      }
     }
 
     const dummy = [

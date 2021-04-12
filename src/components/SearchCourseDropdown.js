@@ -4,6 +4,7 @@ export default function SearchCourseDropdown({
   options,
   label,
   name,
+  discuss,
   prompt,
   value,
   onChange,
@@ -22,12 +23,21 @@ export default function SearchCourseDropdown({
   }
 
   function filter(options) {
-    return options.filter(
-      (option) =>
-        `${option[label]} ${option[name]}`
-          .toLowerCase()
-          .indexOf(query.toLowerCase()) > -1
-    );
+    if (discuss) {
+      return options.filter(
+        (option) =>
+          `${option[label]} ${option.details[0][1]}` //course code and title
+            .toLowerCase()
+            .indexOf(query.toLowerCase()) > -1
+      );
+    } else {
+      return options.filter(
+        (option) =>
+          `${option[label]} ${option[name]}`
+            .toLowerCase()
+            .indexOf(query.toLowerCase()) > -1
+      );
+    }
   }
 
   function displayValue() {
@@ -66,7 +76,9 @@ export default function SearchCourseDropdown({
                 setOpen(false);
               }}
             >
-              {`${option[label]} ${option[name]}`}
+              {discuss
+                ? `${option[label]} ${option.details[0][1]}`
+                : `${option[label]} ${option[name]}`}
             </div>
           ))}
         </div>

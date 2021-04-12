@@ -8,15 +8,37 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 function DiscussionForum(props) {
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  // const [selectedCourse, setSelectedCourse] = useState(null);
   const [value, setValue] = useState(null);
+  // const [allCourses, setAllCourses] = useState([]);
+
   const [topCourses, setTopCourses] = useState(null);
 
-  const handleCourseSelect = (course) => {
-    setSelectedCourse(course);
-  };
+  // function fetchAllCourse() {
+  //   axios
+  //     .get("/sendCourseList/getCourseList", {})
+  //     .then((response) => {
+  //       // console.log(response);
+  //       console.log("ok");
+  //       setAllCourses(response.data); //Change to all courses afterward
+  //     })
+  //     .catch(function (error) {
+  //       if (error.response) {
+  //         alert(error.response.data.message);
+  //       }
+  //     });
+  // }
 
-  function fetchTopRatedCourse(values) {
+  // useEffect(() => {
+  //   console.log("FETCHING all courses");
+  //   fetchAllCourse();
+  // }, []);
+
+  // const handleCourseSelect = (course) => {
+  //   setSelectedCourse(course);
+  // };
+
+  function fetchTopRatedCourse() {
     axios
       .get("/discuss/top_course", {})
       .then((response) => {
@@ -31,7 +53,7 @@ function DiscussionForum(props) {
   }
 
   useEffect(() => {
-    console.log("FETCHING");
+    console.log("FETCHING top 5 courses");
     fetchTopRatedCourse();
   }, []);
 
@@ -41,7 +63,7 @@ function DiscussionForum(props) {
           <Card
             tag="li"
             key={course.id}
-            onClick={() => handleCourseSelect(course)}
+            // onClick={() => handleCourseSelect(course)}
             className="col-12 mt-1"
           >
             <CardBody>
@@ -118,6 +140,7 @@ function DiscussionForum(props) {
               id="courseCode"
               label="courseCode"
               name="name"
+              discuss={true}
               options={props.courses.map((item) => ({
                 ...item,
                 id: Math.random().toString(36).substr(2, 9),
@@ -127,7 +150,12 @@ function DiscussionForum(props) {
             />
           </div>
           <div>
-            <Button id="discuss-search-course-button" onClick={() => handleSearchCourse(value)}>Search</Button>
+            <Button
+              id="discuss-search-course-button"
+              onClick={() => handleSearchCourse(value)}
+            >
+              Search
+            </Button>
           </div>
         </div>
         <div className="row">
