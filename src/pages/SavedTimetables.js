@@ -9,7 +9,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
-import { Button } from "reactstrap";
+import { Media, Card, Button, CardBody } from "reactstrap";
+import CircularSlider from "@fseehawer/react-circular-slider";
+import { AiOutlineDelete } from "react-icons/ai";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -27,10 +30,11 @@ export default function SavedTimetables() {
   const location = useLocation();
   const [timetables, setTimetables] = useState([]);
   const [savedCourses, setSavedCourses] = useState([]);
+  const [realSavedCourses, setRealSavedCourses] = useState([]);
 
   useEffect(() => {
     console.log("retrieve saved time tables");
-    // console.log(history);
+
     console.log(location);
 
     if (location.state) {
@@ -40,128 +44,7 @@ export default function SavedTimetables() {
 
   const classes = useStyles();
 
-  const dummy = [
-    {
-      timetableID: "1617868015223",
-      courseSelected: [
-        {
-          courseID: "AAA08B",
-          indexNum: "39676",
-        },
-        {
-          courseID: "AAA18G",
-          indexNum: "39652",
-        },
-        {
-          courseID: "AAA28J",
-          indexNum: "39682",
-        },
-      ],
-      fixedTimeSlots: [],
-      courseFixed: [
-        {
-          courseID: "AAA18G",
-          indexNum: "39652",
-        },
-      ],
-      courseClashAllowed: [],
-    },
-    {
-      timetableID: "1617869004855",
-      courseSelected: [
-        {
-          courseID: "CZ1007",
-          indexNum: 10059,
-        },
-        {
-          courseID: "AAA08B",
-          indexNum: "",
-        },
-        {
-          courseID: "CZ1103",
-          indexNum: "10064",
-        },
-      ],
-      fixedTimeSlots: [
-        [
-          new Date("2021-03-02T01:45:00.000Z"),
-          new Date("2021-03-02T02:45:00.000Z"),
-        ],
-        [
-          new Date("2021-03-05T03:45:00.000Z"),
-          new Date("2021-03-05T04:45:00.000Z"),
-        ],
-      ],
-      courseFixed: [
-        {
-          courseID: "CZ1103",
-          indexNum: "10064",
-        },
-      ],
-      courseClashAllowed: ["AAA08B"],
-    },
-    {
-      fixedTimeSlots: [
-        ["2021-03-02T03:30:00.000Z", "2021-03-02T04:30:00.000Z"],
-        ["2021-03-04T03:30:00.000Z", "2021-03-04T04:30:00.000Z"],
-      ],
-      courseClashAllowed: ["AAA08B"],
-      _id: "6071b4bd74638e4afccbd220",
-      timetableID: "1618064573576",
-      courseSelected: [
-        {
-          courseID: "AAA08B",
-          indexNum: "39677",
-        },
-        {
-          courseID: "CZ1103",
-          indexNum: "10063",
-        },
-      ],
-      courseFixed: [
-        {
-          courseID: "AAA08B",
-          indexNum: "39677",
-        },
-      ],
-      __v: 0,
-    },
-    // {
-    //   timetableID: "1617704070595",
-    //   courseSelected: {
-    //     AAA08B: "39676",
-    //   },
-    //   fixedTimeSlots: [
-    //     [
-    //       new Date("2021-03-03T01:15:00.000Z"),
-    //       new Date("2021-03-03T02:15:00.000Z"),
-    //     ],
-    //   ],
-    //   courseFixed: {},
-    //   courseClashAllowed: [],
-    // },
-    // {
-    //   timetableID: "1617776472165",
-    //   courseSelected: {
-    //     CZ1016: "10061",
-    //     AAA18G: "39652",
-    //   },
-    //   fixedTimeSlots: [
-    //     [
-    //       new Date("2021-03-03T03:45:00.000Z"),
-    //       new Date("2021-03-03T04:45:00.000Z"),
-    //     ],
-    //   ],
-    //   courseFixed: {
-    //     AAA18G: "39652",
-    //   },
-    //   courseClashAllowed: ["CZ1016"],
-    // },
-  ];
-
   useEffect(() => {
-    // const timetableID = JSON.parse(sessionStorage.getItem("userData"))
-    //   .timetables[0];
     const userTimetables = JSON.parse(
       sessionStorage.getItem("userData")
     ).timetables.map((item) => item.toString());
@@ -172,42 +55,19 @@ export default function SavedTimetables() {
       const timetableID = userTimetables[i];
 
       const reqbody = { timetableID: timetableID };
-      // console.log(reqbody);
+
       axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
-        // console.log(response.data);
-        // console.log(response.data);
         tempTimetables.push(...response.data);
-        // console.log(tempTimetables);
-        // console.log(i);
+
         if (i === userTimetables.length - 1) {
           setTimetables(editeddummy(tempTimetables));
         }
       });
     }
-    // console.log(tempTimetables);
   }, []);
 
-  useEffect(() => {
-    console.log(timetables);
-  }, [timetables]);
-
-  // const editeddummy = dummy.map((item) => {
-  //   const courseSelected = {};
-  //   item.courseSelected.forEach((element) => {
-  //     courseSelected[element.courseID] = element.indexNum;
-  //   });
-  //   const courseFixed = {};
-  //   item.courseFixed.forEach((element) => {
-  //     courseFixed[element.courseID] = element.indexNum;
-  //   });
-
-  //   item.courseSelected = courseSelected;
-  //   item.courseFixed = courseFixed;
-  //   return item;
-  // });
-
-  const editeddummy = (tempTT) =>
-    tempTT.map((item) => {
+  const editeddummy = (tempTT) => {
+    return tempTT.map((item) => {
       // console.log(timetables);
       const fixedTimeSlots = item.fixedTimeSlots.map((element) =>
         element.map((timeslot) => new Date(timeslot))
@@ -228,22 +88,144 @@ export default function SavedTimetables() {
       item.fixedTimeSlots = fixedTimeSlots;
       return item;
     });
+  };
 
   const redirectToPlan = () => {
     console.log("halo");
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   console.log("why");
+  //   console.log(savedCourses);
+  // }, [savedCourses]);
+
+  const CourseCard = ({ course }) => {
+    return (
+      <Card
+        tag="li"
+        key={course.id}
+        // onClick={() => handleCourseSelect(course)}
+        className="col-12 mt-1"
+      >
+        <Button
+          className="discuss-detail-save-button"
+          onClick={() => removeSavedCourse(course.courseCode)}
+        >
+          <span>
+            <AiOutlineDelete />
+          </span>
+        </Button>
+
+        <CardBody>
+          <Link to={`/discuss/${course.courseCode}`}>
+            <div className="row">
+              <Media heading className="col-8">
+                <b>{course.courseCode}</b>
+              </Media>
+              <div className="col-3">
+                <p className="row mt-2">Average Rating:</p>
+              </div>
+              <div className="col-1">
+                <div className="row mb-1">
+                  <CircularSlider
+                    width={60}
+                    dataIndex={
+                      course.overallRating
+                        ? course.overallRating.toPrecision(2)
+                        : 5.0
+                    }
+                    label="savings"
+                    hideLabelValue={true}
+                    verticalOffset="0.5rem"
+                    progressSize={8}
+                    trackColor="#fffff"
+                    progressColorFrom="#228B22"
+                    progressColorTo="#39FF14"
+                    trackSize={8}
+                    min={0}
+                    max={10}
+                    knobDraggable={false}
+                  />
+                  <div className="rating">
+                    {course.overallRating
+                      ? course.overallRating.toPrecision(2)
+                      : 5.0}{" "}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Media heading>{course.courseInfo[0][1]}</Media>
+            {/* <Media heading>{course.name}</Media> */}
+            {/* <p>{course.description}</p> */}
+            <p>{course.courseInfo[course.courseInfo.length - 1]}</p>
+          </Link>
+          {/* <Button onClick={()=>alert(typeof(course))}>Click</Button> */}
+        </CardBody>
+      </Card>
+    );
+  };
+
+  const fetchSavedCourses = () => {
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
 
     const reqbody = { email: userEmail };
 
     axios.post("/saveCourse/getSavedCourses", reqbody).then((response) => {
-      console.log(response);
-      setSavedCourses(response.data[0] ? response.data[0].savedCourse : []);
-      // console.log();
+      if (response.data[0]) {
+        setSavedCourses(response.data[0].savedCourse);
+      }
     });
+  };
+
+  useEffect(() => {
+    fetchSavedCourses();
   }, []);
+
+  useEffect(() => {
+    console.log("set real saved courses");
+    if (savedCourses.length !== 0) {
+      setRealSavedCourses((prevCourses) => []);
+      savedCourses.forEach((courseCode, idx) => {
+        axios
+          .post("/discuss/course", { courseCode: courseCode })
+          .then((response) => {
+            setRealSavedCourses((prevCourses) => [
+              ...prevCourses,
+              response.data,
+            ]);
+          })
+          .catch(function (error) {
+            if (error.response) {
+              alert(error.response.data.message);
+            }
+          });
+      });
+    } else {
+      setRealSavedCourses((prevCourses) => []);
+    }
+  }, [savedCourses]);
+
+  const removeSavedCourse = (courseCode) => {
+    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+
+    const reqbody = { userEmail: userEmail, savedCourse: courseCode };
+    axios
+      .patch("/saveCourse/removeSavedCourses", reqbody)
+      .then((response) => {
+        console.log(response.data);
+        fetchSavedCourses();
+        // setTimeout(function () {
+        //   alert(response.data);
+        // }, 1);
+
+        // alert(response.data.message);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // alert(error.response.data.message);
+        }
+      });
+  };
 
   return (
     <div className="container">
@@ -267,22 +249,7 @@ export default function SavedTimetables() {
           </div>
         ))}
       </div>
-      {/* <div className="row">Saved Courses</div>
-      <div className="row">
-        {savedCourses.map((item) => (
-          <div className="col-4">
-            <Button onClick={() => alert(item)}></Button>
-            <Link to={"/discuss/" + item}>
-              <Paper
-                elevation={5}
-                style={{ height: "200px", wordWrap: "break-word" }}
-              >
-                <h5>{item}</h5>
-              </Paper>
-            </Link>
-          </div>
-        ))}
-      </div> */}
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -291,10 +258,10 @@ export default function SavedTimetables() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {savedCourses.map((item) => (
-              <TableRow key={item}>
+            {realSavedCourses.map((course) => (
+              <TableRow key={course.CourseCode}>
                 <TableCell component="th" scope="row">
-                  <Link to={"/discuss/" + item}>{item}</Link>
+                  <CourseCard course={course} />
                 </TableCell>
               </TableRow>
             ))}
