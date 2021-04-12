@@ -18,6 +18,8 @@ import {
   PlanTimetableContextProvider,
   usePlanTimetable,
 } from "../context/PlanTimetableContextProvider";
+import axios from "axios";
+
 var QRCode = require("qrcode.react");
 
 export default function ShareTimetableComponent(props) {
@@ -154,17 +156,19 @@ export default function ShareTimetableComponent(props) {
     //     window.location.pathname
     //   }?${tempCombinationArray.join("&")}`
     // );
+
+    // console.log(encodeURIComponent(JSON.stringify(returnCurrentTT())));
     setLink(
       `${window.location.origin}${
         window.location.pathname
-      }?timetable=${JSON.stringify(returnCurrentTT())}`
+      }?timetable=${encodeURIComponent(JSON.stringify(returnCurrentTT()))}`
     );
     // combinations[];
   };
 
   return (
     <>
-      <Button className="share"  onClick={toggleModal}>
+      <Button className="share" onClick={toggleModal}>
         {/*<span className="fa fa-sign-in fa-lg"></span>*/} Share Timetable
       </Button>
       <Modal
@@ -179,8 +183,17 @@ export default function ShareTimetableComponent(props) {
         <ModalBody class="modal fade bd-example-modal-lg">
           {subShareTimetableComponent()}
           <Button onClick={generateLink}>Share</Button>
-          <a href={link} target="_blank">
-            {link}
+          <a
+            href={link}
+            target="_blank"
+            style={{
+              display: "block",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            }}
+          >
+            {link.slice(0, 80)}
+            {link.length > 80 ? "..." : ""}
           </a>
           <br></br>
           <QRCode size={256} value={link} imageSettings={{ width: 30 }} />

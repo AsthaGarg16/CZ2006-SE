@@ -141,7 +141,7 @@ export default function ShareTimetable(props) {
       for (const [key, value] of searchParams.entries()) {
         if (key === "timetable") {
           // console.log(JSON.parse(value));
-          const tempTimetable = JSON.parse(value);
+          const tempTimetable = JSON.parse(decodeURIComponent(value));
           const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
             element.map((timeslot) => new Date(timeslot))
           );

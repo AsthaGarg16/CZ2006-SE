@@ -131,7 +131,7 @@ export default function MoreOptionsComponent(props) {
       for (const [key, value] of searchParams.entries()) {
         if (key === "timetable") {
           // console.log(JSON.parse(value));
-          const tempTimetable = JSON.parse(value);
+          const tempTimetable = JSON.parse(decodeURIComponent(value));
           const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
             element.map((timeslot) => new Date(timeslot))
           );
@@ -161,8 +161,8 @@ export default function MoreOptionsComponent(props) {
   };
 
   return (
-    <> 
-      <Button className = 'more' variant="outlined"  onClick={handleClickOpen}>
+    <>
+      <Button className="more" variant="outlined" onClick={handleClickOpen}>
         More Options
       </Button>
       <Dialog
