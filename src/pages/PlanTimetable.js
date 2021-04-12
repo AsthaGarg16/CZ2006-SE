@@ -38,6 +38,10 @@ function PlanTimetableContextConsumer(props) {
 
   //call backend
   const saveCurrentTT = () => {
+    if (!sessionStorage.getItem("token")) {
+      alert("Please login before saving timetable.");
+      return;
+    }
     const courseFixed = [];
     courseDivs.forEach((courseDiv) => {
       if (courseDiv.isIndexFixed) {
@@ -76,24 +80,7 @@ function PlanTimetableContextConsumer(props) {
       tempTimetables.push(parseInt(timetableID));
       userData.timetables = tempTimetables;
       sessionStorage.setItem("userData", JSON.stringify(userData));
-      // if (typeof response.data.message[0] === "string") {
-      //   alert(response.data.message[0]);
-      // } else {
-      //   setCombinations(response.data.message);
-      // }
     });
-    //
-    // const reqbody = { timetableID: "2" };
-    // console.log(reqbody);
-    // axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
-    //   console.log(response.data);
-    //   // if (typeof response.data.message[0] === "string") {
-    //   //   alert(response.data.message[0]);
-    //   // } else {
-    //   //   setCombinations(response.data.message);
-    //   // }
-    // });
-    // console.log(reqbody);
   };
 
   const downloadfile = () => {

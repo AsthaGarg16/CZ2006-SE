@@ -92,4 +92,20 @@ const testing = {
   ],
   week: 12,
 };
-console.log(new Date(Date.now()).toLocaleString());
+console.log(
+  encodeURIComponent(
+    JSON.stringify({
+      userEmail: "testing@gmail.com",
+      timetableID: "1618240398758",
+      courseSelected: [
+        {
+          courseID: "AAA08B",
+          indexNum: "",
+        },
+      ],
+      fixedTimeSlots: [],
+      courseFixed: [],
+      courseClashAllowed: [],
+    })
+  )
+);
