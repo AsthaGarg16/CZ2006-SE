@@ -38,7 +38,7 @@ const allComments = new Schema({
         type: Number,
         default: 1
     },
-    comments: [comment],
+    comments: [comments],
     default: []
 })
 
