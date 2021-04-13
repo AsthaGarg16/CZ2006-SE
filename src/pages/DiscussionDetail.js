@@ -46,6 +46,10 @@ function RenderComments({
   }
 
   function handleReplySubmit(values) {
+    if (!sessionStorage.getItem("token")) {
+      alert("Please login before replying a comment.");
+      return;
+    }
     const userName = JSON.parse(sessionStorage.getItem("userData")).name;
     // const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
     // console.log(selectedComment.comm);
@@ -481,6 +485,10 @@ function CommentForm(props) {
 
   function handleSubmit(values) {
     // console.log();
+    if (!sessionStorage.getItem("token")) {
+      alert("Please login before posting a comment.");
+      return;
+    }
     const reqbody = {};
 
     const userName = JSON.parse(sessionStorage.getItem("userData")).name;
