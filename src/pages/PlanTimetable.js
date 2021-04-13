@@ -125,6 +125,7 @@ function PlanTimetableContextConsumer(props) {
         return {
           title: "Free Time Slot",
           weekList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          type: "",
           startDate: item[0],
           endDate: item[1],
           day: dayNames[item[0].getDay()],
