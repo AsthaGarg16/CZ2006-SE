@@ -361,11 +361,12 @@ async function check_exam_clash(input_courses) {
       exami["date"] = -1;
       exami["day"] = -1;
       exami["time"] = -1;
-      exami["duration"] = -1;
+      exami["duration"] = 0;
     } else {
       exami_date = exami["date"];
       exami_time = exami["time"];
       exami_duration = exami["duration"];
+      console.log("blabla");
       console.log(exami_duration);
     }
     for (j = i + 1; j < input_courses.length; j++) {
@@ -379,13 +380,13 @@ async function check_exam_clash(input_courses) {
         exam["date"] = -1;
         exam["day"] = -1;
         exam["time"] = -1;
-        exam["duration"] = -1;
+        exam["duration"] = 0;
       } else {
         exam_date = exam["date"];
         exam_time = exam["time"];
         exam_duration = exam["duration"];
       }
-      if (exami_date == exam_date) {
+      if (exami_date == exam_date && exami_date != -1 && exam_date != -1) {
         if (
           exami_time <= exam_time &&
           parseInt(exami_time) + exami_duration >= exam_time
