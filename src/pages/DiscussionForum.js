@@ -164,7 +164,7 @@ function DiscussionForum(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-12">Top Rated Course</div>
+          <div className="col-12 top-rated-course mt-3"><b>Top Rated Courses</b></div>
           {/* <div className="discuss-filter col-2">Filter by School</div> */}
         </div>
         <div className="row">

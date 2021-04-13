@@ -57,51 +57,66 @@ export default function Login({ setToken }) {
   // <div className='container'>
   // <h1>Please Log In</h1>
   // <form onSubmit={handleSubmit}>
-      
+
   //     <div className = 'form-control'>
   //      <label>Email:</label>
   //      <input type='text' placeholder = 'Enter Teacher Email' required onChange={(e)=> setEmail(e.target.value)}/>
   //   </div>
-      
+
   //     <div className = 'form-control'>
   //        <label>Password:</label>
   //        <input type='password' placeholder = 'Enter Password' required onChange={(e)=> setPassword(e.target.value)}/>
   //    </div>
-  //    <input type = 'submit' value = 'Login'className ='btn2 btn2-block'/> 
+  //    <input type = 'submit' value = 'Login'className ='btn2 btn2-block'/>
   // </form>
   // </div>
   // </div>
 
   return (
-    <div className='login_container'>
-      <h1 className = 'head1'> Log In</h1>
-     <form onSubmit={handleSubmit}>
-        
-         <div className = 'form-control'>
+    <div className="login_container">
+      <h1 className="head1"> Log In</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-control">
           <label>Email:</label>
-          <input type='text' placeholder = 'Enter Email' required onChange={(e)=> setEmail(e.target.value)}/>
-       </div>
-        
-         <div className = 'form-control'>
-            <label>Password:</label>
-            <input className = 'pass'type='password' placeholder = 'Enter Password' required onChange={(e)=> setPassword(e.target.value)}/>
+          <input
+            type="text"
+            placeholder="Enter Email"
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-        <input type = 'submit' value = 'Login'className ='btn2 btn2-block'/> 
-        <div className = 'span2'>
-       <span class="psw">
-           <a href="#" onClick={forgotPwd}>
-            <b><u> Forgot password?</u></b>
-           </a>
-         </span>
-         <span class="psw">
-          <text/> Or{" "}
-           <a href="#" onClick={register}>
-           <b><u>Create account</u></b>
-           </a>
-         </span></div>
-     </form>
-     </div>
-     
+
+        <div className="form-control">
+          <label>Password:</label>
+          <input
+            className="pass"
+            type="password"
+            placeholder="Enter Password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <input type="submit" value="Login" className="btn2 btn2-block" />
+        <div className="span2">
+          <span class="psw">
+            <a href="#" onClick={forgotPwd}>
+              <b>
+                <u> Forgot password?</u>
+              </b>
+            </a>
+          </span>
+          <span class="psw">
+            <text /> Or{" "}
+            <a href="#" onClick={register}>
+              <b>
+                <u>Create account</u>
+              </b>
+            </a>
+          </span>
+        </div>
+      </form>
+    </div>
+
     // <div className="Login-container" align="center">
     //   <Form onSubmit={handleSubmit}>
     //     {/* <Form.Group size="lg" controlId="email"> */}

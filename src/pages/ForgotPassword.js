@@ -115,100 +115,169 @@ function ForgotPassword() {
   switch (currentform) {
     case 0:
       return (
-        <div>
-          <h4>Forgot password</h4>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group size="lg" controlId="email">
-              <Form.Label>Email</Form.Label>
-              <br />
-              <Form.Control
-                autoFocus
-                type="email"
-                value={email}
+        <div className="login_container">
+          <h1 className="head1"> Forgot password</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="form-control">
+              <label>Email:</label>
+              <input
+                type="text"
+                placeholder="Enter Email"
+                required
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter email"
               />
-            </Form.Group>
-
-            <Button
-              block
-              size="lg"
+            </div>
+            <input
               type="submit"
-              disabled={!validateEmail()}
-              onclick={handleSubmit}
-            >
-              <span>Send code</span>
-            </Button>
-          </Form>
+              value="Send code"
+              className="btn2 btn2-block"
+            />
+          </form>
         </div>
+        // <div>
+        //   <h4>Forgot password</h4>
+        //   <Form onSubmit={handleSubmit}>
+        //     <Form.Group size="lg" controlId="email">
+        //       <Form.Label>Email</Form.Label>
+        //       <br />
+        //       <Form.Control
+        //         autoFocus
+        //         type="email"
+        //         value={email}
+        //         onChange={(e) => setEmail(e.target.value)}
+        //         placeholder="Enter email"
+        //       />
+        //     </Form.Group>
+
+        //     <Button
+        //       block
+        //       size="lg"
+        //       type="submit"
+        //       disabled={!validateEmail()}
+        //       onclick={handleSubmit}
+        //     >
+        //       <span>Send code</span>
+        //     </Button>
+        //   </Form>
+        // </div>
       );
       break;
     case 1:
       return (
-        <div>
-          <h4>Forgot password</h4>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group size="lg" controlId="username">
-              <Form.Label>Verification Code</Form.Label>
-              <br />
-              <Form.Control
+        <div className="login_container">
+          <h1 className="head1"> Forgot password</h1>
+          <h6 className="head1">Verification Code</h6>
+          <form onSubmit={handleSubmit}>
+            <div className="form-control">
+              <label>Enter code:</label>
+              <input
                 type="text"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
                 placeholder="Enter verification code"
+                required
+                onChange={(e) => setVerificationCode(e.target.value)}
               />
-            </Form.Group>
-
-            <Button
-              block
-              size="lg"
+            </div>
+            <input
               type="submit"
-              disabled={!validateVerificationCode()}
-              onclick={handleSubmit}
-            >
-              <span>Verify code</span>
-            </Button>
-          </Form>
+              value="Verify code"
+              className="btn2 btn2-block"
+            />
+          </form>
         </div>
+
+        // <div>
+        //   <h4>Forgot password</h4>
+        //   <Form onSubmit={handleSubmit}>
+        //     <Form.Group size="lg" controlId="username">
+        //       <Form.Label>Verification Code</Form.Label>
+        //       <br />
+        //       <Form.Control
+        //         type="text"
+        //         value={verificationCode}
+        //         onChange={(e) => setVerificationCode(e.target.value)}
+        //         placeholder="Enter verification code"
+        //       />
+        //     </Form.Group>
+
+        //     <Button
+        //       block
+        //       size="lg"
+        //       type="submit"
+        //       disabled={!validateVerificationCode()}
+        //       onclick={handleSubmit}
+        //     >
+        //       <span>Verify code</span>
+        //     </Button>
+        //   </Form>
+        // </div>
       );
       break;
     case 2:
       return (
-        <div>
-          <h4>Forgot password</h4>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group size="lg" controlId="password">
-              <Form.Label>Password</Form.Label>
-              <br />
-              <Form.Control
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+        <div className="login_container">
+          <h1 className="head1"> Forgot password</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="form-control">
+              <label>Password:</label>
+              <input
+                type="text"
                 placeholder="Enter password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
               />
-            </Form.Group>
-            <Form.Group size="lg" controlId="password">
-              <Form.Label>Confirm Password</Form.Label>
-              <br />
-              <Form.Control
-                type="password"
-                value={cpassword}
-                onChange={(e) => setcPassword(e.target.value)}
+            </div>
+            <div className="form-control">
+              <label>Confirm Password:</label>
+              <input
+                type="text"
                 placeholder="Confirm password"
+                required
+                onChange={(e) => setcPassword(e.target.value)}
               />
-            </Form.Group>
-
-            <Button
-              block
-              size="lg"
+            </div>
+            <input
               type="submit"
-              disabled={!validatePassword()}
-              onclick={handleSubmit}
-            >
-              <span>Reset password</span>
-            </Button>
-          </Form>
+              value="Reset password"
+              className="btn2 btn2-block"
+            />
+          </form>
         </div>
+
+        // <div>
+        //   <h4>Forgot password</h4>
+        //   <Form onSubmit={handleSubmit}>
+        //     <Form.Group size="lg" controlId="password">
+        //       <Form.Label>Password</Form.Label>
+        //       <br />
+        //       <Form.Control
+        //         type="password"
+        //         value={password}
+        //         onChange={(e) => setPassword(e.target.value)}
+        //         placeholder="Enter password"
+        //       />
+        //     </Form.Group>
+        //     <Form.Group size="lg" controlId="password">
+        //       <Form.Label>Confirm Password</Form.Label>
+        //       <br />
+        //       <Form.Control
+        //         type="password"
+        //         value={cpassword}
+        //         onChange={(e) => setcPassword(e.target.value)}
+        //         placeholder="Confirm password"
+        //       />
+        //     </Form.Group>
+
+        //     <Button
+        //       block
+        //       size="lg"
+        //       type="submit"
+        //       disabled={!validatePassword()}
+        //       onclick={handleSubmit}
+        //     >
+        //       <span>Reset password</span>
+        //     </Button>
+        //   </Form>
+        // </div>
       );
       break;
 
