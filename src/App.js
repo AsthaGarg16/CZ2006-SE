@@ -10,6 +10,7 @@ import Discuss from "./pages/DiscussionForum";
 import DiscussionDetail from "./pages/DiscussionDetail";
 import Login from "./pages/Login";
 import Common from "./pages/FindCommon";
+import Profile from "./pages/Profile";
 // import Share from "./pages/ShareTimetable";
 import ForgotPassword from "./pages/ForgotPassword";
 import Register from "./pages/Register";
@@ -111,6 +112,7 @@ function AppContextConsumer() {
             component={() => <Register setToken={setToken} />}
           />
           <Route path="/savedtimetables" component={SavedTimetables} />
+          <Route path="/profile" component={Profile} />
         </Switch>
         <Footer />
       </Router>
