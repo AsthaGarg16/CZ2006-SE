@@ -16,11 +16,39 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 
 function DiscussionForum(props) {
   // const [selectedCourse, setSelectedCourse] = useState(null);
+  // console.log(props);
+
+  const [courses, setCourses] = useState(
+    sessionStorage.getItem("discuss")
+      ? JSON.parse(sessionStorage.getItem("discuss"))
+      : []
+  );
   const [value, setValue] = useState(null);
   // const [allCourses, setAllCourses] = useState([]);
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState("");
   const [topCourses, setTopCourses] = useState(null);
+
+  function fetchAllCourse(values) {
+    axios
+      .get("/sendCourseList/getCourseList", {})
+      .then((response) => {
+        console.log(response);
+        setCourses(response.data); //Change to all courses afterward
+      })
+      .catch(function (error) {
+        if (error.response) {
+          alert(error.response.data.message);
+        }
+      });
+  }
+
+  useEffect(() => {
+    if (props.courses.length === 0) {
+      console.log("FETCHING all courses");
+      fetchAllCourse();
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -183,7 +211,7 @@ function DiscussionForum(props) {
               label="courseCode"
               name="name"
               discuss={true}
-              options={props.courses.map((item) => ({
+              options={courses.map((item) => ({
                 ...item,
                 id: Math.random().toString(36).substr(2, 9),
               }))}
