@@ -80,6 +80,7 @@ function PlanTimetableContextConsumer(props) {
       tempTimetables.push(parseInt(timetableID));
       userData.timetables = tempTimetables;
       sessionStorage.setItem("userData", JSON.stringify(userData));
+      alert("Current timetable has been saved.");
     });
   };
 
