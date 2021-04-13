@@ -15,6 +15,7 @@ const sendEmail = async (req, res) => {
     },
   });
   let r = Math.random().toString(36).substring(7);
+  console.log(r);
   var mailOptions = {
     from: "softwarexeon@gmail.com",
     to: "softwarexeon@gmail.com",

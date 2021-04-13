@@ -189,9 +189,8 @@ function RenderComments({
                             className="form-control"
                           />
                           <Button
-                            className="mt-2"
+                            className="submit-button mt-2"
                             type="submit"
-                            color="primary"
                           >
                             Submit
                           </Button>
@@ -205,8 +204,6 @@ function RenderComments({
           </ModalBody>
         </Modal>
         <CardHeader className="comment-header">
-          {/* <div className="row"> */}
-          {/* <h4>Comments</h4> */}
           <b className="larger-font">Comments</b>
           <div className="float-to-right">
             <CommentForm
@@ -214,7 +211,6 @@ function RenderComments({
               fetchCoursePage={fetchCoursePage}
             />
           </div>
-          {/* </div> */}
         </CardHeader>
         <ul className="list-unstyled">
           {comments.map((comment) => {
@@ -371,7 +367,7 @@ function DiscussionDetail(props) {
                     className="discuss-detail-save-button"
                     onClick={() => handleSaveCourse(course.courseCode)}
                   >
-                    <span style={{ color: "black" }}>
+                    <span>
                       <HiOutlineSave />
                     </span>
                   </Button>
@@ -621,7 +617,7 @@ function CommentForm(props) {
             </Row>
             <Row className="form-group">
               <Col md={{ size: 10 }}>
-                <Button type="submit" color="primary" className="col-4">
+                <Button type="submit" className="submit-button col-4">
                   Submit
                 </Button>
               </Col>
@@ -629,8 +625,8 @@ function CommentForm(props) {
           </LocalForm>
         </ModalBody>
       </Modal>
-      <Button outline className="submit-comment-button" onClick={toggleModal}>
-        Submit Comment
+      <Button outline className="submit-button" onClick={toggleModal}>
+        Submit Commentss
       </Button>
     </div>
   );

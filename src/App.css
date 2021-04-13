@@ -2,6 +2,11 @@
   text-align: justify;
 }
 
+.homepage-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 * {
   box-sizing: border-box;
@@ -32,11 +37,11 @@ a {
   margin-top: 30px;
 }
 
-.larger-font{
+.larger-font {
   font-size: 1.8em;
 }
 
-.float-to-right{
+.float-to-right {
   float: right;
 }
 
@@ -52,7 +57,7 @@ a {
   font-size: 1.8em;
 }
 
-#generate-common{
+#generate-common {
   margin-top: 5px;
 }
 
@@ -62,6 +67,7 @@ a {
   position: absolute;
   margin-left: 15px;
   margin-top: 15px;
+  font-size: 20px;
   text-align: center;
   /* margin-left: 19px;
   margin-top: 20px; */
@@ -95,11 +101,12 @@ a {
 
 .modal-header,
 .card-header {
-  background-color: #3399ff;
+  background-image: linear-gradient(to top, #f3e7e9 0%);
+  background-color: rgb(191, 207, 214);
 }
 
 .modal-body {
-  background-color: #c0d9ff;
+  /* background-color: #c0d9ff; */
 }
 
 .comment-for-course:hover {
@@ -107,8 +114,13 @@ a {
   background-color: #c5d2e6;
 }
 
-.submit-comment-button {
-  color: #ffffff;
+.submit-button {
+  color: #000;
+  background-color: rgb(191, 207, 214);
+  background-image: linear-gradient(
+    to top,
+    #f3e7e9 0%,
+  );
 }
 
 .background {
@@ -146,7 +158,7 @@ a {
   position: relative;
 }
 
-.more-options-cancel-icons:hover{
+.more-options-cancel-icons:hover {
   cursor: pointer;
 }
 
@@ -172,6 +184,11 @@ hr {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.top-rated-course {
+  font-size: 2em;
+  text-align: center;
 }
 
 /* Moved From ComponentsStyle.css */
@@ -201,9 +218,10 @@ hr {
 }
 
 .head1 {
-  position: relative;
+  text-align: center;
+  /* position: relative;
   bottom: 20px;
-  left: 200px;
+  left: 200px; */
 }
 
 .span2 {
@@ -412,7 +430,8 @@ hr {
 .discuss-detail-save-button {
   font-size: 1.2em;
   text-align: center;
-  color: rgb(196, 196, 164);
+  color: black;
+  background-image: linear-gradient(to top, #f3e7e9 0%);
   margin-bottom: 12px;
   float: right;
   margin-left: 3px;

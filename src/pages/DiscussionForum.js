@@ -229,7 +229,8 @@ function DiscussionForum(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-10">Top Rated Course</div>
+
+           <div className="col-10 top-rated-course mt-3"><b>Top Rated Courses</b></div>
           <div className="col-2">
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="school-native-simple">School</InputLabel>
@@ -249,6 +250,7 @@ function DiscussionForum(props) {
               </Select>
             </FormControl>
           </div>
+
           {/* <div className="discuss-filter col-2">Filter by School</div> */}
         </div>
         <div className="row">
