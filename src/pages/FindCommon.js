@@ -374,10 +374,11 @@ export default function FindCommon() {
 
             <Button
               onClick={generateCommonFreeTimeSlots}
-              id="generate-common"
-              className="common-page-button"
+              
+              className="common-page-button generate-button"
             >
-              Generate
+              <div id="generate-common">Generate</div>
+              
             </Button>
 
             {selectedICSfiles.map((item, idx) => {

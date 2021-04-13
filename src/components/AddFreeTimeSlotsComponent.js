@@ -10,12 +10,12 @@ export default function AddFreeTimeSlotsComponent({
 }) {
   return (
     <div
-      className="container"
+      // className="container"
       style={{
-        width: "90vw",
+        width: "80vw",
         height: "600px",
         "--cell-height": "20px",
-        "--cell-width": "50px",
+        "--cell-width": "40px",
       }}
     >
       <h4>Add Free Time Slots</h4>

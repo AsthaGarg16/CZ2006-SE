@@ -28,8 +28,16 @@ a {
 }
 
 .comment-card {
-  background: #ccffff;
+  /* background: #ccffff; */
   margin-top: 30px;
+}
+
+.larger-font{
+  font-size: 1.8em;
+}
+
+.float-to-right{
+  float: right;
 }
 
 .comment-header {
@@ -44,10 +52,19 @@ a {
   font-size: 1.8em;
 }
 
+#generate-common{
+  margin-top: 5px;
+}
+
 .rating {
+  height: 30px;
+  width: 30px;
   position: absolute;
-  margin-left: 18px;
+  margin-left: 15px;
   margin-top: 15px;
+  text-align: center;
+  /* margin-left: 19px;
+  margin-top: 20px; */
 }
 
 .discuss-filter {
@@ -91,7 +108,6 @@ a {
 }
 
 .submit-comment-button {
-  background-color: #740cb1;
   color: #ffffff;
 }
 
@@ -105,8 +121,28 @@ a {
   background-color: rgb(191, 207, 214);
 }
 
+.wrapper {
+  width: 1360px;
+}
+
 .empty-space {
   height: 50px;
+}
+
+.more-options-cancel-icons {
+  float: right;
+  /* height: ; */
+  width: 39px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  width: 39px;
+  height: 39px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.more-options-cancel-icons:hover{
+  cursor: pointer;
 }
 
 .container {
@@ -167,7 +203,7 @@ hr {
 
 .span2 {
   position: relative;
-  left:110px;
+  left: 110px;
 }
 .register {
   position: relative;
@@ -175,8 +211,9 @@ hr {
   bottom: 20px;
 }
 
- .login_container{
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);  background-color: #1b0b3f;
+.login_container {
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-color: #1b0b3f;
   max-width: 600px;
   margin: 100px auto;
   /* overflow: auto; */
@@ -189,7 +226,8 @@ hr {
 }
 
 .createContainer {
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);  background-color: #1b0b3f;
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-color: #1b0b3f;
   max-width: 600px;
   margin: 50px auto;
   height: 600px;
@@ -206,7 +244,7 @@ hr {
   margin: 20px 0;
   max-width: 600px;
   height: 45px;
-  display: block; 
+  display: block;
 }
 
 .form-control2 {
@@ -316,7 +354,7 @@ hr {
   display: block;
   width: 40%;
   position: relative;
-  left:150px;
+  left: 150px;
 }
 .add {
   margin-left: 15px;
@@ -325,6 +363,14 @@ hr {
   right: 15px;
   height: 40px;
   width: 180px;
+}
+
+#course-div-delete-button {
+  margin-left: 11px;
+}
+
+#course-div-flag-button {
+  margin-left: 11px;
 }
 
 #planner-index-plan-button {

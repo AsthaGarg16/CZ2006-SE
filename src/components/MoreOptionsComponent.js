@@ -14,8 +14,7 @@ import AllowClashCheckBoxesComponent from "./AllowClashCheckBoxesComponent";
 import { usePlanTimetable } from "../context/PlanTimetableContextProvider";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 import { Button } from "reactstrap";
-
-import { makeStyles } from "@material-ui/core/styles";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const styles = (theme) => ({
   root: {
@@ -174,36 +173,45 @@ export default function MoreOptionsComponent(props) {
         maxWidth="lg"
         TransitionComponent={Transition}
       >
-        <DialogTitle
+        {/* <DialogTitle
           id="moreOptions-dialog-title"
           onClose={handleClose}
           style={{ background: "#16a6df", color: "white" }}
+          className="background"
         >
           More Options
-        </DialogTitle>
-        <DialogContent dividers>
-          <AddFreeTimeSlotsComponent
-            tempUserDefinedTimeSlots={tempUserDefinedTimeSlots}
-            setTempUserDefinedTimeSlots={setTempUserDefinedTimeSlots}
-          />
+        </DialogTitle> */}
 
-          <AllowClashCheckBoxesComponent
-            tempAllowClashCC={tempAllowClashCC}
-            setTempAllowClashCC={setTempAllowClashCC}
-            courseDivs={courseDivs}
-          />
+        <DialogContent dividers>
+          <div className="empty-space"></div>
+          <div className="container">
+            <span onClick={handleClose} className="more-options-cancel-icons">
+              <CancelIcon />
+            </span>
+            <AddFreeTimeSlotsComponent
+              tempUserDefinedTimeSlots={tempUserDefinedTimeSlots}
+              setTempUserDefinedTimeSlots={setTempUserDefinedTimeSlots}
+            />
+            <AllowClashCheckBoxesComponent
+              tempAllowClashCC={tempAllowClashCC}
+              setTempAllowClashCC={setTempAllowClashCC}
+              courseDivs={courseDivs}
+            />
+            <DialogActions>
+              <Button
+                autoFocus
+                onClick={handleSaveChanges}
+                color="primary"
+                disabled={!isChangeMade}
+                variant={isChangeMade ? "contained" : "outlined"}
+              >
+                Save changes
+              </Button>
+            </DialogActions>
+          </div>
+
+          <div className="empty-space"></div>
         </DialogContent>
-        <DialogActions>
-          <Button
-            autoFocus
-            onClick={handleSaveChanges}
-            color="primary"
-            disabled={!isChangeMade}
-            variant={isChangeMade ? "contained" : "outlined"}
-          >
-            Save changes
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   );
