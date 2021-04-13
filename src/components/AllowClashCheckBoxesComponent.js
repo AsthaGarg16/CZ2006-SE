@@ -38,7 +38,7 @@ export default function AllowClashCheckBoxesComponent({
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
-      <FormLabel component="legend">Allow Clash</FormLabel>
+      <FormLabel component="legend" className="pt-5">Allow Clash</FormLabel>
       <FormGroup>
         {courseDivs.map((courseDiv) => {
           return (

@@ -18,6 +18,9 @@ export default function AddFreeTimeSlotsComponent({
         "--cell-width": "40px",
       }}
     >
+      <h1 className="top-rated-course mb-4">
+        <b>More Options</b>
+      </h1>
       <h4>Add Free Time Slots</h4>
       <TimeGridScheduler
         classes={classes}

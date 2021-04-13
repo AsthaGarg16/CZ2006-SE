@@ -1,10 +1,16 @@
 .home-paragraph {
-  text-align: justify;
+  /* text-align: justify; */
 }
 
 .homepage-container {
-  padding-left: 40px;
-  padding-right: 40px;
+  width:80%;
+  margin: auto;
+}
+
+.carousel-content{
+  padding-left:50px;
+  padding-right:50px;
+  width:70%;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
@@ -117,10 +123,7 @@ a {
 .submit-button {
   color: #000;
   background-color: rgb(191, 207, 214);
-  background-image: linear-gradient(
-    to top,
-    #f3e7e9 0%,
-  );
+  background-image: linear-gradient(to top, #f3e7e9 0%);
 }
 
 .background {
@@ -143,7 +146,7 @@ a {
 }
 
 .empty-space {
-  height: 50px;
+  height: 85px;
 }
 
 .more-options-cancel-icons {
@@ -464,6 +467,17 @@ hr {
   color: white;
 }
 
+/* .footer {
+  background: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgb(24, 0, 88) 100%);
+  height: 80px;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 2rem;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+} */
+
 .nav-menu {
   z-index: 99 !important;
   /* background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);   */
@@ -725,6 +739,16 @@ hr {
   padding-top: 24px;
 }
 
+.pt-5 {
+  margin-top:20px;
+}
+
+.profile-pic{
+  position: absolute;
+  margin-top:23px;
+  text-align:center;
+}
+
 .share {
   position: relative;
   right: 110px;
@@ -743,4 +767,8 @@ hr {
   height: 40px;
   left: 22px;
   width: 180px;
+}
+
+.table-header{
+  background-color: rgb(191, 207, 214);
 }

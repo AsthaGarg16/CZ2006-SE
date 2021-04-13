@@ -139,54 +139,40 @@ export default function SavedTimetables() {
   //   console.log(savedCourses);
   // }, [savedCourses]);
 
-  const CourseCard = ({ course }) => {
-    return (
-      <Card
-        tag="li"
-        key={course.id}
-        // onClick={() => handleCourseSelect(course)}
-        className="col-12 mt-1"
-      >
-        {/* <div>
-          <Button
-            outline
-            className="discuss-detail-save-button"
-            onClick={() => removeSavedCourse(course.courseCode)}
-          >
-            <span style={{ color: "black" }}>
-              <AiOutlineDelete />
-            </span>
-          </Button>
-        </div> */}
+  // const CourseCard = ({ course }) => {
+  //   return (
+  //     <Card
+  //       tag="li"
+  //       key={course.id}
+  //       // onClick={() => handleCourseSelect(course)}
+  //       className="col-12 mt-1"
+  //     >
+  //     <CardBody>
+  //         <Link to={`/discuss/${course.courseCode}`}>
+  //           <div className="col-12 home-paragraph">
+  //             <Media heading>
+  //               <b>{course.courseCode}</b>
+  //             </Media>
 
-        <CardBody>
-          <Link to={`/discuss/${course.courseCode}`}>
-            <div className="col-12 home-paragraph">
-              <Media heading>
-                <b>{course.courseCode}</b>
-              </Media>
-
-              <Media heading>
-                {course.courseInfo[0][1]}
-              </Media>
-              <p>{course.courseInfo[course.courseInfo.length - 1]}</p>
-            </div>
-            <div className="float-to-right">
-              <Button
-                outline
-                className="discuss-detail-save-button"
-                onClick={() => removeSavedCourse(course.courseCode)}
-              >
-                <span style={{ color: "black" }}>
-                  <AiOutlineDelete />
-                </span>
-              </Button>
-            </div>
-          </Link>
-        </CardBody>
-      </Card>
-    );
-  };
+  //             <Media heading>{course.courseInfo[0][1]}</Media>
+  //             <p>{course.courseInfo[course.courseInfo.length - 1]}</p>
+  //           </div>
+  //           <div className="float-to-right">
+  //             <Button
+  //               outline
+  //               className="discuss-detail-save-button"
+  //               onClick={() => removeSavedCourse(course.courseCode)}
+  //             >
+  //               <span style={{ color: "black" }}>
+  //                 <AiOutlineDelete />
+  //               </span>
+  //             </Button>
+  //           </div>
+  //         </Link>
+  //       </CardBody>
+  //     </Card>
+  //   );
+  // };
 
   const fetchSavedCourses = () => {
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
@@ -322,7 +308,7 @@ export default function SavedTimetables() {
           <div className="col-10">
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
-                <TableHead>
+                <TableHead className="table-header">
                   <TableRow>
                     <TableCell>
                       <b>Saved TimeTable</b>
@@ -352,15 +338,15 @@ export default function SavedTimetables() {
                             state: convertToCorrectformat(item),
                           }}
                         >
-                          <Paper
+                          {/* <Paper
                             elevation={5}
                             style={{ height: "80px", wordWrap: "break-word" }}
-                          >
-                            <h5>
-                              {new Date(parseInt(item.timetableID)).toString()}
-                            </h5>
-                            <p>{JSON.stringify(item.courseSelected)}</p>
-                          </Paper>
+                          > */}
+                          <h5>
+                            {new Date(parseInt(item.timetableID)).toString()}
+                          </h5>
+                          <p>{JSON.stringify(item.courseSelected)}</p>
+                          {/* </Paper> */}
                         </Link>
                       </TableCell>
                     </TableRow>
@@ -377,7 +363,7 @@ export default function SavedTimetables() {
           <div className="col-10">
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
-                <TableHead>
+                <TableHead  className="table-header">
                   <TableRow>
                     <TableCell>
                       <b>Saved Course</b>
@@ -388,7 +374,30 @@ export default function SavedTimetables() {
                   {realSavedCourses.map((course) => (
                     <TableRow key={course.CourseCode}>
                       <TableCell component="th" scope="row">
-                        <CourseCard course={course} />
+                        <Button
+                          outline
+                          className="discuss-detail-save-button"
+                          onClick={() => removeSavedCourse(course.courseCode)}
+                        >
+                          <span style={{ color: "black" }}>
+                            <AiOutlineDelete />
+                          </span>
+                        </Button>
+                        <Link to={`/discuss/${course.courseCode}`}>
+                          <div className="col-12 home-paragraph">
+                            <Media heading>
+                              <b>{course.courseCode}</b>
+                            </Media>
+
+                            <Media heading>{course.courseInfo[0][1]}</Media>
+                            <p>
+                              {course.courseInfo[course.courseInfo.length - 1]}
+                            </p>
+                          </div>
+                          <div className="float-to-right">
+                          </div>
+                        </Link>
+                        {/* <CourseCard course={course} /> */}
                       </TableCell>
                     </TableRow>
                   ))}

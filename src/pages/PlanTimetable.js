@@ -243,7 +243,7 @@ export default function PlanTimetable() {
         <div className="container">
           {/* <div className="row"> */}
           <div className="page-title col-12">
-            <b>Course Planner</b>
+            <b>Plan Timetable</b>
           </div>
           <hr />
           {/* <div className="small-container"> */}
