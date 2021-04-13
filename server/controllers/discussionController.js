@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const Comments = require('../models/allComments');
 var CourseContent = mongoose.model('CourseContent', new Schema(), 'CourseContent');
 
-
+//function to get all the schools of the courses to filter by school 
 const discussion_index=async(req,res)=>{
     try {
         const schoolList = [];
@@ -25,6 +25,7 @@ const discussion_index=async(req,res)=>{
     }
 };
 
+//debug function to check comments 
 const create_first_comment=async(req,res)=>{
     try {
 
@@ -44,6 +45,7 @@ const create_first_comment=async(req,res)=>{
     }
 };
 
+//function to get top courses either by school or overall
 const get_top_courses=async(req,res)=>{
     try {
         const school = req.body.school;
@@ -62,7 +64,7 @@ const get_top_courses=async(req,res)=>{
     }
 };
 
-
+//function to get a specific course page
 const course_page=async(req,res)=>{
     try{
         const courseCode = req.body.courseCode;
@@ -76,6 +78,7 @@ const course_page=async(req,res)=>{
     }
 };
 
+//function to add a reply to a comment
 const add_reply=async(req,res)=>{
 
     try {
@@ -136,6 +139,7 @@ const add_reply=async(req,res)=>{
     }
 }
 
+//function to add a rating and a comment to a course
 const update_course_page=async(req,res)=>{
     try{
         const courseCode = req.body.courseCode;
@@ -221,6 +225,7 @@ const update_course_page=async(req,res)=>{
     }
 }
 
+//backend function to add all courses to discussion forum database
 const add_course_page=async(req, res)=>{
     // res.status(200).send('OK!');
     try {

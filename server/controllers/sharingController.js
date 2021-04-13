@@ -6,7 +6,7 @@ const createICS = require('./AppointToIcsConverter');
 const dis = require('./discussionController');
 var CourseContent = dis.CourseContent;
 
-
+//function to send all available timetables
 const timetable_index=async(req,res)=>{
     try {
         console.log(req);
@@ -20,6 +20,7 @@ const timetable_index=async(req,res)=>{
     }
 };
 
+//function to send a list of all the courses
 const all_courses=async(req,res)=>{
     try {
         courses = await CourseContent.find({});
@@ -45,6 +46,7 @@ const all_courses=async(req,res)=>{
     }
 };
 
+//function to add new timetable
 const add_timetable=async(req,res)=>{
     try{
         const email = req.body.email;
@@ -91,6 +93,7 @@ const add_timetable=async(req,res)=>{
     }
 }
 
+//code to create a link to share timetable
 const link_share=async(req,res)=>{
     try {
         const timetableID = req.body.timetableID;
@@ -104,21 +107,24 @@ const link_share=async(req,res)=>{
     }
 };
 
-// const share_QR=async(req, res) => {
-//     try {
-//         // const link = link_share(req, res);
-//         const link = "https://www.google.com";
-//         const QR = QRCode.toDataURL(link, function (err, url) {
-//             console.log(url)
-//         });
-//         return QR;
-//     }
-//     catch (err) {
-//         res.status(400).send(err);
-//         console.log(err);
-//     }
-// }
 
+//funciton to create a QR code to share
+const share_QR=async(req, res) => {
+    try {
+        // const link = link_share(req, res);
+        const link = "https://www.google.com";
+        const QR = QRCode.toDataURL(link, function (err, url) {
+            console.log(url)
+        });
+        return QR;
+    }
+    catch (err) {
+        res.status(400).send(err);
+        console.log(err);
+    }
+}
+
+//function to export a json file
 const export_settings=async(req,res)=>{
     try {
         const timetableID = req.body.timetableID;
@@ -131,6 +137,7 @@ const export_settings=async(req,res)=>{
     }
 };
 
+//function to export an ICS
 const download_ics=(req,res)=>{
     const ics = createICS.createICS(req.body.appointments);
     res.status(200).send(ics);
@@ -140,7 +147,7 @@ const download_ics=(req,res)=>{
 module.exports={
     timetable_index,
     link_share,
-    // share_QR,
+    share_QR,
     export_settings,
     download_ics,
     add_timetable,
