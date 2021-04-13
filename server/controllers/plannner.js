@@ -59,14 +59,12 @@ const send_timetable = async (req, res) => {
   var flag = false;
   exam_result = await check_exam_clash(input_courses);
   console.log(exam_result);
-  for (i = 0; i < exam_result.length; i++) {
-    if (exam_result[i]["clash"] == 0) {
-      console.log("exam clash");
-      res.status(200).json({ message: exam_result[i] });
-      flag = true;
-      break;
-    }
+  if (exam_result["clash"] == 0) {
+    console.log("exam clash");
+    res.status(200).json({ message: "Exam clash between courses "+ exam_result["course1"]+ " and " + exam_result["course2"] });
+    flag = true;
   }
+  // }
   //generated_timetables = plan_timetable(input_courses, clash_courses, temp_timetable);
   //resultobj = delete_empty_slots(generated_timetables)
   if (!flag) {

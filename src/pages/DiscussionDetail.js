@@ -498,6 +498,8 @@ function CommentForm(props) {
       .then((response) => {
         console.log(response.data);
         props.fetchCoursePage(props.courseCode);
+        alert("Comment successfully added");
+        setIsModalOpen(false);
       })
       .catch(function (error) {
         if (error.response) {
