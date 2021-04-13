@@ -100,29 +100,10 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
   var all_timetables = [];
   var index_comb = [];
   // clash_courses added
-  //console.log(free_slots);
-  //set all the free time slots
-  for (let f = 0; f < free_slots.length; f++) {
-    let slot = free_slots[f];
-    let day = slot.getDay();
-    if (day == 1) {
-      day = "MON";
-    } else if (day == 2) {
-      day = "TUE";
-    } else if (day == 3) {
-      day = "WED";
-    } else if (day == 4) {
-      day = "THU";
-    } else if (day == 5) {
-      day = "FRI";
-    } else if (day == 6) {
-      day = "SAT";
-    }
-    let time = slot.getHours().toString() + slot.getMinutes().toString();
-    temp_timetable[day][time] = ["000000"];
-    //console.log(temp_timetable[day][time], day, time);
-  }
-
+  console.log(free_slots);
+  // call allot_free_time_slots
+  temp_timetable = allot_free_time_slots(temp_timetable, free_slots);
+  console.log(temp_timetable);
   //insert course 1 ke index
   for (var i = 0; i < input_courses[0]["index"].length; i++) {
     if (
@@ -220,7 +201,7 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
         }
       });
     }
-    console.log(result["0"].concat(result["2"], result["3"], result["4"]));
+    //console.log(result["0"].concat(result["2"], result["3"], result["4"]));
     index_comb = result["0"].concat(result["2"], result["3"], result["4"]);
     if (index_comb.length == 0){
         return ["There is no possible index combination!\n"+
@@ -231,6 +212,13 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
   } else {
     return index_comb;
   }
+}
+
+function getTimeDiff(date1, date2)
+{
+  var diff = date2 - date1;
+  diff=((diff/1000)/60)/30;
+  return diff;
 }
 
 function check_clash(index, temp_timetable) {
@@ -275,6 +263,45 @@ function check_clash(index, temp_timetable) {
     }
   }
   return false;
+}
+
+function allot_free_time_slots(temp_timetable, free_slots)
+{
+  var copiedTT = JSON.parse(JSON.stringify(temp_timetable));
+  for (let f = 0; f < free_slots.length; f++) {
+    console.log(free_slots[f]);
+    let a = free_slots[f][0];
+    let b = free_slots[f][1];
+    let slot1=new Date(a);
+    let slot2 = new Date(b);
+    let day = slot1.getDay();
+    if (day == 1) {
+      day = "MON";
+    } else if (day == 2) {
+      day = "TUE";
+    } else if (day == 3) {
+      day = "WED";
+    } else if (day == 4) {
+      day = "THU";
+    } else if (day == 5) {
+      day = "FRI";
+    } else if (day == 6) {
+      day = "SAT";
+    }
+    let t1 = slot1.toLocaleTimeString('en-GB',{ hour12: false, hour: "numeric", minute: "numeric"});
+    let t2 = slot2.toLocaleTimeString('en-GB',{ hour12: false, hour: "numeric", minute: "numeric"});
+    let time1 = t1.substring(0,2)+t1.substring(3);
+    let time2 = t2.substring(0,2)+t2.substring(3);
+    for (var key in copiedTT[day])
+    {
+      if(key>=time1 && key<time2)
+      {
+        console.log("putting 0");
+        copiedTT[day][key] = ["000000"];
+      }
+    }    
+  }
+  return copiedTT;
 }
 
 
