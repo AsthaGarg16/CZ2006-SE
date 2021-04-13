@@ -75,4 +75,22 @@ const getsavedTimetable = async (req, res) => {
   }
 };
 
-module.exports = { saveTimetable, getsavedTimetable };
+const removeSavedTimetable = async (req, res) => {
+  User.update(
+    { email: req.body.userEmail },
+    {
+      $pull: {
+        timetables: req.body.timetableID,
+      },
+    },
+    function (err, result) {
+      if (err) {
+        return res.status(500).send("Error in removing Timetable");
+      } else {
+        return res.status(200).send("Successfully removed Timetable");
+      }
+    }
+  );
+};
+
+module.exports = { saveTimetable, getsavedTimetable, removeSavedTimetable };
