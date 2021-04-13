@@ -59,14 +59,12 @@ const send_timetable = async (req, res) => {
   var flag = false;
   exam_result = await check_exam_clash(input_courses);
   console.log(exam_result);
-  for (i = 0; i < exam_result.length; i++) {
-    if (exam_result[i]["clash"] == 0) {
-      console.log("exam clash");
-      res.status(200).json({ message: exam_result[i] });
-      flag = true;
-      break;
-    }
+  if (exam_result["clash"] == 0) {
+    console.log("exam clash");
+    res.status(200).json({ message: "Exam clash between courses "+ exam_result["course1"]+ " and " + exam_result["course2"] });
+    flag = true;
   }
+  // }
   //generated_timetables = plan_timetable(input_courses, clash_courses, temp_timetable);
   //resultobj = delete_empty_slots(generated_timetables)
   if (!flag) {
@@ -363,11 +361,12 @@ async function check_exam_clash(input_courses) {
       exami["date"] = -1;
       exami["day"] = -1;
       exami["time"] = -1;
-      exami["duration"] = -1;
+      exami["duration"] = 0;
     } else {
       exami_date = exami["date"];
       exami_time = exami["time"];
       exami_duration = exami["duration"];
+      console.log("blabla");
       console.log(exami_duration);
     }
     for (j = i + 1; j < input_courses.length; j++) {
@@ -381,13 +380,13 @@ async function check_exam_clash(input_courses) {
         exam["date"] = -1;
         exam["day"] = -1;
         exam["time"] = -1;
-        exam["duration"] = -1;
+        exam["duration"] = 0;
       } else {
         exam_date = exam["date"];
         exam_time = exam["time"];
         exam_duration = exam["duration"];
       }
-      if (exami_date == exam_date) {
+      if (exami_date == exam_date && exami_date != -1 && exam_date != -1) {
         if (
           exami_time <= exam_time &&
           parseInt(exami_time) + exami_duration >= exam_time

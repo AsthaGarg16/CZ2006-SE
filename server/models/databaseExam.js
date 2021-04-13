@@ -29,5 +29,5 @@ const examSchema=new Schema({
 });
 
 
-const databaseExam=mongoose.model('databaseExam',examSchema,'2020_examDate');
+const databaseExam=mongoose.model('databaseExam',examSchema,'databaseexams');
 module.exports= databaseExam;

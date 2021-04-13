@@ -10,7 +10,7 @@ router.get("/get_schools", sharingController.discussion_index);
 
 router.post("/course", sharingController.course_page);
 
-router.get("/top_course", sharingController.get_top_courses);
+router.post("/top_course", sharingController.get_top_courses);
 
 router.post("/comment", sharingController.update_course_page);
 

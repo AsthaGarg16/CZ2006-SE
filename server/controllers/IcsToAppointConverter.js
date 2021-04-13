@@ -44,10 +44,10 @@ const return_appointments = async (req, res) => {
   const ics_list = req.body.icsList;
   const week = req.body.week;
 
-  res.status(200).json(generateAppointments(ics_list, week));
+  res.status(200).json(findForWeek(ics_list, week));
 };
 
-function generateAppointments(ics_list, week){
+function findForWeek(ics_list, week){
     let input_ics_list = [];
     let result1 = [];
     let result2 = [];
@@ -125,21 +125,30 @@ function getAppointments(ics, thisWeek) {
             let endDate = new Date(ev.end);
             event["endDate"] = endDate;
         } else if (ev.duration) {
+            console.log(ev.duration.split("PT"));
+
             let time = ev.duration.split("PT")[1];
             let hour_min = time.split("H");
+            console.log(hour_min);
             let hour = 0;
             let min = 0;
-            if (hour_min[0]){
+            if (hour_min.length>1){
                 hour = parseInt(hour_min[0]);
-                if (hour_min[1]){
-                    min = parseInt(hour_min[1].split("M")[0]);
-                }
+                min = parseInt(hour_min[1].split("M")[0]);
             } else {
-                hour = 0;
                 min = parseInt(time.split("M")[0]);
             }
             //event["endDate"] = new Date(startDate);
+            console.log(hour, min);
+            if (!hour) {
+                hour = 0;
+            }
+            if (!min) {
+                min = 0;
+            }
             event["endDate"] = new Date(startDate.getTime() + min*60000 + hour*3600000);
+        } else {
+            continue;
         }
         
         event["group"] = ev.description;

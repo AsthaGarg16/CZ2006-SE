@@ -23,7 +23,7 @@ import SavedTimetables from "./pages/SavedTimetables";
 import axios from "axios";
 
 function AppContextConsumer() {
-  const [courses, setCourses] = useState(COURSES);
+  const [courses, setCourses] = useState([]);
   const [comments, setComments] = useState(COMMENTS);
   const appContext = useApp();
   const setToken = appContext.setToken;
@@ -53,7 +53,8 @@ function AppContextConsumer() {
       .get("/sendCourseList/getCourseList", {})
       .then((response) => {
         console.log(response);
-        setCourses(response.data); //Change to all courses afterward
+        sessionStorage.setItem("discuss", JSON.stringify(response.data));
+        // setCourses(response.data); //Change to all courses afterward
       })
       .catch(function (error) {
         if (error.response) {

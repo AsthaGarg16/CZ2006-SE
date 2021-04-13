@@ -64,6 +64,13 @@ export default function CustomizedMenus() {
     setAnchorEl(null);
   };
 
+  const logout = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      sessionStorage.clear();
+      window.location.reload(false);
+    }
+  };
+
   return (
     <div>
       <IconButton
@@ -88,10 +95,7 @@ export default function CustomizedMenus() {
             <StyledMenuItem
               key="1"
               onClick={() => {
-                // console.log("logout");
-                // setToken(undefined);
-                sessionStorage.clear();
-                window.location.reload(false);
+                logout();
               }}
             >
               <ListItemIcon>

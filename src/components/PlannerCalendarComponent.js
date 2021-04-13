@@ -13,6 +13,7 @@ import RoomIcon from "@material-ui/icons/Room";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import { resourcesData } from "./resources";
+import moment from "moment";
 // import "./calendar.css";
 // import { usePlanTimetable } from "../context/PlanTimetableContextProvider";
 
@@ -123,6 +124,47 @@ export default function PlannerCalendarComponent(props) {
   //   return <WeekView.TimeScaleLayout height={20} />;
   // };
   // displayCurrentTTpage();
+  const DayScaleCell = (props) => {
+    const { startDate } = props;
+    if (new Date().getDay() === startDate.getDay()) {
+      return (
+        <WeekView.DayScaleCell
+          {...props}
+          today={false}
+          formatDate={formatDayScaleDateToday}
+        />
+      );
+    }
+    if (startDate.getDay() === 0 || startDate.getDay() === 6) {
+      return (
+        <WeekView.DayScaleCell
+          {...props}
+          today={false}
+          formatDate={formatDayScaleDate}
+        />
+      );
+    }
+    return (
+      <WeekView.DayScaleCell
+        {...props}
+        today={false}
+        formatDate={formatDayScaleDate}
+      />
+    );
+  };
+
+  const formatDayScaleDate = (date, options) => {
+    const momentDate = moment(date);
+    const { weekday } = options;
+    return weekday ? "" : momentDate.format("ddd"); // Render weekday on where the date is supposed to be
+  };
+
+  const formatDayScaleDateToday = (date, options) => {
+    const momentDate = moment(date);
+    const { weekday } = options;
+    return weekday ? "Today" : momentDate.format("ddd"); // Render weekday on where the date is supposed to be
+  };
+
   return (
     <Paper>
       <div
@@ -137,6 +179,7 @@ export default function PlannerCalendarComponent(props) {
           <WeekView
             startDayHour={8}
             endDayHour={22}
+            dayScaleCellComponent={DayScaleCell}
             // timeScaleLayoutComponent={TimeScaleLayout}
           />
           <Appointments appointmentContentComponent={AppointmentContent} />

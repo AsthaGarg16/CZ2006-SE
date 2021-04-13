@@ -71,8 +71,10 @@ export default function ShareTimetableComponent(props) {
     // }
     const courseFixed = { ...combinations[currentTimeTablePage - 1] };
     courseDivs.forEach((courseDiv) => {
-      if (courseDiv.isIndexFixed)
+      if (!courseDiv.isIndexFixed) {
         delete courseFixed[courseDiv.course.courseCode];
+        // console.log("delete");
+      }
     });
     const reqbody = {
       // timetableID: Date.now().toString(),

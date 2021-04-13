@@ -285,7 +285,11 @@ export default function ShareTimetable(props) {
       .then((response) => {
         console.log(response.data);
         if (typeof response.data.message[0] === "string") {
-          alert(response.data.message[0]);
+          if (typeof response.data.message === "string") {
+            alert(response.data.message);
+          } else {
+            alert(response.data.message[0]);
+          }
         } else {
           setCombinations(response.data.message);
         }

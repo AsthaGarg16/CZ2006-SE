@@ -29,6 +29,7 @@ export default function SavedTimetables() {
   const history = useHistory();
   const location = useLocation();
   const [timetables, setTimetables] = useState([]);
+  // const [realtt, setrealtt] = useState([]);
   const [savedCourses, setSavedCourses] = useState([]);
   const [realSavedCourses, setRealSavedCourses] = useState([]);
 
@@ -44,30 +45,69 @@ export default function SavedTimetables() {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    const userTimetables = JSON.parse(
-      sessionStorage.getItem("userData")
-    ).timetables.map((item) => item.toString());
+  const fetchUserTimetables = () => {
+    const userTimetables = JSON.parse(sessionStorage.getItem("userData"))
+      .timetables;
     console.log(userTimetables);
-    const tempTimetables = [];
-
+    // const tempTimetables = [];
+    setTimetables((prevtt) => []);
+    // setTimetables((prevTT) => []);
     for (let i = 0; i < userTimetables.length; i++) {
       const timetableID = userTimetables[i];
 
       const reqbody = { timetableID: timetableID };
-
+      console.log(reqbody);
       axios.post("/saving/getSavedTimetable", reqbody).then((response) => {
-        tempTimetables.push(...response.data);
-
-        if (i === userTimetables.length - 1) {
-          setTimetables(editeddummy(tempTimetables));
-        }
+        // tempTimetables.push(...response.data);
+        setTimetables((prevtt) => [...prevtt, ...response.data]);
+        // console.log(response.data);
+        // console.log(i);
+        // console.log(editeddummy(response.data));
+        // setTimetables((prevTT) => [...prevTT, ...editeddummy(response.data)]);
+        // setTimetables((prevTT) => [...prevTT, ...editeddummy(response.data)]);
+        // if (i === userTimetables.length - 1) {
+        //   setTimetables(tempTimetables);
+        // }
       });
     }
+  };
+
+  useEffect(() => {
+    fetchUserTimetables();
   }, []);
 
+  useEffect(() => {
+    console.log(timetables);
+  }, [timetables]);
+
+  const convertToCorrectformat = (temptt) => {
+    const temporarytt = { ...temptt };
+    console.log(temporarytt);
+
+    const fixedTimeSlots = temporarytt.fixedTimeSlots.map((element) =>
+      element.map((timeslot) => new Date(timeslot))
+    );
+    const tcourseSelected = {};
+    // console.log(temporarytt);
+    // console.log(temporarytt.courseSelected);
+    temporarytt.courseSelected.forEach((element) => {
+      tcourseSelected[element.courseID] = element.indexNum;
+    });
+    const courseFixed = {};
+    temporarytt.courseFixed.forEach((element) => {
+      courseFixed[element.courseID] = element.indexNum;
+    });
+
+    temporarytt.courseSelected = tcourseSelected;
+    temporarytt.courseFixed = courseFixed;
+    temporarytt.fixedTimeSlots = fixedTimeSlots;
+    return temporarytt;
+  };
+
   const editeddummy = (tempTT) => {
-    return tempTT.map((item) => {
+    const temporaryTT = [...tempTT];
+    return temporaryTT.map((item) => {
+      console.log(item);
       // console.log(timetables);
       const fixedTimeSlots = item.fixedTimeSlots.map((element) =>
         element.map((timeslot) => new Date(timeslot))
@@ -188,6 +228,31 @@ export default function SavedTimetables() {
     }
   }, [savedCourses]);
 
+  // useEffect(() => {
+  //   console.log("set real saved tt");
+  //   if (timetables.length !== 0) {
+  //     // setrealtt((prevtt) => []);
+  //     setrealtt((prevtt) => editeddummy(timetables));
+  //     // timetables.forEach((courseCode, idx) => {
+  //     //   axios
+  //     //     .post("/discuss/course", { courseCode: courseCode })
+  //     //     .then((response) => {
+  //     //       setRealSavedCourses((prevCourses) => [
+  //     //         ...prevCourses,
+  //     //         response.data,
+  //     //       ]);
+  //     //     })
+  //     //     .catch(function (error) {
+  //     //       if (error.response) {
+  //     //         alert(error.response.data.message);
+  //     //       }
+  //     //     });
+  //     // });
+  //   } else {
+  //     setrealtt((prevTT) => []);
+  //   }
+  // }, [timetables]);
+
   const removeSavedCourse = (courseCode) => {
     const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
 
@@ -208,6 +273,20 @@ export default function SavedTimetables() {
           // alert(error.response.data.message);
         }
       });
+  };
+
+  const removeSavedTimetable = (timetableID) => {
+    const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
+    const reqbody = { userEmail: userEmail, timetableID: timetableID };
+    axios.patch("/saving/removeSavedTimetable", reqbody).then((response) => {
+      console.log(response);
+    });
+    const tempuserdata = JSON.parse(sessionStorage.getItem("userData"));
+    tempuserdata.timetables = JSON.parse(
+      sessionStorage.getItem("userData")
+    ).timetables.filter((id) => id !== parseInt(timetableID));
+    sessionStorage.setItem("userData", JSON.stringify(tempuserdata));
+    fetchUserTimetables();
   };
 
   return (
@@ -254,12 +333,23 @@ export default function SavedTimetables() {
                   {timetables.map((item) => (
                     <TableRow>
                       <TableCell component="th" scope="row">
+                        <Button
+                          outline
+                          className="discuss-detail-save-button"
+                          onClick={() =>
+                            removeSavedTimetable(parseInt(item.timetableID))
+                          }
+                        >
+                          <span style={{ color: "black" }}>
+                            <AiOutlineDelete />
+                          </span>
+                        </Button>
                         <Link
                           to={{
                             pathname: location.state
                               ? "/findcommon"
                               : "/planner",
-                            state: item,
+                            state: convertToCorrectformat(item),
                           }}
                         >
                           <Paper
