@@ -116,7 +116,7 @@ export default function CustomizedMenus() {
                 <ListItemIcon>
                   <EventIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="Saved timetables" />
+                <ListItemText primary="Saved items" />
               </StyledMenuItem>
             </Link>,
           ]
