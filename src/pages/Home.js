@@ -31,42 +31,32 @@ function Home() {
           <div className="carousel-content">
             <h1 className="head1">Our Functionality</h1>
             <p>
-              Suspendisse pretium lacus vel massa luctus ultrices. Nam lacinia
-              mattis leo, at consequat mi rhoncus quis. Vestibulum in accumsan
-              nulla, vel ultrices dolor. Nunc euismod sapien nibh, quis lacinia
-              erat aliquet in. Vestibulum blandit orci vel gravida sollicitudin.
-              Fusce rhoncus hendrerit neque sit amet tristique. Quisque eu
-              fringilla turpis. Vivamus dictum accumsan pharetra. Morbi ac
-              fermentum lectus, sed fermentum quam. Suspendisse blandit, lacus
-              at posuere congue, risus dolor tristique ante, pellentesque
-              accumsan nulla odio varius nisl. Suspendisse varius non augue in
-              interdum. Proin eget enim et enim elementum fermentum. Ut at
-              pharetra libero. Vivamus elementum diam at velit sodales auctor.
+              We provide the user with an option to choose courses and their respective indices, if the user is unsure about which index to take
+              then (s)he can simply add the courses and get all possible combinations of the courses and their different indices from which the user 
+              can choose to download the desired timetable in .ics format or save that timetable to the users 'saved Timetable' tab or do both. <br/>
+              The user can take benefit from our more options settings which allows the user to choose time slots which the user wants free. MyCal will
+              take that into consideration and will not compute timetable where any of the class timings clashes with the free time slot of the user.
+              The user can also <b>allow clash</b> for upto 4 courses which will allow timetables to be computed where class timings clash for those particular
+              courses but the user still wants it since (s)he is convinced that they can get the time waiver from the schools who offer those courses.
+              Another feature at the users disposal is to <b>fix index</b> of a course(s) which will result in timetables with those indexes fixed and
+              different combinations involving indices of other courses to be changed and moved around the fixed indices.<br/>
             </p>
             <p>
-              Proin ornare aliquet sem, eu tristique lorem. Etiam quis diam
-              egestas turpis auctor facilisis. Nunc efficitur, elit eu tincidunt
-              venenatis, erat diam dictum arcu, sit amet lacinia velit tortor id
-              augue. Vivamus vitae enim mauris. Proin quis arcu sit amet leo
-              posuere aliquam a id lacus. Donec vel ligula porttitor, sodales
-              neque sit amet, convallis tortor. Nulla magna eros, tincidunt id
-              ipsum id, molestie volutpat dui. In vestibulum arcu non mollis
-              hendrerit. Aenean quis ante et neque pellentesque sollicitudin.
-              Morbi aliquet nibh purus, eu posuere neque scelerisque auctor.
-              Nulla ligula augue, mollis in iaculis eu, mattis in enim.
-              Phasellus sagittis, leo id accumsan rhoncus, dui eros dignissim
-              lectus, sed interdum nisi nibh ac ex. Proin porta sagittis
-              ultricies. Phasellus nec ullamcorper libero, a placerat massa.
+              Our <b>Discussion forum</b> presents the user with a platform to share their views on a particular course/ rate courses and even save courses 
+              that (s)he plans to take in future semesters. The courses displayed can be filtered to view top rated courses from each programme 
+              and upon clicking any of the course the user can view a detailed description about the course<br/>
+              Lastly our '<b>Find Common free time slot</b>' saves the users valuable time in asking each and every member of a group for their availability
+              for a group meeting by allowing a user to simply upload their timetable in .ics format and we will provide the common free time slots among all the timetables added.
             </p>
           </div>
-          <div className="carousel-content">
+          {/* <div className="carousel-content">
             <h1 className="head1">React Master Liew</h1>
             <p>
             Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. 
             Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. React Master. Call me master. 
             </p>
-          </div>
-          <div className="carousel-content">
+          </div> */}
+          {/* <div className="carousel-content">
             <h1 className="head1">React Master Liew</h1>
             <p>
               Suspendisse pretium lacus vel massa luctus ultrices. Nam lacinia
@@ -96,7 +86,7 @@ function Home() {
               lectus, sed interdum nisi nibh ac ex. Proin porta sagittis
               ultricies. Phasellus nec ullamcorper libero, a placerat massa.
             </p>
-          </div>
+          </div> */}
           {/* <div>
             <h2>Text and Images!?</h2>
             <div>
