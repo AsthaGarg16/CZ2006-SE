@@ -274,7 +274,12 @@ export default function SavedTimetables() {
     sessionStorage.setItem("userData", JSON.stringify(tempuserdata));
     fetchUserTimetables();
   };
-
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
   return (
     <div className="background">
       <div className="empty-space"></div>
@@ -343,9 +348,41 @@ export default function SavedTimetables() {
                             style={{ height: "80px", wordWrap: "break-word" }}
                           > */}
                           <h5>
-                            {new Date(parseInt(item.timetableID)).toString()}
+                            {"Created on " +
+                              new Date(
+                                parseInt(item.timetableID)
+                              ).toLocaleDateString(undefined, options) +
+                              " " +
+                              new Date(
+                                parseInt(item.timetableID)
+                              ).toLocaleTimeString()}
                           </h5>
-                          <p>{JSON.stringify(item.courseSelected)}</p>
+                          {/* <p>{JSON.stringify(item.courseSelected)}</p> */}
+
+                          <tr>
+                            {item.courseSelected.map((element) => (
+                              <>
+                                <td style={{ paddingRight: 5 }}>
+                                  {element.courseID + ": "}
+                                </td>
+                                <td style={{ paddingRight: 15 }}>
+                                  {element.indexNum}
+                                </td>
+                              </>
+                            ))}
+                            {/* <td className="saved-timetable">
+                              {item.courseSelected[0].courseID + ":"}
+                            </td>
+                            <td className="saved-timetable">
+                              {item.courseSelected[0].indexNum}
+                            </td>
+                            <td className="saved-timetable">
+                              {item.courseSelected[0].courseID + ":"}
+                            </td>
+                            <td className="saved-timetable">
+                              {item.courseSelected[0].indexNum}
+                            </td> */}
+                          </tr>
                           {/* </Paper> */}
                         </Link>
                       </TableCell>
@@ -363,7 +400,7 @@ export default function SavedTimetables() {
           <div className="col-10">
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
-                <TableHead  className="table-header">
+                <TableHead className="table-header">
                   <TableRow>
                     <TableCell>
                       <b>Saved Course</b>
@@ -394,8 +431,7 @@ export default function SavedTimetables() {
                               {course.courseInfo[course.courseInfo.length - 1]}
                             </p>
                           </div>
-                          <div className="float-to-right">
-                          </div>
+                          <div className="float-to-right"></div>
                         </Link>
                         {/* <CourseCard course={course} /> */}
                       </TableCell>
