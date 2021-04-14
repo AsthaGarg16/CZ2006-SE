@@ -411,7 +411,9 @@ function DiscussionDetail(props) {
                         </TableCell>
                         <TableCell>
                           <div className="discussion-forum-table">
-                            {course.usefulness.toPrecision(2)}
+                            {course.usefulness
+                              ? course.usefulness.toPrecision(2)
+                              : "No data yet"}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -421,7 +423,9 @@ function DiscussionDetail(props) {
                         </TableCell>
                         <TableCell>
                           <div className="discussion-forum-table">
-                            {course.easiness.toPrecision(2)}
+                            {course.easiness
+                              ? course.easiness.toPrecision(2)
+                              : "No data yet"}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -431,7 +435,9 @@ function DiscussionDetail(props) {
                         </TableCell>
                         <TableCell>
                           <div className="discussion-forum-table">
-                            {course.timeInvestment.toPrecision(2)}
+                            {course.timeInvestment
+                              ? course.timeInvestment.toPrecision(2)
+                              : "No data yet"}
                           </div>
                         </TableCell>
                       </TableRow>
