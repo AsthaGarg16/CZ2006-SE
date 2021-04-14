@@ -324,7 +324,7 @@ export default function SavedTimetables() {
                   {timetables.map((item) => (
                     <TableRow>
                       <TableCell component="th" scope="row">
-                        <Button
+                        {/* <Button
                           outline
                           className="discuss-detail-save-button"
                           onClick={() =>
@@ -334,7 +334,7 @@ export default function SavedTimetables() {
                           <span style={{ color: "black" }}>
                             <AiOutlineDelete />
                           </span>
-                        </Button>
+                        </Button> */}
                         <Link
                           to={{
                             pathname: location.state
@@ -385,6 +385,17 @@ export default function SavedTimetables() {
                           </tr>
                           {/* </Paper> */}
                         </Link>
+                        <Button
+                          outline
+                          className="discuss-detail-save-button"
+                          onClick={() =>
+                            removeSavedTimetable(parseInt(item.timetableID))
+                          }
+                        >
+                          <span style={{ color: "black" }}>
+                            <AiOutlineDelete />
+                          </span>
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -409,9 +420,9 @@ export default function SavedTimetables() {
                 </TableHead>
                 <TableBody>
                   {realSavedCourses.map((course) => (
-                    <TableRow key={course.CourseCode}>
+                    <TableRow>
                       <TableCell component="th" scope="row">
-                        <Button
+                        {/* <Button
                           outline
                           className="discuss-detail-save-button"
                           onClick={() => removeSavedCourse(course.courseCode)}
@@ -419,8 +430,11 @@ export default function SavedTimetables() {
                           <span style={{ color: "black" }}>
                             <AiOutlineDelete />
                           </span>
-                        </Button>
-                        <Link to={`/discuss/${course.courseCode}`}>
+                        </Button> */}
+                        <Link
+                          to={`/discuss/${course.courseCode}`}
+                          style={{ width: "600px" }}
+                        >
                           <div className="col-12 home-paragraph">
                             <Media heading>
                               <b>{course.courseCode}</b>
@@ -433,6 +447,15 @@ export default function SavedTimetables() {
                           </div>
                           <div className="float-to-right"></div>
                         </Link>
+                        <Button
+                          outline
+                          className="discuss-detail-save-button"
+                          onClick={() => removeSavedCourse(course.courseCode)}
+                        >
+                          <span style={{ color: "black" }}>
+                            <AiOutlineDelete />
+                          </span>
+                        </Button>
                         {/* <CourseCard course={course} /> */}
                       </TableCell>
                     </TableRow>

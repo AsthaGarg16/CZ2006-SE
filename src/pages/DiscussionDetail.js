@@ -411,7 +411,7 @@ function DiscussionDetail(props) {
                         </TableCell>
                         <TableCell>
                           <div className="discussion-forum-table">
-                            {course.usefulness}
+                            {course.usefulness.toPrecision(2)}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -421,7 +421,7 @@ function DiscussionDetail(props) {
                         </TableCell>
                         <TableCell>
                           <div className="discussion-forum-table">
-                            {course.easiness}
+                            {course.easiness.toPrecision(2)}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -431,7 +431,7 @@ function DiscussionDetail(props) {
                         </TableCell>
                         <TableCell>
                           <div className="discussion-forum-table">
-                            {course.timeInvestment}
+                            {course.timeInvestment.toPrecision(2)}
                           </div>
                         </TableCell>
                       </TableRow>
