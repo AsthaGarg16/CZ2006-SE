@@ -233,7 +233,7 @@ function DiscussionForum(props) {
            <div className="col-10 top-rated-course mt-3"><b>Top Rated Courses</b></div>
           <div className="col-2">
             <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="school-native-simple">School</InputLabel>
+              <InputLabel htmlFor="school-native-simple">Programme</InputLabel>
               <Select
                 native
                 value={selectedSchool}
