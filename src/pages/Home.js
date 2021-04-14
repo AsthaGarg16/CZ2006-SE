@@ -10,31 +10,22 @@ function Home() {
           <div className="carousel-content home-paragraph">
             <h1 className="head1">About MyCal</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-              semper leo et lorem vestibulum, id convallis sem ultricies. Ut
-              porttitor enim ligula, ut feugiat diam cursus eu. Phasellus
-              molestie rutrum enim vitae iaculis. Proin euismod nec lorem quis
-              semper. Nulla eu neque at diam maximus finibus at euismod arcu. In
-              nulla neque, varius et erat sit amet, consectetur euismod diam.
-              Morbi maximus, ligula at pulvinar feugiat, sem dui posuere augue,
-              id blandit felis orci vitae ipsum. Integer ac mollis enim, eu
-              mollis nibh. Cras posuere vitae erat eu pellentesque. Vivamus
-              ornare, tellus placerat auctor volutpat, quam lorem sodales est,
-              at aliquet justo dolor at magna. Phasellus at dignissim turpis.
-              Sed erat mi, egestas vel enim quis, porttitor sollicitudin elit.
-              Integer laoreet dui tortor, et scelerisque sapien convallis in.
-              Proin vitae nulla non sapien auctor sollicitudin.
+            MyCal aims to provide users with an easier way to choose their NTU courses and plan their timetable without 
+            requiring the effort to go through all the indices of a course and trying to schedule their desired timetable. 
+            Currently the NTU stars planner and other websites have some functionalities to ease the process of course planning 
+            but lack of advanced filtering options such as choosing a free time slot and fixing a particular course index if the user has made 
+            up his/her mind to take that particular index are not present which leaves the user spending a lot of time and effort for a simple 
+            task to plan their timetable. With MyCal, the user not only gets features such as choosing free time slots, fixing a particular 
+            course index, getting all possible combinations of the selected courses but they can also allow clash for particular courses and 
+            download their timetable in .ics file to add it to their laptop/tablet or mobile phone calendars.
             </p>
             <p>
-              Sed fringilla dui eu ante euismod scelerisque. Curabitur et sapien
-              id arcu ullamcorper fringilla ac ut nisi. Praesent quis dui nisl.
-              Phasellus ut justo a dolor bibendum vehicula. In molestie ex vitae
-              imperdiet vestibulum. Pellentesque tellus augue, accumsan sit amet
-              accumsan ut, mattis eget enim. Nunc efficitur pharetra fermentum.
-              Duis non neque ante. Donec rutrum auctor ligula quis venenatis.
-              Donec at augue neque. Vestibulum tempor semper sollicitudin. Nam
-              eleifend eros eget fermentum tempor. Quisque ut nunc magna. Etiam
-              malesuada felis nec sem porttitor mattis.
+              But MyCal isnt restricted to just course planning, our Common Free time slot generater can take up multiple .ics file and provide the 
+              user with the common free time among all the uploaded timetables which reduces the time spent on asking every member of a group for 
+              his/her availability for a meeting or an event. Our Discussion forum provides a platform for the users to share their views on a particular
+              course by adding and replying to comments which promotes a healthy and insightful discussion for the students who are unsure About
+              which course to take. If the user is still not sure about the course then he/she can always chek the rating for the course 
+              along with getting the top rated courses for each programme.  
             </p>
           </div>
           <div className="carousel-content">
