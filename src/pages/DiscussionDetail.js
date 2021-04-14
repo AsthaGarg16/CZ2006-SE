@@ -188,10 +188,7 @@ function RenderComments({
                             rows="6"
                             className="form-control"
                           />
-                          <Button
-                            className="submit-button mt-2"
-                            type="submit"
-                          >
+                          <Button className="submit-button mt-2" type="submit">
                             Submit
                           </Button>
                         </Col>
@@ -626,7 +623,7 @@ function CommentForm(props) {
         </ModalBody>
       </Modal>
       <Button outline className="submit-button" onClick={toggleModal}>
-        Submit Commentss
+        Submit Comment
       </Button>
     </div>
   );
