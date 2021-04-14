@@ -16,6 +16,7 @@ import FaceIcon from "@material-ui/icons/Face";
 import EventIcon from "@material-ui/icons/Event";
 // import useToken from "../custom hooks/useToken";
 import { useApp } from "../context/AppContextProvider";
+import { useHistory } from "react-router-dom";
 
 const StyledMenu = withStyles({
   paper: {
@@ -49,6 +50,7 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function CustomizedMenus() {
+  const history = useHistory();
   // const { token, setToken } = useToken();
   const appContext = useApp();
   const token = appContext.token;
@@ -67,6 +69,7 @@ export default function CustomizedMenus() {
   const logout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       sessionStorage.clear();
+      history.push("/");
       window.location.reload(false);
     }
   };
