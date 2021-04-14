@@ -20,7 +20,6 @@ function PlanTimetableContextConsumer(props) {
   const currentTimeTablePage = planTimetableContext.currentTimeTablePage;
   const setCurrentTimeTablePage = planTimetableContext.setCurrentTimeTablePage;
   const occupiedTimeSlots = planTimetableContext.occupiedTimeSlots;
-
   const courseDivs = planTimetableContext.courseDivs;
   const userDefinedTimeSlots = planTimetableContext.userDefinedTimeSlots;
   const allowClashCC = planTimetableContext.allowClashCC;
@@ -84,6 +83,21 @@ function PlanTimetableContextConsumer(props) {
     });
   };
 
+  const convertUserDefinedTimeSlotstoAppointments = (userTimeSlots) => {
+    return userTimeSlots.map((item) => {
+      const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+      console.log(item);
+      return {
+        title: "Free Time Slot",
+        weekList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        type: "",
+        startDate: item[0],
+        endDate: item[1],
+        day: dayNames[item[0].getDay()],
+      };
+    });
+  };
+
   const downloadfile = () => {
     const FileDownload = require("js-file-download");
     console.log(occupiedTimeSlots);
@@ -118,20 +132,7 @@ function PlanTimetableContextConsumer(props) {
     //     courseDivID: 1,
     //   },
     // ];
-    const convertUserDefinedTimeSlotstoAppointments = (occupiedTimeSlots) => {
-      return occupiedTimeSlots.map((item) => {
-        const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-        console.log(item);
-        return {
-          title: "Free Time Slot",
-          weekList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-          type: "",
-          startDate: item[0],
-          endDate: item[1],
-          day: dayNames[item[0].getDay()],
-        };
-      });
-    };
+
     const udtsAppointments = convertUserDefinedTimeSlotstoAppointments(
       userDefinedTimeSlots
     );
@@ -179,7 +180,10 @@ function PlanTimetableContextConsumer(props) {
           </Button>
         </div>
         <PlannerCalendarComponent
-          timeTableData={occupiedTimeSlots}
+          timeTableData={[
+            ...occupiedTimeSlots,
+            ...convertUserDefinedTimeSlotstoAppointments(userDefinedTimeSlots),
+          ]}
           currentDate={"2021-03-02"}
         />
       </div>
