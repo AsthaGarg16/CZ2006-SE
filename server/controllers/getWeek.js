@@ -1,3 +1,10 @@
+/**
+ * Gets the current week number in the teaching weeks.
+ *
+ * @author: Runtao
+ */
+
+/** @private The start dates of beginnings of teaching weeks*/
 const week1 = new Date('2021-01-11T00:00:00Z');
 const week2 = new Date('2021-01-18T00:00:00Z');
 const week3 = new Date('2021-01-25T00:00:00Z');
@@ -14,8 +21,14 @@ const week12 = new Date('2021-04-05T00:00:00Z');
 const week13 = new Date('2021-04-12T00:00:00Z');
 const end = new Date('2021-04-19T00:00:00Z');
 
+/** @private Array of the start dates of beginnings of teaching weeks*/
 const teaching_weeks = [week1, week2, week3, week4, week5, week6, week7, week8, week9, week10, week11, week12, week13, end];
 
+/**
+ * Main function to get the week number.
+ *
+ * @return {number} The week number.
+ */
 function getWeek(){
     let now = new Date();
     if (recess < now && now < week8){
@@ -31,6 +44,7 @@ function getWeek(){
     }
 }
 
+/** @exports the main function */
 module.exports.getWeek = getWeek;
 
 // Test
