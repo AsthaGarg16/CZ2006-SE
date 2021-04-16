@@ -1,7 +1,13 @@
-const ics = require("ics");
-//const date2 = new Date('1995-12-17T03:24:00');
-//all starting week dates
+/**
+ * Converts arrays of appointment dictionaries to one ICS string.
+ *
+ * @author: Astha and Runtao
+ */
 
+/** Import ical */
+const ics = require("ics");
+
+/** @private The start dates of beginnings of teaching weeks*/
 const week1 = new Date("2021-01-11T00:00:00");
 const week2 = new Date("2021-01-18T00:00:00");
 const week3 = new Date("2021-01-25T00:00:00");
@@ -16,6 +22,7 @@ const week11 = new Date("2021-03-29T00:00:00");
 const week12 = new Date("2021-04-05T00:00:00");
 const week13 = new Date("2021-04-12T00:00:00");
 
+/** @private Array of the start dates of beginnings of teaching weeks*/
 const weekDates = [
   week1,
   week2,
@@ -31,21 +38,30 @@ const weekDates = [
   week12,
   week13,
 ];
+
+/** @private Dictionary that maps day of week to numbers */
 const Day = { MON: 0, TUE: 1, WED: 2, THU: 3, FRI: 4, SAT: 5 };
 
 
 
-// title: 'Dinner',
-//   description: 'Nightly thing I do',
-//   busyStatus: 'FREE',
-//   start: [2018, 1, 15, 6, 30],
-//   duration: { minutes: 50 }
+/**
+ * Main function called by the frontend.
+ *
+ * @param {array} req.body.appointments - Array of appointment dictionaries.
+ * @return {string} An ICS string.
+ */
 const createICS = async (req, res) => {
   const appointments = req.body.appointments;
 
   res.status(200).json(generateEvents(appointments));
 };
 
+/**
+ * Converts appointments to an ICS string.
+ *
+ * @param {array} appointments - Array of appointment dictionaries.
+ * @return {string} An ICS string or an error message.
+ */
 function generateEvents(appointments){
     const eventsAdd = editEvents(appointments);
     const { error, value } = ics.createEvents(eventsAdd);
@@ -55,7 +71,12 @@ function generateEvents(appointments){
     return value;
 }
 
-
+/**
+ * Converts appointments to an array of event dictionaries.
+ *
+ * @param {array} appointments - Array of appointment dictionaries.
+ * @return {array} An array of event dictionaries.
+ */
 function editEvents(appointments) {
   var events = [];
   var event = { title: "", description: "",  location: "", start: [], end: [] };
@@ -67,14 +88,10 @@ function editEvents(appointments) {
     //get the weeklist
     for (var j = 0; j < weeklist.length; j++) {
       if (weeklist[j] == 1) {
-        //console.log("added");
-
-
         var eventObj = event;
         var weekDay = Day[i.day]; // Monday is 0
         eventObj["title"] = i.title + " " + i.type;
         eventObj["description"] = i.group;
-        //eventObj["group"] = i.group;
         eventObj["location"] = i.location;
 
         var eventDate = addDays(weekDates[j], weekDay);
@@ -84,7 +101,7 @@ function editEvents(appointments) {
         let eHour = endDate.getHours();
         let sMin = startDate.getMinutes();
         let eMin = endDate.getMinutes();
-        //console.log(sTime);
+        
         eventObj["start"] = [
           eventDate.getFullYear(),
           eventDate.getMonth() + 1,
@@ -109,16 +126,17 @@ function editEvents(appointments) {
   return events;
 }
 
-function getDaysDiff(date1, date2) {
-  const diffTime = Math.abs(date2 - date1);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays;
-}
-
+/**
+ * Adds a few days to a date.
+ *
+ * @param {date} date - A date.
+ * @return {number} Number of days to add.
+ */
 function addDays(date, days) {
   var result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
 }
 
+/** @exports the main function */
 module.exports.createICS = createICS;
