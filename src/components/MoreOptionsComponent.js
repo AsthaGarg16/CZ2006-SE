@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-// import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
@@ -72,10 +71,8 @@ export default function MoreOptionsComponent(props) {
   const setAllowClashCC = planTimetableContext.setAllowClashCC;
   const userDefinedTimeSlots = planTimetableContext.userDefinedTimeSlots;
   const setUserDefinedTimeSlots = planTimetableContext.setUserDefinedTimeSlots;
-
   const [open, setOpen] = useState(false);
   const [isChangeMade, setIsChangeMade] = useState(false);
-  // const [isChangeSaved, setIsChangeSaved] = useState(false);
   const [tempUserDefinedTimeSlots, setTempUserDefinedTimeSlots] = useState(
     userDefinedTimeSlots
   );
@@ -89,7 +86,6 @@ export default function MoreOptionsComponent(props) {
   }, [open]);
 
   useEffect(() => {
-    //have to compare initial and final state
     if (
       JSON.stringify(tempAllowClashCC.sort()) !==
         JSON.stringify(allowClashCC.sort()) ||
@@ -101,10 +97,6 @@ export default function MoreOptionsComponent(props) {
       setIsChangeMade(false);
     }
   }, [tempAllowClashCC, tempUserDefinedTimeSlots]);
-
-  // useEffect(() => {
-  //   console.log("moreoptions");
-  // });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -119,17 +111,14 @@ export default function MoreOptionsComponent(props) {
     } else {
       setOpen(false);
     }
-    // setIsChangeSaved(false);
   };
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
   const returnTimetableByQuery = (searchParams) => {
-    // console.log(searchParams);
     if (searchParams.toString()) {
       for (const [key, value] of searchParams.entries()) {
         if (key === "timetable") {
-          // console.log(JSON.parse(value));
           const tempTimetable = JSON.parse(decodeURIComponent(value));
           const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
             element.map((timeslot) => new Date(timeslot))
@@ -141,13 +130,9 @@ export default function MoreOptionsComponent(props) {
     }
   };
   useEffect(() => {
-    // console.log(location);
     const tempTimetable =
       returnTimetableByQuery(searchParams) || location.state;
     if (tempTimetable) {
-      // console.log("state exists");
-
-      // setCombinations([tempTimetable.courseSelected]);
       setUserDefinedTimeSlots(tempTimetable.fixedTimeSlots);
       setAllowClashCC(tempTimetable.courseClashAllowed);
     }
@@ -173,14 +158,6 @@ export default function MoreOptionsComponent(props) {
         maxWidth="lg"
         TransitionComponent={Transition}
       >
-        {/* <DialogTitle
-          id="moreOptions-dialog-title"
-          onClose={handleClose}
-          style={{ background: "#16a6df", color: "white" }}
-          className="background"
-        >
-          More Options
-        </DialogTitle> */}
 
         <DialogContent dividers>
           <div className="empty-space"></div>

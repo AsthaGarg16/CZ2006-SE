@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { LeakAddTwoTone, LiveTvTwoTone } from "@material-ui/icons";
 import axios from "axios";
 
+/** This function is used for rendering the forgot password page. */
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
@@ -25,11 +26,6 @@ function ForgotPassword() {
     return verificationCode.length > 0;
   }
 
-  // const switchForm = {
-  //   0: { function: validateEmail, text: "Send verification code" },
-  //   1: { function: validateVerificationCode, text: "Submit verification code" },
-  //   2: { function: validatePassword, text: "Reset password" },
-  // };
   const history = useHistory();
 
   function handleSubmit(event) {
@@ -46,9 +42,6 @@ function ForgotPassword() {
           .then((response) => {
             console.log(response.data);
             alert(response.data.message);
-            // console.log(response.data.token);
-            // setToken(response.data.token);
-            // history.push("/planner");
             setCorrectVerificationCode(response.data.code);
           })
           .catch(function (error) {
@@ -93,9 +86,6 @@ function ForgotPassword() {
               console.log(response.data);
               alert(response.data.message);
               history.push("/login");
-              // console.log(response.data.token);
-              // setToken(response.data.token);
-              // history.push("/planner");
             })
             .catch(function (error) {
               if (error.response) {
@@ -108,8 +98,6 @@ function ForgotPassword() {
       default:
         break;
     }
-
-    // alert(JSON.stringify(reqbody));
   }
 
   switch (currentform) {
@@ -134,32 +122,6 @@ function ForgotPassword() {
             />
           </form>
         </div>
-        // <div>
-        //   <h4>Forgot password</h4>
-        //   <Form onSubmit={handleSubmit}>
-        //     <Form.Group size="lg" controlId="email">
-        //       <Form.Label>Email</Form.Label>
-        //       <br />
-        //       <Form.Control
-        //         autoFocus
-        //         type="email"
-        //         value={email}
-        //         onChange={(e) => setEmail(e.target.value)}
-        //         placeholder="Enter email"
-        //       />
-        //     </Form.Group>
-
-        //     <Button
-        //       block
-        //       size="lg"
-        //       type="submit"
-        //       disabled={!validateEmail()}
-        //       onclick={handleSubmit}
-        //     >
-        //       <span>Send code</span>
-        //     </Button>
-        //   </Form>
-        // </div>
       );
       break;
     case 1:
@@ -184,32 +146,6 @@ function ForgotPassword() {
             />
           </form>
         </div>
-
-        // <div>
-        //   <h4>Forgot password</h4>
-        //   <Form onSubmit={handleSubmit}>
-        //     <Form.Group size="lg" controlId="username">
-        //       <Form.Label>Verification Code</Form.Label>
-        //       <br />
-        //       <Form.Control
-        //         type="text"
-        //         value={verificationCode}
-        //         onChange={(e) => setVerificationCode(e.target.value)}
-        //         placeholder="Enter verification code"
-        //       />
-        //     </Form.Group>
-
-        //     <Button
-        //       block
-        //       size="lg"
-        //       type="submit"
-        //       disabled={!validateVerificationCode()}
-        //       onclick={handleSubmit}
-        //     >
-        //       <span>Verify code</span>
-        //     </Button>
-        //   </Form>
-        // </div>
       );
       break;
     case 2:
@@ -242,42 +178,6 @@ function ForgotPassword() {
             />
           </form>
         </div>
-
-        // <div>
-        //   <h4>Forgot password</h4>
-        //   <Form onSubmit={handleSubmit}>
-        //     <Form.Group size="lg" controlId="password">
-        //       <Form.Label>Password</Form.Label>
-        //       <br />
-        //       <Form.Control
-        //         type="password"
-        //         value={password}
-        //         onChange={(e) => setPassword(e.target.value)}
-        //         placeholder="Enter password"
-        //       />
-        //     </Form.Group>
-        //     <Form.Group size="lg" controlId="password">
-        //       <Form.Label>Confirm Password</Form.Label>
-        //       <br />
-        //       <Form.Control
-        //         type="password"
-        //         value={cpassword}
-        //         onChange={(e) => setcPassword(e.target.value)}
-        //         placeholder="Confirm password"
-        //       />
-        //     </Form.Group>
-
-        //     <Button
-        //       block
-        //       size="lg"
-        //       type="submit"
-        //       disabled={!validatePassword()}
-        //       onclick={handleSubmit}
-        //     >
-        //       <span>Reset password</span>
-        //     </Button>
-        //   </Form>
-        // </div>
       );
       break;
 

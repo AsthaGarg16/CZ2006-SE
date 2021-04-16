@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
-
-import { SentimentVerySatisfiedTwoTone } from "@material-ui/icons";
 import axios from "axios";
 
+/** This function is used for rendering the register new account page. */
 export default function Register({ setToken }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -53,9 +52,6 @@ export default function Register({ setToken }) {
             JSON.stringify({ timetables: [] })
           );
           history.push("/login");
-          // console.log(response.data.token);
-          // setToken(response.data.token);
-          // history.push("/planner");
         })
         .catch(function (error) {
           if (error.response) {

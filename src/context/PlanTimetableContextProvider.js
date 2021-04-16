@@ -1,6 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
-import { data } from "../components/testData.js";
-import { appointments } from "../shares/appointments";
+import React, { useState, useEffect } from "react";
 const PlanTimetableContext = React.createContext();
 
 function PlanTimetableContextProvider({ children }) {
@@ -11,9 +9,6 @@ function PlanTimetableContextProvider({ children }) {
         )
       : []
   );
-  //   [
-  //   // [new Date("March 1, 2021 10:15:00"), new Date("March 1, 2021 12:15:00")], //each item is an array of start time and end time of a slot
-  // ]
   const setUserDefinedTimeSlots = (timeslots) => {
     saveUserDefinedTimeSlots(timeslots);
     sessionStorage.setItem("userDefinedTimeSlots", JSON.stringify(timeslots));
@@ -24,11 +19,6 @@ function PlanTimetableContextProvider({ children }) {
       ? JSON.parse(sessionStorage.getItem("courseDivs"))
       : []
   );
-  // {
-  //           course: tempCourse,
-  //           currentIdx: currentIdxVar,
-  //           isIndexFixed: false,
-  //         },
   const setCourseDivs = (courseDivsVar) => {
     saveCourseDivs(courseDivsVar);
     sessionStorage.setItem("courseDivs", JSON.stringify(courseDivsVar));
@@ -57,7 +47,6 @@ function PlanTimetableContextProvider({ children }) {
   //combinations = [{coursecode:index,...},...] each item is a combination of course indexes
   const [occupiedTimeSlots, setOccupiedTimeSlots] = useState([]); //appointment format(react scheduler)
   const [isPlanClicked, setIsPlanClicked] = useState(false);
-  // const [isPageChanged, setIsPageChanged] = useState(false);
 
   const dayNames = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
@@ -155,8 +144,6 @@ function PlanTimetableContextProvider({ children }) {
     if (isPlanClicked) {
       setIsPlanClicked(false);
     }
-    // if (isPageChanged) setIsPageChanged(false);
-    // console.log(apps);
     return apps;
   };
 
@@ -172,36 +159,25 @@ function PlanTimetableContextProvider({ children }) {
 
       idx += 1;
     }
-
-    // console.log(apps);
     return apps;
   };
 
   useEffect(() => {
-    // console.log("useeffect2")
     const combination = {
       ...combinations[currentTimeTablePage - 1],
     };
-    // console.log(combination);
     const tempOTS = convertCombinationtoApps(combination);
     setOccupiedTimeSlots(tempOTS);
   }, [combinations]);
 
   useEffect(() => {
-    // console.log("useeffect1")
     const combination = {
       ...combinations[currentTimeTablePage - 1],
     };
-    // console.log(combination);
     const tempOTS = convertCombinationtoApps2(combination);
 
     setOccupiedTimeSlots(tempOTS);
   }, [currentTimeTablePage]);
-
-  // NOTE: you *might* need to memoize this value
-  // Learn more in http://kcd.im/optimize-context
-  //   const value = { state, dispatch };
-
   const value = {
     userDefinedTimeSlots,
     setUserDefinedTimeSlots,
@@ -216,7 +192,6 @@ function PlanTimetableContextProvider({ children }) {
     occupiedTimeSlots,
     setOccupiedTimeSlots,
     setIsPlanClicked,
-    // setIsPageChanged,
   };
   return (
     <PlanTimetableContext.Provider value={value}>

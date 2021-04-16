@@ -107,13 +107,6 @@ export default function ShareTimetable(props) {
 
   const [data, setData] = useState([]);
   const getData = () => {
-    // axios
-    //   .get("/sendAllCourses/getAllCourses", {})
-    //   .then((response) => {
-    //     // console.log(response.data);
-    //     setData(response.data);
-    //   })
-    //   .catch(function (error) {});
     fetch("output.json", {
       headers: {
         "Content-Type": "application/json",
@@ -125,7 +118,6 @@ export default function ShareTimetable(props) {
       })
       .then(function (myJson) {
         setData(myJson);
-        // sessionStorage.setItem("coursesData", JSON.stringify(myJson));
       });
   };
 
@@ -136,11 +128,9 @@ export default function ShareTimetable(props) {
   const searchParams = new URLSearchParams(location.search);
 
   const returnTimetableByQuery = (searchParams) => {
-    // console.log(searchParams);
     if (searchParams.toString() && data.length !== 0) {
       for (const [key, value] of searchParams.entries()) {
         if (key === "timetable") {
-          // console.log(JSON.parse(value));
           const tempTimetable = JSON.parse(decodeURIComponent(value));
           const fixedTimeSlots = tempTimetable.fixedTimeSlots.map((element) =>
             element.map((timeslot) => new Date(timeslot))
@@ -153,13 +143,10 @@ export default function ShareTimetable(props) {
   };
 
   useEffect(() => {
-    // console.log(new URLSearchParams(location.search));
-    // console.log(location);
     const tempTimetable =
       returnTimetableByQuery(searchParams) || location.state;
     console.log(tempTimetable);
     if (tempTimetable && data.length != 0) {
-      // console.log("state exists");
       const selectedCourses = [];
 
       for (const courseCode in tempTimetable.courseSelected) {
@@ -182,47 +169,11 @@ export default function ShareTimetable(props) {
     }
   }, [data]);
 
-  // const setCombinationsByQuery = (searchParams) => {
-  //   if (searchParams.toString() && data.length !== 0) {
-  //     const selectedCourses = [];
-  //     for (let p of searchParams.keys()) {
-  //       selectedCourses.push(data.find((item) => item.courseCode === p));
-  //     }
-
-  //     // const selectedCourses = data.filter((item) =>
-  //     //   searchParams.has(item.courseCode)
-  //     // );
-
-  //     setCourseDivs(
-  //       selectedCourses.map((item) => {
-  //         return {
-  //           course: item,
-  //           currentIdx: {},
-  //           isIndexFixed: false,
-  //         };
-  //       })
-  //     );
-
-  //     const tempCombo = {};
-
-  //     for (let p of searchParams) {
-  //       tempCombo[p[0]] = p[1];
-  //     }
-  //     setIsPlanClicked(true);
-  //     setCombinations([tempCombo]);
-  //   }
-  // };
-  // useEffect(() => {
-  //   setTimetableByQuery(searchParams);
-  // }, [data]);
-
   //Backend: this method will retrieve all course indexes then call backend method to return timetables
   //if clash then give a error message
   //convert courseDivs to courses
   const planCourse = (temp_course_divs) => {
-    // console.log(temp_course_divs);
     //pass course to backend
-    // setIsPlanClicked(true);
     const non_clash_courses = [];
     const clash_courses = [];
 
@@ -248,16 +199,6 @@ export default function ShareTimetable(props) {
         }
       }
     }
-
-    // const input_course_arr = temp_course_divs.map((item) => {
-    //   if (item.isIndexFixed) {
-    //     const tempCourse = { ...item.course };
-    //     tempCourse.index = [item.currentIdx];
-    //     return tempCourse;
-    //   } else {
-    //     return item.course;
-    //   }
-    // });
 
     console.log({
       non_clash_courses: non_clash_courses,
@@ -295,53 +236,12 @@ export default function ShareTimetable(props) {
         }
       });
 
-    // axios
-    //   .post("/user/login", {
-    //     email: "astha@gmail.com",
-    //     password: "astha123",
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   });
-
-    // console.log(temp_course_arr);
-
     //testing
     const courseSelected = [
       { courseCode: "cz2006", index_number: "10145" },
       { courseCode: "cz2007", index_number: "10145" },
       // {course:{},index_number:"10145"}
     ];
-
-    // console.log(courseSelected);
-
-    // console.log(courseSelected[0]["courseId"]);
-    // setIsPlanClicked(true);
-    // setCombinations([
-    //   { CZ1016: "10061", CZ1103: "10064" },
-    //   { CZ1016: "10060", CZ1103: "10063" },
-    //   { CZ1016: "10062", CZ1103: "10064" },
-    // ]);
-    //
-    // const backend_data_arr = backend_method(temp_course_arr)
-    // const backend_data_arr = [];
-    // //reset timetablestate.timetables
-    // // for (let i=0;i<backend_data_arr.length;i++){
-    // //   let tempTT = backend_data_arr[i];
-    // // }
-    // setTimetablesState({ ...timetablesState, timeTables: backend_data_arr });
-    // displayCurrentTTpage();
-    // const setCurrentIdx = () => {
-    //   const tempCD = [...courseDivs];
-    //   const tempIdx = tempCD[0].course.index.findIndex(
-    //     (item) => item.index_number === "10064"
-    //   );
-    //   tempCD[0].currentIdx = tempCD[0].course.index[tempIdx];
-    //   setCourseDivs(tempCD);
-    // };
-
-    // setCurrentIdx();
-    // console.log(temp_course_arr);
   };
 
   const updateCurrentIdx = (event, idx) => {
@@ -363,9 +263,6 @@ export default function ShareTimetable(props) {
   };
 
   const setIsIndexFixed = (value, idx) => {
-    // const indexFixedCourseDivIDs = courseDivs.map((item, i) => {
-    //   if (item.isIndexFixed) return i + 1;
-    // });
 
     const tempCourseDivs = [...courseDivs];
     tempCourseDivs[idx].isIndexFixed = value;

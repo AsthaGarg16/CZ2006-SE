@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Media, Card, Button, CardBody } from "reactstrap";
-import DiscussionDetail from "./DiscussionDetail";
 import { Link } from "react-router-dom";
 import CircularSlider from "@fseehawer/react-circular-slider";
 import SearchCourseDropdown from "../components/SearchCourseDropdown";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { resourcesData } from "../components/resources";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import NativeSelect from "@material-ui/core/NativeSelect";
 
+/** This function is used for rendering the discussion forum page. */
 function DiscussionForum(props) {
-  // const [selectedCourse, setSelectedCourse] = useState(null);
-  // console.log(props);
 
   const [courses, setCourses] = useState(
     sessionStorage.getItem("discuss")
@@ -24,7 +19,6 @@ function DiscussionForum(props) {
       : []
   );
   const [value, setValue] = useState(null);
-  // const [allCourses, setAllCourses] = useState([]);
   const [schools, setSchools] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState("");
   const [topCourses, setTopCourses] = useState(null);
@@ -34,7 +28,7 @@ function DiscussionForum(props) {
       .get("/sendCourseList/getCourseList", {})
       .then((response) => {
         console.log(response);
-        setCourses(response.data); //Change to all courses afterward
+        setCourses(response.data); 
       })
       .catch(function (error) {
         if (error.response) {
@@ -54,8 +48,6 @@ function DiscussionForum(props) {
     axios
       .get("/discuss/get_schools", {})
       .then((response) => {
-        // console.log(response);
-        // console.log(response.data[0].schoolList);
         const schoolist = response.data[0].schoolList;
         schoolist.sort();
         setSchools(schoolist);
@@ -66,29 +58,6 @@ function DiscussionForum(props) {
         }
       });
   }, []);
-  // function fetchAllCourse() {
-  //   axios
-  //     .get("/sendCourseList/getCourseList", {})
-  //     .then((response) => {
-  //       // console.log(response);
-  //       console.log("ok");
-  //       setAllCourses(response.data); //Change to all courses afterward
-  //     })
-  //     .catch(function (error) {
-  //       if (error.response) {
-  //         alert(error.response.data.message);
-  //       }
-  //     });
-  // }
-
-  // useEffect(() => {
-  //   console.log("FETCHING all courses");
-  //   fetchAllCourse();
-  // }, []);
-
-  // const handleCourseSelect = (course) => {
-  //   setSelectedCourse(course);
-  // };
 
   function fetchTopRatedCourse(schoolname) {
     axios
@@ -115,7 +84,6 @@ function DiscussionForum(props) {
           <Card
             tag="li"
             key={course.id}
-            // onClick={() => handleCourseSelect(course)}
             className="col-12 mt-1"
           >
             <CardBody>
@@ -157,13 +125,10 @@ function DiscussionForum(props) {
                   </div>
                 </div>
                 <Media heading>{course.courseInfo[0][1]}</Media>
-                {/* <Media heading>{course.name}</Media> */}
-                {/* <p>{course.description}</p> */}
                 <p className="home-paragraph">
                   {course.courseInfo[course.courseInfo.length - 1]}
                 </p>
               </Link>
-              {/* <Button onClick={()=>alert(typeof(course))}>Click</Button> */}
             </CardBody>
           </Card>
         );
@@ -178,7 +143,6 @@ function DiscussionForum(props) {
       history.push(`/discuss/${val.courseCode}`);
     }
   }
-  // const scrollContainerStyle = { width: "200px", maxHeight: "400px" };
 
   const handleChangeSchool = (event) => {
     setSelectedSchool(event.target.value);
@@ -250,22 +214,12 @@ function DiscussionForum(props) {
               </Select>
             </FormControl>
           </div>
-
-          {/* <div className="discuss-filter col-2">Filter by School</div> */}
         </div>
         <div className="row">
           <Media list className="col-12">
             {topRatedCourse}
           </Media>
-          {/* <Card className="col-2"> */}
-          {/* <MDBContainer className="col-2">
-            <div className="scrollbar" style={scrollContainerStyle}>
-
-            </div>
-          </MDBContainer> */}
-          {/* </Card> */}
         </div>
-        {/* {selectedCourse && <DiscussionDetail course={selectedCourse} />} */}
       </div>
       <div className="empty-space"></div>
     </div>

@@ -10,7 +10,6 @@ export default function AddFreeTimeSlotsComponent({
 }) {
   return (
     <div
-      // className="container"
       style={{
         width: "80vw",
         height: "600px",

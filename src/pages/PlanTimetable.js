@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PlannerCalendarComponent from "../components/PlannerCalendarComponent";
 import PlannerIndexComponent from "../components/PlannerIndexComponent";
 import MoreOptionsComponent from "../components/MoreOptionsComponent";
@@ -10,9 +10,11 @@ import {
   PlanTimetableContextProvider,
   usePlanTimetable,
 } from "../context/PlanTimetableContextProvider";
-import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 
+/** This class Uses the context created by the Plantimetablecontextprovider. 
+ * The context contains the states which serve as variables that can be changed throughout a session
+ * The context also contains functions that can be used to change the states*/
 function PlanTimetableContextConsumer(props) {
   const planTimetableContext = usePlanTimetable();
 
@@ -23,16 +25,8 @@ function PlanTimetableContextConsumer(props) {
   const courseDivs = planTimetableContext.courseDivs;
   const userDefinedTimeSlots = planTimetableContext.userDefinedTimeSlots;
   const allowClashCC = planTimetableContext.allowClashCC;
-
-  // const setIsPageChanged = planTimetableContext.setIsPageChanged;
-  //Backend: addTimetables
-  // const addTimeTables = (tempTimeTables) => {
-  //   //currentTimeTablePage set to 1 as default when new timetables added
-  //   setTimetablesState({ timeTables: tempTimeTables, currentTimeTablePage: 1 });
-  // };
   const updateTimeTablePageNum = (tempPage) => {
     setCurrentTimeTablePage(tempPage);
-    // setIsPageChanged(true);
   };
 
   //call backend
@@ -48,12 +42,10 @@ function PlanTimetableContextConsumer(props) {
           courseID: courseDiv.course.courseCode,
           indexNum: courseDiv.currentIdx.index_number,
         });
-        // [courseDiv.course.courseCode] = courseDiv.currentIdx.index_number;
       }
     });
 
     const courseSelected = [];
-    // console.log(combinations);
     for (const [key, value] of Object.entries(
       combinations[currentTimeTablePage - 1]
     )) {
@@ -107,36 +99,10 @@ function PlanTimetableContextConsumer(props) {
         "Access-Control-Allow-Origin": "*",
       },
     };
-
     console.log(typeof occupiedTimeSlots[0].startDate);
-    // console.log(occupiedTimeSlots);
-
-    // const dummy = [
-    //   {
-    //     type: "LEC/STUDIO",
-    //     group: "L3",
-    //     day: "THU",
-    //     full: "1130-1430",
-    //     start: "1130",
-    //     end: "1430",
-    //     duration: 3,
-    //     location: "NIE7-02-07",
-    //     flag: 0,
-    //     remarks: "",
-    //     date_w1: "2021-08-12",
-    //     weekList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    //     title: "AAA08B",
-    //     id: "fejvsx0d6",
-    //     startDate: "2021-03-04T03:30:00.000Z",
-    //     endDate: "2021-03-04T06:30:00.000Z",
-    //     courseDivID: 1,
-    //   },
-    // ];
-
     const udtsAppointments = convertUserDefinedTimeSlotstoAppointments(
       userDefinedTimeSlots
     );
-    // console.log(udtsAppointments);
     const reqbody = {
       appointments: [...occupiedTimeSlots, ...udtsAppointments],
     };
@@ -145,11 +111,8 @@ function PlanTimetableContextConsumer(props) {
       .post("/icsString/get_ics_string", reqbody, axiosConfig)
       .then((response) => {
         console.log(response);
-
-        // console.log(response.data);
         FileDownload(response.data, "testing3.ics");
       });
-    // FileDownload("sdfsdf", "testing.ics");
   };
 
   return (
@@ -191,22 +154,10 @@ function PlanTimetableContextConsumer(props) {
   );
 }
 
+/** This function is used for rendering the plan timetable page. */
 export default function PlanTimetable() {
   const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
-  // const props = useParams();
-  // console.log(props);
-
-  //if this page is redirected from savedtimetables
-  // let location = useLocation();
-
-  // useEffect(() => {
-  //   console.log(location);
-  //   if (location.state) {
-  //   }
-  // }, []);
-
-  //method to add course(div)
   const getData = () => {
     fetch("output.json", {
       headers: {
@@ -215,22 +166,12 @@ export default function PlanTimetable() {
       },
     })
       .then(function (response) {
-        // console.log(response);
         return response.json();
       })
       .then(function (myJson) {
-        // console.log(myJson);
-        //i only chose 200 courses
         setData(myJson);
         sessionStorage.setItem("coursesData", JSON.stringify(myJson));
       });
-    // axios
-    //   .get("/sendAllCourses/getAllCourses", {})
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     setData(response.data);
-    //   })
-    //   .catch(function (error) {});
   };
 
   useEffect(() => {
@@ -245,12 +186,10 @@ export default function PlanTimetable() {
       <div className="background">
         <div className="empty-space"></div>
         <div className="container">
-          {/* <div className="row"> */}
           <div className="page-title col-12">
             <b>Plan Timetable</b>
           </div>
           <hr />
-          {/* <div className="small-container"> */}
           <div
             className="row"
             id="planner-search-course-dropdown"
@@ -269,9 +208,7 @@ export default function PlanTimetable() {
               onChange={(val) => setValue(val)}
             />
           </div>
-          {/* </div> */}
           <PlanTimetableContextConsumer course={value} />
-          {/* </div> */}
         </div>
         <div className="empty-space"></div>
       </div>

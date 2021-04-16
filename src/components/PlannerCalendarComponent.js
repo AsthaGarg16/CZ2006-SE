@@ -14,15 +14,8 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import { resourcesData } from "./resources";
 import moment from "moment";
-// import "./calendar.css";
-// import { usePlanTimetable } from "../context/PlanTimetableContextProvider";
 
 export default function PlannerCalendarComponent(props) {
-  // const planTimetableContext = usePlanTimetable();
-
-  // const timetablesState = planTimetableContext.timetablesState;
-  // const displayCurrentTTpage = planTimetableContext.displayCurrentTTpage;
-
   let resources = [
     {
       fieldName: "courseDivID",
@@ -53,8 +46,6 @@ export default function PlannerCalendarComponent(props) {
 
     return day + " " + monthNames[monthIndex] + " " + year;
   }
-
-  // const currentDate = "2021-03-02";
 
   const AppointmentContent = (data) => {
     return (
@@ -119,11 +110,6 @@ export default function PlannerCalendarComponent(props) {
       </AppointmentTooltip.Content>
     );
   };
-
-  // const TimeScaleLayout = () => {
-  //   return <WeekView.TimeScaleLayout height={20} />;
-  // };
-  // displayCurrentTTpage();
   const DayScaleCell = (props) => {
     const { startDate } = props;
     if (new Date().getDay() === startDate.getDay()) {
@@ -167,20 +153,13 @@ export default function PlannerCalendarComponent(props) {
 
   return (
     <Paper>
-      <div
-      // className="calendar"
-      >
-        <Scheduler
-          data={props.timeTableData}
-          firstDayOfWeek={1}
-          // style={{ height: 400 }}
-        >
+      <div>
+        <Scheduler data={props.timeTableData} firstDayOfWeek={1}>
           <ViewState currentDate={props.currentDate} />
           <WeekView
             startDayHour={8}
             endDayHour={22}
             dayScaleCellComponent={DayScaleCell}
-            // timeScaleLayoutComponent={TimeScaleLayout}
           />
           <Appointments appointmentContentComponent={AppointmentContent} />
           <AppointmentTooltip

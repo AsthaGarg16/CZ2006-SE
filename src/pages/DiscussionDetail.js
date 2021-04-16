@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Media,
   Card,
   CardHeader,
   CardBody,
@@ -16,25 +15,21 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import { Control, LocalForm } from "react-redux-form";
-import CircularSlider from "@fseehawer/react-circular-slider";
-import { Link, useParams } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { useParams } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 import Paper from "@material-ui/core/Paper";
 import TableRow from "@material-ui/core/TableRow";
 import { HiOutlineSave } from "react-icons/hi";
-// import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
-import { SignalCellularNull } from "@material-ui/icons";
 
+/** This function is used for rendering the comment of a specific course when the user go to the discussion forum page of that course. */
 function RenderComments({
   courseCode,
   comments,
-  fetchCoursePage /*, postComment, dishId */,
+  fetchCoursePage,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedComment, setSelectedComment] = useState(
@@ -51,8 +46,6 @@ function RenderComments({
       return;
     }
     const userName = JSON.parse(sessionStorage.getItem("userData")).name;
-    // const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-    // console.log(selectedComment.comm);
     axios
       .post("/discuss/reply", {
         courseCode: courseCode,
@@ -71,27 +64,6 @@ function RenderComments({
         }
       });
   }
-
-  // function handleReplySubmit(values) {
-  //   const userId = JSON.parse(sessionStorage.getItem("userData"))._id;
-  //   const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-  //   axios
-  //     .post("/discuss/reply/:props.courseCode", {
-  //       // courseCode: props.courseCode,
-  //       studentId: userId,
-  //       // studentRated: userEmail,
-  //       replyBody: values.reply,
-  //       commentID: selectedComment.id
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       if (error.response) {
-  //         alert(error.response.data.message);
-  //       }
-  //     });
-  // }
 
   if (comments != null) {
     return (
@@ -118,7 +90,6 @@ function RenderComments({
                     <CardBody>
                       {selectedComment.commentBody}
                       <br />
-                      {/* Posted on: */}
                     </CardBody>
                   </Card>
                 </p>
@@ -204,7 +175,7 @@ function RenderComments({
           <b className="larger-font">Comments</b>
           <div className="float-to-right">
             <CommentForm
-              courseCode={courseCode} /*postComment={postComment}*/
+              courseCode={courseCode}
               fetchCoursePage={fetchCoursePage}
             />
           </div>
@@ -228,7 +199,6 @@ function RenderComments({
                       </p>
                       <p className="ml-2">
                         {comment.commentBody} <br />
-                        {/* Posted on  */}
                       </p>
                     </CardBody>
                   </Card>
@@ -242,24 +212,10 @@ function RenderComments({
   } else return <div></div>;
 }
 
+/** This function is used for rendering the detail of a course when the user clicks on the course in the discussion forum page. */
 function DiscussionDetail(props) {
-  // const [topCourses, setTopCourses] = useState([]);
 
   const [course, setCourse] = useState(null);
-
-  // function fetchTopRatedCourse() {
-  //   axios
-  //     .get("/discuss/top_course", {})
-  //     .then((response) => {
-  //       console.log(response);
-  //       setTopCourses(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       if (error.response) {
-  //         alert(error.response.data.message);
-  //       }
-  //     });
-  // }
 
   function fetchCoursePage(courseCode) {
     console.log(courseCode);
@@ -279,17 +235,8 @@ function DiscussionDetail(props) {
   const params = useParams();
   useEffect(() => {
     console.log("FETCHING course");
-    // console.log(params);
     fetchCoursePage(params.courseCode);
   }, []);
-  // console.log("--debug--");
-
-  // console.log(props);
-  // console.log("--debug--");
-  // const { course } = props;
-  // const course =
-  //   props.course ||
-  //   topCourses.find((item) => item.courseCode === params.courseCode);
 
   if (course) {
     console.log(course.comments);
@@ -297,8 +244,7 @@ function DiscussionDetail(props) {
     const courseAU = course.courseInfo[0][2];
     const courseDescription = course.courseInfo[course.courseInfo.length - 1];
     const remarks = {};
-    let prevColName = ""; //previous col name
-    //loop through courseinfo to get all remarks info
+    let prevColName = ""; 
     course.courseInfo.slice(1, course.courseInfo.length - 1).forEach((item) => {
       if (item.length === 2) {
         remarks[item[0]] = [item[1]];
@@ -307,27 +253,8 @@ function DiscussionDetail(props) {
         remarks[prevColName].push(" " + item[0]);
       }
     });
-    // console.log(remarks);
-
-    // function handleSaveCourse(courseCode) {
-    //   const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-    //   axios
-    //     .post("/saving/savedCourse", {
-    //       userEmail: userEmail,
-    //       courseCode: courseCode
-    //     })
-    //     .then((response) => {
-    //       console.log(response.data);
-    //     })
-    //     .catch(function (error) {
-    //       if (error.response) {
-    //         alert(error.response.data.message);
-    //       }
-    //     });
-    // }
 
     function handleSaveCourse(courseCode) {
-      // alert(courseCode);
       console.log(courseCode);
       if (sessionStorage.getItem("token")) {
         const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
@@ -339,11 +266,9 @@ function DiscussionDetail(props) {
           .then((response) => {
             console.log(response.data);
             alert("Course saved!");
-            // alert(response.data.message);
           })
           .catch(function (error) {
             if (error.response) {
-              // alert(error.response.data.message);
             }
           });
       } else {
@@ -467,6 +392,7 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
+/** This function is used for rendering the comment form for the user to submit a comment regarding the course. */
 function CommentForm(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [usefulness, setUsefulness] = useState(5);
@@ -477,13 +403,7 @@ function CommentForm(props) {
     setIsModalOpen((prevState) => !prevState);
   }
 
-  // function handleSubmit(values) {
-  //   const userId = JSON.parse(sessionStorage.getItem("userData"))._id;
-  //   const userEmail = JSON.parse(sessionStorage.getItem("userData")).email;
-  // }
-
   function handleSubmit(values) {
-    // console.log();
     if (!sessionStorage.getItem("token")) {
       alert("Please login before posting a comment.");
       return;
@@ -513,22 +433,6 @@ function CommentForm(props) {
           alert(error.response.data.message);
         }
       });
-    // alert(
-    //   "CourseCode: " +
-    //     props.courseCode +
-    //     "Email:" +
-    //     userEmail +
-    //     "User ID:" +
-    //     userId +
-    //     " Usefulness: " +
-    //     usefulness +
-    //     " Easiness: " +
-    //     easiness +
-    //     "Time Investment " +
-    //     timeinvestment +
-    //     " Comment: " +
-    //     values.comment
-    // );
   }
 
   return (

@@ -1,9 +1,9 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Planner from "./pages/PlanTimetable";
 import Discuss from "./pages/DiscussionForum";
@@ -11,42 +11,16 @@ import DiscussionDetail from "./pages/DiscussionDetail";
 import Login from "./pages/Login";
 import Common from "./pages/FindCommon";
 import Profile from "./pages/Profile";
-// import Share from "./pages/ShareTimetable";
 import ForgotPassword from "./pages/ForgotPassword";
 import Register from "./pages/Register";
-// import useToken from "./custom hooks/useToken";
 import { AppContextProvider, useApp } from "./context/AppContextProvider";
-
-import { COURSES } from "./pages/discussionData";
-import { COMMENTS } from "./shares/comments";
 import SavedTimetables from "./pages/SavedTimetables";
 import axios from "axios";
 
 function AppContextConsumer() {
   const [courses, setCourses] = useState([]);
-  const [comments, setComments] = useState(COMMENTS);
   const appContext = useApp();
   const setToken = appContext.setToken;
-  // const [topCourses, setTopCourses] = useState([]);
-
-  // function fetchTopRatedCourse() {
-  //   axios
-  //     .get("/discuss/top_course", {})
-  //     .then((response) => {
-  //       console.log(response);
-  //       setTopCourses(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       if (error.response) {
-  //         alert(error.response.data.message);
-  //       }
-  //     });
-  // }
-
-  // useEffect(() => {
-  //   console.log("FETCHING top rated courses");
-  //   fetchTopRatedCourse();
-  // }, []);
 
   function fetchAllCourse(values) {
     axios
@@ -67,26 +41,6 @@ function AppContextConsumer() {
     console.log("FETCHING all courses");
     fetchAllCourse();
   }, []);
-
-  // const CourseWithId = ({ match }) => {
-  //   return (
-  //     <DiscussionDetail
-  //       // course={
-  //       //   topCourses.filter(
-  //       //     //(course) => course.id === parseInt(match.params.id, 10)
-  //       //     (course) => course.courseCode === match.params.courseCode
-  //       //   )[0]
-  //       // }
-  //       // comments={course.comments}
-  //       // comments={course.comments.filter(
-  //       //   (comment) => comment.courseCode === match.params.courseCode
-  //       // )}
-  //       // comments={courses.comments.filter(
-  //       //   (comment) => comment.courseCode === match.params.courseCode
-  //       // )}
-  //     />
-  //   );
-  // };
 
   return (
     <>

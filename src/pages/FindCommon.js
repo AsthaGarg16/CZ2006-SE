@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 import PlannerCalendarComponent from "../components/PlannerCalendarComponent";
-
 import SelectCommonPageComponent from "../components/SelectCommonPageComponent";
 import { Button } from "reactstrap";
 import MUIButton from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
-
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Paper from "@material-ui/core/Paper";
-import axios from "axios";
-
 import MUbutton from "@material-ui/core/Button";
-
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   toggleContainer: {
@@ -33,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/** This function is used for rendering the current week/ next week toggle button in find common free time slot page. */
 function ToggleButtonNotEmpty(props) {
   const { setWeekView } = props;
   const [week, setWeek] = React.useState("currentweek");
@@ -83,8 +78,6 @@ const GetTimetableData = function (props) {
     <Paper
       elevation={5}
       style={{
-        // width: "180px",
-        // overflowWrap: "break-word",
         wordWrap: "break-word",
       }}
     >
@@ -102,13 +95,12 @@ const GetTimetableData = function (props) {
           />
         </div>
       </div>
-
-      {/* <input type="file" name="file" accept=".ics" onChange={chooseICSfile} /> */}
       <p>{selectedICSfile.fileName || "No file chosen"}</p>
     </Paper>
   );
 };
 
+/** This function is used for rendering the find common timeslot page. */
 export default function FindCommon() {
   const classes = useStyles();
 
@@ -161,23 +153,15 @@ export default function FindCommon() {
   }
   const [selectedICSfiles, setSelectedICSfiles] = useState([]);
 
-  const [commonFreeTimeSlots, setCommonFreeTimeSlots] = useState([
-    // [appointments[0]],
-    // [appointments[0], appointments[2]],
-  ]);
+  const [commonFreeTimeSlots, setCommonFreeTimeSlots] = useState([]);
 
   const [weekView, setWeekView] = useState(0); //0-current week , 1-next week
   const [currentPage, setCurrentPage] = useState(1); //1 = index 0
   const [currentWeek, setCurrentWeek] = useState(getWeek());
   const [allFilesLoadedToggle, setAllFilesLoadedToggle] = useState(false);
-
-  // sessionStorage.setItem("selectedICSfiles", JSON.stringify(dummyfiles));
-  // console.log(JSON.parse(sessionStorage.getItem("selectedICSfiles")));
-
   const location = useLocation();
   useEffect(() => {
     console.log("find common");
-    // console.log(history);
     console.log(location);
 
     if (location.state) {
@@ -220,10 +204,8 @@ export default function FindCommon() {
   useEffect(() => {
     if (selectedICSfiles.length !== 0) {
       const reqbody = { icsList: [] };
-      // console.log(tempSelectedICSfiles.map((item) => item.fileData));
       reqbody.icsList = selectedICSfiles.map((item) => item.fileData);
       reqbody.week = getWeek();
-      // reqbody.week = getCurrentWeek();
       console.log(reqbody);
       let axiosConfig = {
         headers: {
@@ -264,13 +246,9 @@ export default function FindCommon() {
         selectedICSfiles[i].results.forEach((item, idx) => {
           reqbody.appointmentList[idx].push(...item);
         });
-        // reqbody.appointmentList[0].push(...selectedICSfiles[i].results[0]);
-        // reqbody.appointmentList[1].push(...selectedICSfiles[i].results[1]);
       }
     }
     reqbody.week = getWeek();
-    // reqbody.appointmentList.push(selectedICSfiles.map((item) => ...[1,2,3]);
-    // reqbody.week = getCurrentWeek();
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json",
@@ -310,7 +288,6 @@ export default function FindCommon() {
   const updateTimeTablePageNum = (tempPage) => {
     console.log(tempPage);
     setCurrentPage(tempPage);
-    // setIsPageChanged(true);
   };
 
   function getMonday(d) {
@@ -374,11 +351,9 @@ export default function FindCommon() {
 
             <Button
               onClick={generateCommonFreeTimeSlots}
-              
               className="common-page-button generate-button"
             >
               <div id="generate-common">Generate</div>
-              
             </Button>
 
             {selectedICSfiles.map((item, idx) => {
@@ -411,11 +386,3 @@ export default function FindCommon() {
     </div>
   );
 }
-//         <Link
-//           to={{
-//             pathname: "/savedtimetables",
-//             state: "Select a timetable for find common",
-//           }}
-//         >
-//           <Button>go to savedtt</Button>
-//         </Link>

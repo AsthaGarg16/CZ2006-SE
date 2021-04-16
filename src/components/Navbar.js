@@ -19,17 +19,9 @@ function Navbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          
-          {/* <Link to="/login" className="login">
-            <BiIcons.BiLogIn />
-          </Link> */}
-
           <div className="login">
             <UserMenu />
           </div>
-          {/* <Link to="/login" className="login">
-            <button>halo</button>
-          </Link> */}
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items" onClick={showSidebar}>
