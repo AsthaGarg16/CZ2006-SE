@@ -1,9 +1,14 @@
+/**
+ * Connecting to the MongoDB database
+ *
+ * @author: Astha and Akshat
+ */
 const mongoose = require('mongoose');
-
-const URI = "mongodb+srv://astha:SoftwareXeon123@cluster0.ps96m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dotenv = require ('dotenv');
+dotenv.config();
 
 const connectDB = async () => {
-    await mongoose.connect(URI, {
+    await mongoose.connect(process.env.URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true
     })

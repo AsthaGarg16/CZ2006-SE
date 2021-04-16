@@ -45,7 +45,7 @@ const Day = { MON: 0, TUE: 1, WED: 2, THU: 3, FRI: 4, SAT: 5 };
 
 
 /**
- * Main function called by the frontend.
+ * Main controller function called by the route
  *
  * @param {array} req.body.appointments - Array of appointment dictionaries.
  * @return {string} An ICS string.
@@ -127,7 +127,7 @@ function editEvents(appointments) {
 }
 
 /**
- * Adds a few days to a date.
+ * Adds the specified days to a date.
  *
  * @param {date} date - A date.
  * @return {number} Number of days to add.

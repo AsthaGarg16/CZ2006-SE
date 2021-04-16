@@ -3,11 +3,11 @@ const app = express();
 var cors = require("cors");
 const connectDB = require("./DB/Connection");
 const mongoose = require("mongoose");
+const dotenv=require('dotenv');
+dotenv.config();
 
 connectDB();
-//mongoose.connect("mongodb+srv://Akshat:SoftwareXeon123@cluster0.ps96m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-//{ useNewUrlParser: true ,useUnifiedTopology: true },
-//()=>console.log('Connected to DB'));
+
 //Import routes
 
 const sendAllCourses = require("./routes/sendAllCourses");
@@ -42,7 +42,7 @@ app.use("/share", sharing);
 app.use("/sendAllCourses", sendAllCourses);
 app.use("/sendCourseList", courseList);
 
-app.listen(5000, () => console.log("Server up and running"));
+app.listen(process.env.PORT, () => console.log("Server up and running"));
 app.use((req, res) => {
   console.log("User requested a resource which is unavailable");
   res.status(404).send("Resource not found");

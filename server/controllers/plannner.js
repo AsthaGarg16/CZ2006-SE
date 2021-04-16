@@ -1,5 +1,5 @@
 /**
- * Converts ICS strings to arrays of appointment dictionaries.
+ * Generates different timetables with various combinations of indexes as per user settings
  *
  * @author: Astha, Akshat and Runtao
  */
@@ -55,7 +55,7 @@ timetable = {
 };
 
 /**
- * Main function called by the frontend.
+ * Main controller function called by the planner route
  *
  * @param {array} req.body.non_clash_courses - Array of course objects that do not allow clash.
  * @param {array} req.body.clash_courses - Array of course objects that allow clash.
