@@ -1,7 +1,7 @@
 /**
  * Converts ICS strings to arrays of appointment dictionaries.
  *
- * @author: Astha and Runtao
+ * @author: Runtao
  */
 
 /** Import ical */
