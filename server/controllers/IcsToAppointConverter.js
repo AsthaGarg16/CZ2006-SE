@@ -1,7 +1,13 @@
-  
-// import ical
+/**
+ * Converts ICS strings to arrays of appointment dictionaries.
+ *
+ * @author: Astha and Runtao
+ */
+
+/** Import ical */
 const ical = require("node-ical");
 
+/** @private The start dates of beginnings of teaching weeks*/
 const week1 = new Date("2021-01-11T00:00:00Z");
 const week2 = new Date("2021-01-18T00:00:00Z");
 const week3 = new Date("2021-01-25T00:00:00Z");
@@ -17,6 +23,7 @@ const week12 = new Date("2021-04-05T00:00:00Z");
 const week13 = new Date("2021-04-12T00:00:00Z");
 const end = new Date("2021-04-19T00:00:00Z");
 
+/** @private Array of the start dates of beginnings of teaching weeks*/
 const teaching_weeks = [
   week1,
   week2,
@@ -34,12 +41,14 @@ const teaching_weeks = [
   end,
 ];
 
-
-// req.body.icsList : array of ics file objects.
-// req.body.week : integer representing the current week.
-// return [result1, result2] : array result1 holds appointment arrays for ics files in the current week;
-//                             array result2 holds appointment arrays for ics files in the next week.
-
+/**
+ * Main function called by the frontend.
+ *
+ * @param {array} req.body.icsList - Array of ICS strings.
+ * @param {number} req.body.week - Integer representing the current week.
+ * @return {array} res - [result1, result2] : array result1 holds appointment arrays for ics files in the current week;
+ *                                            array result2 holds appointment arrays for ics files in the next week.
+ */
 const return_appointments = async (req, res) => {
   const ics_list = req.body.icsList;
   const week = req.body.week;
@@ -47,6 +56,14 @@ const return_appointments = async (req, res) => {
   res.status(200).json(findForWeek(ics_list, week));
 };
 
+/**
+ * Calls the function for conversion based on current week number.
+ *
+ * @param {array} ics_list - Array of ICS strings.
+ * @param {number} week - Integer representing the current week.
+ * @return {array} [result1, result2] : array result1 holds appointment arrays for ics files in the current week;
+ *                                      array result2 holds appointment arrays for ics files in the next week.
+ */
 function findForWeek(ics_list, week){
     let input_ics_list = [];
     let result1 = [];
@@ -97,6 +114,13 @@ function findForWeek(ics_list, week){
     return [result1, result2];
 }
 
+/**
+ * Extracts the events in the target week from one ICS string.
+ *
+ * @param {string} ics - One ICS string.
+ * @param {number} thisWeek - Integer representing the target week.
+ * @return {array} An array of appointments happening in the target week.
+ */
 function getAppointments(ics, thisWeek) {
     let appointments = [];
     //let data = ical.sync.parseFile(ics);
@@ -163,4 +187,5 @@ function getAppointments(ics, thisWeek) {
     return appointments;
 }
 
+/** @exports the main function */
 module.exports.return_appointments = return_appointments;
