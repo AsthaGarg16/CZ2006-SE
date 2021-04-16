@@ -1,8 +1,16 @@
-//const { models } = require("mongoose");
-//const CourseModal = require("../models/course.js");
+/**
+ * Converts ICS strings to arrays of appointment dictionaries.
+ *
+ * @author: Astha, Akshat and Runtao
+ */
+
+/** Import exam entities */
 const DatabaseExam = require("../models/databaseExam");
+
+/** Import ClashPlanner class */
 const ClashPlanner = require("./ClashPlanner.js");
 
+/** @private Time slots of a day*/
 var times = {
   "0830": {},
   "0900": {},
@@ -35,7 +43,8 @@ var times = {
   2230: {},
   2300: {},
 };
-//console.log(times);
+
+/** @private Weekly timetable*/
 timetable = {
   MON: times,
   TUE: times,
@@ -45,8 +54,14 @@ timetable = {
   SAT: times,
 };
 
-
-
+/**
+ * Main function called by the frontend.
+ *
+ * @param {array} req.body.non_clash_courses - Array of course objects that do not allow clash.
+ * @param {array} req.body.clash_courses - Array of course objects that allow clash.
+ * @param {array} req.body.free_slots - Array of free slots objects.
+ * @return {array} res - Array of course code and index combinations.
+ */
 const send_timetable = async (req, res) => {
   var input_courses = [];
   var clash_courses = [];
@@ -80,6 +95,13 @@ const send_timetable = async (req, res) => {
     res.status(200).json({ message: full_combinations }); //full_combinations is a list, anything needs to change???
   }
 };
+
+/**
+ * Deletes empty slots in a timetable.
+ *
+ * @param {array} all_timetables - Array of all the timetables, which have no clash currently.
+ * @return {array} Array of all the timetables with no empty slots.
+ */
 function delete_empty_slots(all_timetables) {
   for (j = 0; j < all_timetables.length; j++) {
     for (var i of Object.keys(all_timetable[j])) {
@@ -93,6 +115,16 @@ function delete_empty_slots(all_timetables) {
   return all_timetables;
 }
 
+/**
+ * First plans timetables for courses that do not allow clash.
+ * Then calls the ClashPlanner.
+ * Finally combine all the results.
+ *
+ * @param {array} input_courses - Array of course objects that do not allow clash.
+ * @param {array} clash_courses - Array of course objects that allow clash.
+ * @param {array} free_slots - Array of free slots objects.
+ * @return {array} Array of all the possible course code and index combinations.
+ */
 function plan_timetable(input_courses, clash_courses, free_slots) {
   var temp_timetable = { ...timetable };
   var all_timetables = [];
@@ -212,6 +244,13 @@ function plan_timetable(input_courses, clash_courses, free_slots) {
   }
 }
 
+/**
+ * Gets the time difference between 2 dates.
+ *
+ * @param {number} date1 - The first date.
+ * @param {number} date2 - The second date.
+ * @return {number} The time difference between 2 dates.
+ */
 function getTimeDiff(date1, date2)
 {
   var diff = date2 - date1;
@@ -219,6 +258,13 @@ function getTimeDiff(date1, date2)
   return diff;
 }
 
+/**
+ * Checks if the index can be added to a timetable.
+ *
+ * @param {object} index - The index object.
+ * @param {object} temp_timetable - The target timetable.
+ * @return {boolean} Whether the index can be added.
+ */
 function check_clash(index, temp_timetable) {
   var lesson = index["lesson"];
   var numLessons = lesson.length;
@@ -263,6 +309,13 @@ function check_clash(index, temp_timetable) {
   return false;
 }
 
+/**
+ * Adds free time slots to a timetable.
+ *
+ * @param {object} temp_timetable - The target timetable.
+ * @param {array} free_slots - Free slot objects.
+ * @return {object} The new timetable.
+ */
 function allot_free_time_slots(temp_timetable, free_slots)
 {
   var copiedTT = JSON.parse(JSON.stringify(temp_timetable));
@@ -302,7 +355,14 @@ function allot_free_time_slots(temp_timetable, free_slots)
   return copiedTT;
 }
 
-
+/**
+ * Adds an index to a timetable.
+ *
+ * @param {string} courseCode - The course code.
+ * @param {object} index - The index object.
+ * @param {object} temp_timetable - The target timetable。
+ * @return {object} The new timetable.
+ */
 function allot_course(courseCode, index, temp_timetable) {
   var copiedTT = JSON.parse(JSON.stringify(temp_timetable));
   var newLessonList = index["lesson"];
@@ -337,17 +397,28 @@ function allot_course(courseCode, index, temp_timetable) {
   return copiedTT;
 }
 
-
+/**
+ * Gets the exam object for a course.
+ *
+ * @param {string} courseCode - The course code.
+ * @param {class} DatabaseExam - The imported entity class.
+ * @return {object} The exam object or {number} -1 if the course has no exam.
+ */
 async function get_exam_details(courseCode, DatabaseExam) {
   const examobj = await DatabaseExam.findOne({ courseCode });
   if (!examobj) {
     return -1;
   }
 
-
   return examobj;
 }
 
+/**
+ * Checks if the courses' exam dates would clash.
+ *
+ * @param {array} input_courses - Course objects.
+ * @return {object} Dictionary that shows which 2 courses clash on the exam date.
+ */
 async function check_exam_clash(input_courses) {
   var exam_result = [];
   for (i = 0; i < input_courses.length; i++) {
@@ -413,6 +484,7 @@ async function check_exam_clash(input_courses) {
   return exam_result;
 }
 
+/** @exports the main funciton */
 module.exports = {
   send_timetable
 };
