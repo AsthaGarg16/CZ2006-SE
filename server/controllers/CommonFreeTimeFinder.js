@@ -1,3 +1,10 @@
+/**
+ * Calculates the common free time slots from 2 arrays of appointment dictionaries.
+ *
+ * @author: Runtao
+ */
+
+/** @private Time slots of a day */
 let timetable_day = {
     8.5: 0,
     9: 0,
@@ -30,7 +37,8 @@ let timetable_day = {
     22.5: 0,
     23: 0,
 };
-  
+ 
+/** @private Time slots of a week */
 let timetable_week = {
     1: { ...timetable_day },
     2: { ...timetable_day },
@@ -40,6 +48,7 @@ let timetable_week = {
     6: { ...timetable_day },
 };
   
+/** @private The start dates of beginnings of teaching weeks*/
 const week1 = new Date("2021-01-11T00:00:00Z");
 const week2 = new Date("2021-01-18T00:00:00Z");
 const week3 = new Date("2021-01-25T00:00:00Z");
@@ -56,6 +65,7 @@ const week12 = new Date("2021-04-05T00:00:00Z");
 const week13 = new Date("2021-04-12T00:00:00Z");
 const end = new Date("2021-04-19T00:00:00Z");
 
+/** @private Array of the start dates of beginnings of teaching weeks*/
 const teaching_weeks = [
     week1,
     week2,
@@ -73,12 +83,15 @@ const teaching_weeks = [
     end,
 ];
   
-  
-// req.body.appointmentList : consists of 2 arrays, the former one contains all the appointments in the current week;
-//                                                  the latter one contains all the appointments in the next week.
-// req.body.week : integer representing the current week.
-// return [result1, result2] : array result1 holds free time slots in the current week;
-//                             array result2 holds free time slots in the next week.
+/**
+ * Main function called by the frontend.
+ *
+ * @param {array} req.body.appointmentList : consists of 2 arrays, the former one contains all the appointments in the current week;
+ *                                                                 the latter one contains all the appointments in the next week.
+ * @param {number} req.body.week - Integer representing the current week.
+ * @return {array} res - [result1, result2] : Array result1 holds free time slots in the current week;
+ *                                            array result2 holds free time slots in the next week.
+ */
 const return_freeTime = async (req, res) => {
     // front end should call this function for each week
     const input_appointment_list = req.body.appointmentList;
@@ -88,6 +101,15 @@ const return_freeTime = async (req, res) => {
     res.status(200).json(findForWeek(input_appointment_list, week));
 };
 
+/**
+ * Calls the function for computation based on current week number.
+ *
+ * @param {array} input_appointmentList : consists of 2 arrays, the former one contains all the appointments in the current week;
+ *                                                                 the latter one contains all the appointments in the next week.
+ * @param {number} week - Integer representing the current week.
+ * @return {array} [result1, result2] : Array result1 holds free time slots in the current week;
+ *                                      array result2 holds free time slots in the next week.
+ */
 function findForWeek(input_appointment_list, week){
     let result1 = [];
     let result2 = [];
@@ -104,7 +126,14 @@ function findForWeek(input_appointment_list, week){
     }
     return [result1, result2]
 }
-  
+ 
+/**
+ * Calls the function for computation based on current week number.
+ *
+ * @param {array} appointment_list : An array of all the appointments in the target week;
+ * @param {number} week - Integer representing the target week.
+ * @return {array} An array of free time slots in appointment dictionary format in the target week.
+ */
 function findFreeTime(appointment_list, week) {
     let resultList = [];
     let timeOccupied = { ...timetable_week };
@@ -199,4 +228,5 @@ function findFreeTime(appointment_list, week) {
     return resultList;
 }
   
+/** @exports the main function */
 module.exports.return_freeTime = return_freeTime;
