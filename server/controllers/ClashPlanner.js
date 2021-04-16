@@ -1,5 +1,11 @@
+/** 
+ * @class ClashPlanner contains the variables and functions to plan timetable for courses that allow clashes. 
+ *
+ * @author: Runtao
+ */
 class ClashPlanner {
-
+    
+    /** @private Daily timetables */
     timetable_MON = {
         "0830": {}, "0900": {}, "0930": {}, "1000": {}, "1030": {}, "1100": {}, "1130": {}, "1200": {}, "1230": {}, "1300": {}, 
         "1330": {}, "1400": {}, "1430": {}, "1500": {}, "1530": {}, "1600": {}, "1630": {}, "1700": {}, "1730": {}, "1800": {}, 
@@ -31,6 +37,7 @@ class ClashPlanner {
         "1830": {}, "1900": {}, "1930": {}, "2000": {}, "2030": {}, "2100": {}, "2130": {}, "2200": {}, "2230": {}, "2300": {}, 
     };
 
+    /** @private Weekly timetable */
     full_timetable = {
         "MON": this.timetable_MON,
         "TUE": this.timetable_TUE,
@@ -39,11 +46,16 @@ class ClashPlanner {
         "FRI": this.timetable_FRI,
         "SAT": this.timetable_SAT
     };
-
+    
+    /** @private The array that holds all the courses objects that allow clash */
     courseArray= [];
 
-    //Functions
-
+    /**
+     * Checks if the chosen index would clash with courses in the timetable.
+     *
+     * @param {object} newIndex - Index object.
+     * @return {number} Shows if there is going to be any clash and if the clash is acceptable.
+     */
     checkClash (newIndex){ 
         var clashCourses = []
         var newLessonList = newIndex.lesson;
@@ -91,7 +103,13 @@ class ClashPlanner {
         return clashCourses; 
         
     }
-
+    
+    /**
+     * Removes an index from the timetable.
+     *
+     * @param {string} code - Course code.
+     * @param {object} indexObj - The index object in the course object.
+     */
     removeIndex (code, indexObj){
         var oldLessonList = indexObj.lesson;
         for (var l = 0; l < oldLessonList.length; l++){
@@ -115,7 +133,13 @@ class ClashPlanner {
             
         }
     }
-
+    
+    /**
+     * Adds an index to the timetable.
+     *
+     * @param {string} code - Course code.
+     * @param {object} indexObj - The index object in the course object.
+     */
     addIndex (code, indexObj){
         var newLessonList = indexObj.lesson;
         for (var l = 0; l < newLessonList.length; l++){
@@ -139,12 +163,16 @@ class ClashPlanner {
             }
         }
     }
-        
-
-    // 1. Select an index for each course such that there are 
-    // no more than 2 courses at each time slot
-    // DFS
-    //input: full_timetable (fixed index & free time slots & index planned), 
+    
+    /**
+     * Main funtion that generates all possible index combinations for courses that allow clash using DFS.
+     * Assumptions: No more than 2 courses can clash at the same time slot;
+     *              at most 4 courses can be in clashes in a timetable.
+     *
+     * @param {object} timetable - Weekly timetable of courses that do not allow clash and free time slots chosen by users.
+     * @param {object} clash_courses - An array of course objects that allow clash.
+     * @return {object} A dictionary of course code and index combinations, where the codes and indexes are represented using indexes in the clash_course array.
+     */
     plan(timetable, clash_courses) {
         this.full_timetable = timetable;
         this.courseArray = clash_courses; 
@@ -233,8 +261,12 @@ class ClashPlanner {
         
     }
 
-
-    //
+    /**
+     * Converts course and index from number indexes to string names.
+     *
+     * @param {object} result_dic - Result from plan() funciton.
+     * @return {object} A dictionary of course code and index combinations.
+     */
     generateResults(result_dic){
         let result = {};
         let catgry = Object.keys(result_dic);
@@ -256,6 +288,7 @@ class ClashPlanner {
 
 }
 
+/** @exports the class */
 module.exports = ClashPlanner;
 
 // Test 
