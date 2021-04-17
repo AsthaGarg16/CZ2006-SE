@@ -1,4 +1,4 @@
-# CZ2006-SE
+# CZ2006-SE-MyCal
 
 
 Below is the time_table_cell_format:
