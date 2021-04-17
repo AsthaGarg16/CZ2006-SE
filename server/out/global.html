@@ -98,13 +98,13 @@
 
         
             
-<h4 class="name" id="ical"><span class="type-signature">(constant) </span>ical<span class="type-signature"></span></h4>
+<h4 class="name" id="Timetable"><span class="type-signature">(constant) </span>Timetable<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Import ical
+    Importing timetable and user entity
 </div>
 
 
@@ -142,7 +142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line8">line 8</a>
+        <a href="saveTimetable.js.html">saveTimetable.js</a>, <a href="saveTimetable.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -170,7 +170,7 @@
     
 
     
-    <h4 class="name" id="findForWeek"><span class="type-signature"></span>findForWeek<span class="signature">(ics_list, week)</span><span class="type-signature"> &rarr; {array}</span></h4>
+    <h4 class="name" id="getsavedTimetable"><span class="type-signature">(async) </span>getsavedTimetable<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="global.html#timetable">timetable</a>|string}</span></h4>
     
 
     
@@ -178,7 +178,7 @@
 
 
 <div class="description">
-    Calls the function for conversion based on current week number.
+    Main function for getting the saved timetables
 </div>
 
 
@@ -214,189 +214,7 @@
 
         <tr>
             
-                <td class="name"><code>ics_list</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Array of ICS strings.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>week</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Integer representing the current week.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line67">line 67</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    [result1, result2] : array result1 holds appointment arrays for ics files in the current week;                                     array result2 holds appointment arrays for ics files in the next week.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getAppointments"><span class="type-signature"></span>getAppointments<span class="signature">(ics, thisWeek)</span><span class="type-signature"> &rarr; {array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Extracts the events in the target week from one ICS string.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>ics</code></td>
+                <td class="name"><code>req.body.timetableID</code></td>
             
 
             <td class="type">
@@ -412,30 +230,7 @@
 
             
 
-            <td class="description last">One ICS string.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>thisWeek</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Integer representing the target week.</td>
+            <td class="description last">= THe required timetable to be returned</td>
         </tr>
 
     
@@ -476,7 +271,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line124">line 124</a>
+        <a href="saveTimetable.js.html">saveTimetable.js</a>, <a href="saveTimetable.js.html#line102">line 102</a>
     </li></ul></dd>
     
 
@@ -505,7 +300,7 @@
 
         
 <div class="param-desc">
-    An array of appointments happening in the target week.
+    the saved timetable or an error message
 </div>
 
 
@@ -516,7 +311,10 @@
     </dt>
     <dd>
         
-<span class="param-type">array</span>
+<span class="param-type"><a href="global.html#timetable">timetable</a></span>
+|
+
+<span class="param-type">string</span>
 
 
     </dd>
@@ -534,7 +332,7 @@
     
 
     
-    <h4 class="name" id="return_appointments"><span class="type-signature">(async) </span>return_appointments<span class="signature">()</span><span class="type-signature"> &rarr; {array}</span></h4>
+    <h4 class="name" id="removeSavedTimetable"><span class="type-signature">(async) </span>removeSavedTimetable<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -542,7 +340,7 @@
 
 
 <div class="description">
-    Main function called by the frontend.
+    Main function for removing a saved timetable
 </div>
 
 
@@ -578,13 +376,13 @@
 
         <tr>
             
-                <td class="name"><code>req.body.icsList</code></td>
+                <td class="name"><code>req.body.email</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">array</span>
+<span class="param-type">string</span>
 
 
             
@@ -594,20 +392,20 @@
 
             
 
-            <td class="description last">Array of ICS strings.</td>
+            <td class="description last">= User email</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>req.body.week</code></td>
+                <td class="name"><code>req.body.timetableID</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
             
@@ -617,7 +415,7 @@
 
             
 
-            <td class="description last">Integer representing the current week.</td>
+            <td class="description last">= the timetable id to be removed</td>
         </tr>
 
     
@@ -658,7 +456,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line52">line 52</a>
+        <a href="saveTimetable.js.html">saveTimetable.js</a>, <a href="saveTimetable.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -687,7 +485,7 @@
 
         
 <div class="param-desc">
-    res - [result1, result2] : array result1 holds appointment arrays for ics files in the current week;                                           array result2 holds appointment arrays for ics files in the next week.
+    success or error message
 </div>
 
 
@@ -698,7 +496,281 @@
     </dt>
     <dd>
         
-<span class="param-type">array</span>
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="saveTimetable"><span class="type-signature">(async) </span>saveTimetable<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Main function for saving the timetable
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">= User email</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.timetableID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">= Timetable id</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.courseSelected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">= List of selecetd courses</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.courseFixed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">= List of courses with fixed indices</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.fixedTimeSlots</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">= List of fixed time slots</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.courseClashAllowed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">= List of courses which allow clash</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="saveTimetable.js.html">saveTimetable.js</a>, <a href="saveTimetable.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    success or error message
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
 
 
     </dd>
@@ -714,6 +786,442 @@
     
 
     
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id="timetable">timetable</h4>
+
+
+
+
+<div class="description">
+    Timetable entity
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timetableID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>courseSelected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fixedTimeSlots</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>courseFixed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>courseClashAllowed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="saveTimetable.js.html">saveTimetable.js</a>, <a href="saveTimetable.js.html#line21">line 21</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="user">user</h4>
+
+
+
+
+<div class="description">
+    User entity
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>courseOfStudy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>yearOfStudy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="saveTimetable.js.html">saveTimetable.js</a>, <a href="saveTimetable.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+    
 
     
 </article>
@@ -726,13 +1234,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-the.html">the</a></li></ul><h3>Global</h3><ul><li><a href="global.html#findForWeek">findForWeek</a></li><li><a href="global.html#getAppointments">getAppointments</a></li><li><a href="global.html#ical">ical</a></li><li><a href="global.html#return_appointments">return_appointments</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#getsavedTimetable">getsavedTimetable</a></li><li><a href="global.html#removeSavedTimetable">removeSavedTimetable</a></li><li><a href="global.html#saveTimetable">saveTimetable</a></li><li><a href="global.html#Timetable">Timetable</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 17 2021 11:16:02 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 17 2021 16:15:59 GMT+0800 (Singapore Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
