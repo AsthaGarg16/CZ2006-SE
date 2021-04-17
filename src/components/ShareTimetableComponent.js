@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-} from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -50,7 +45,6 @@ export default function ShareTimetableComponent(props) {
     return reqbody;
   };
 
-
   const generateLink = () => {
     console.log(returnCurrentTT());
     const tempCombinationArray = [];
@@ -76,7 +70,7 @@ export default function ShareTimetableComponent(props) {
         fade={false}
       >
         <ModalHeader toggle={toggleModal}>
-          <h2>Share Timetable</h2>
+          <h2>Share Current Timetable</h2>
         </ModalHeader>
         <ModalBody class="modal fade bd-example-modal-lg">
           <Button onClick={generateLink}>Generate Link</Button>
