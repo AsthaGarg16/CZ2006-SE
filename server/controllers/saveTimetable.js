@@ -1,8 +1,44 @@
+/**
+ * Saves the timetable to the database and adds id to user's profile
+ *
+ * @author: Akshat
+ */
+
+/** Importing timetable and user entity */
 const Timetable = require("../models/timetable");
 const User = require("../models/user");
-// var course ={"courseID":"","indexNum":""};
-// var courses=[];
 
+/**
+ * User entity
+ * @typedef {Object} user
+ * @property {String} email
+ * @property {String} name
+ * @property {String} password
+ * @property {String} courseOfStudy
+ * @property {number} yearOfStudy
+ */
+
+/**
+ * Timetable entity
+ * @typedef {Object} timetable
+ * @property {String} timetableID
+ * @property {[{courseID:string, indexNum:string}]} courseSelected
+ * @property {[[Date]]} fixedTimeSlots
+ * @property {[{courseID:string, indexNum:string}]} courseFixed
+ * @property {[string]} courseClashAllowed
+ */
+
+
+/** Main function for saving the timetable 
+ * 
+ * @param {string} req.body.email = User email
+ * @param {string} req.body.timetableID = Timetable id
+ * @param {[{courseID:string, indexNum:string}]} req.body.courseSelected = List of selecetd courses
+ * @param {[{courseID:string, indexNum:string}]} req.body.courseFixed = List of courses with fixed indices
+ * @param {[[Date]]} req.body.fixedTimeSlots = List of fixed time slots
+ * @param {[string]} req.body.courseClashAllowed = List of courses which allow clash
+ * @returns {string} success or error message
+ */
 const saveTimetable = async (req, res) => {
   const {
     userEmail,
@@ -13,11 +49,6 @@ const saveTimetable = async (req, res) => {
     courseClashAllowed,
   } = req.body;
   console.log(courseSelected);
-  // for (i = 0;i < courseSelected.length; i++){
-  //     course["courseID"]=courseSelected[i]["courseID"];
-  //     course["indexNum"]=courseSelected[i]["indexNum"];
-  //     courses.push(course);
-  // }
 
   const timetable = new Timetable({
     timetableID: timetableID,
@@ -49,7 +80,7 @@ const saveTimetable = async (req, res) => {
       }
     }
   );
-  //result = JSON.parse(JSON.stringify(timetable));
+
   console.log(timetable);
   timetable
     .save()
@@ -62,6 +93,12 @@ const saveTimetable = async (req, res) => {
     });
 };
 
+
+/** Main function for getting the saved timetables
+ * 
+ * @param {string} req.body.timetableID = THe required timetable to be returned
+ * @returns {(timetable|string)} the saved timetable or an error message
+ */
 const getsavedTimetable = async (req, res) => {
   try {
     const timetableID = req.body.timetableID;
@@ -75,6 +112,13 @@ const getsavedTimetable = async (req, res) => {
   }
 };
 
+
+/** Main function for removing a saved timetable 
+ * 
+ * @param {string} req.body.email = User email
+ * @param {string} req.body.timetableID = the timetable id to be removed
+ * @returns {string} success or error message
+ */
 const removeSavedTimetable = async (req, res) => {
   User.update(
     { email: req.body.userEmail },
@@ -93,4 +137,5 @@ const removeSavedTimetable = async (req, res) => {
   );
 };
 
+/** exporting controller functions */
 module.exports = { saveTimetable, getsavedTimetable, removeSavedTimetable };

@@ -1,25 +1,27 @@
+/**
+ * Saves the course selected by the user to the database in user's profile
+ *
+ * @author: Akshat
+ */
+
+/** Importing savedCourse entity */
 const savedCourse = require("../models/savedCourse");
 
-// const saveCourses = async(req,res)=>{
-//     savedCourse.update({email: req.body.userEmail},
-//         {
-//             $push:{
-//                 savedCourse: req.body.savedCourse
-//             },
-//         },  function(
-//             err,
-//             result
-//         ) {
-//             if (err) {
-//                return res.status(500).send("Update error in user")
-//             }
-//             else{
-//                 console.log(savedCourse);
-//                 return res.status(200).send('Success');
-//             }
-//         })
-// }
+/**
+ * Saved course entity
+ * @typedef {Object} savedCourse
+ * @property {String} email = user's email id
+ * @property {[String]} savedCourse = list of course codes saved by the user
+ */
 
+
+
+/** Main function for saving the course 
+ * 
+ * @param {string} req.body.email = User email
+ * @param {[string]} req.body.savedCourses = User;s current saved courses list
+ * @returns {{message: string}} success or error message
+ */
 const saveCourses = async (req, res) => {
   const { email, savedCourses } = req.body;
   try {
@@ -48,6 +50,12 @@ const saveCourses = async (req, res) => {
   }
 };
 
+
+/** Main function for getting the saved the courses
+ * 
+ * @param {string} req.body.email = User email
+ * @returns {(savedCourse|string)} list of saved courses or an error message
+ */
 const getSavedCourses = async (req, res) => {
   try {
     const email = req.body.email;
@@ -60,6 +68,15 @@ const getSavedCourses = async (req, res) => {
   }
 };
 
+
+
+
+/** Main function for removing a saved course 
+ * 
+ * @param {string} req.body.email = User email
+ * @param {[string]} req.body.savedCourse = User;s current saved courses list
+ * @returns {string} success or error message
+ */
 const removeSavedCourses = async (req, res) => {
   savedCourse.update(
     { email: req.body.userEmail },
@@ -78,6 +95,8 @@ const removeSavedCourses = async (req, res) => {
   );
 };
 
+
+/** exporting controller functions */
 module.exports = {
   saveCourses,
   getSavedCourses,
