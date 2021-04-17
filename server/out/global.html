@@ -98,13 +98,13 @@
 
         
             
-<h4 class="name" id="bcrypt"><span class="type-signature">(constant) </span>bcrypt<span class="type-signature"></span></h4>
+<h4 class="name" id="ical"><span class="type-signature">(constant) </span>ical<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Importing necessary libraries
+    Import ical
 </div>
 
 
@@ -142,69 +142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="register.js.html">register.js</a>, <a href="register.js.html#line8">line 8</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="UserModal"><span class="type-signature">(constant) </span>UserModal<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Importing user entity
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="register.js.html">register.js</a>, <a href="register.js.html#line14">line 14</a>
+        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -232,7 +170,7 @@
     
 
     
-    <h4 class="name" id="register"><span class="type-signature">(async) </span>register<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="global.html#user">user</a>}</span></h4>
+    <h4 class="name" id="findForWeek"><span class="type-signature"></span>findForWeek<span class="signature">(ics_list, week)</span><span class="type-signature"> &rarr; {array}</span></h4>
     
 
     
@@ -240,7 +178,7 @@
 
 
 <div class="description">
-    Main function for registering a new user
+    Calls the function for conversion based on current week number.
 </div>
 
 
@@ -276,13 +214,13 @@
 
         <tr>
             
-                <td class="name"><code>req.body.email</code></td>
+                <td class="name"><code>ics_list</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">array</span>
 
 
             
@@ -292,83 +230,14 @@
 
             
 
-            <td class="description last">= User email</td>
+            <td class="description last">Array of ICS strings.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>req.body.name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">= User name</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>req.body.password</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">= User password</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>req.body.courseOfStudy</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">= User course of study</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>req.body.yearOfStudy</code></td>
+                <td class="name"><code>week</code></td>
             
 
             <td class="type">
@@ -384,7 +253,7 @@
 
             
 
-            <td class="description last">= User year of study</td>
+            <td class="description last">Integer representing the current week.</td>
         </tr>
 
     
@@ -425,7 +294,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="register.js.html">register.js</a>, <a href="register.js.html#line37">line 37</a>
+        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line67">line 67</a>
     </li></ul></dd>
     
 
@@ -454,7 +323,7 @@
 
         
 <div class="param-desc">
-    user entity
+    [result1, result2] : array result1 holds appointment arrays for ics files in the current week;                                     array result2 holds appointment arrays for ics files in the next week.
 </div>
 
 
@@ -465,7 +334,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="global.html#user">user</a></span>
+<span class="param-type">array</span>
 
 
     </dd>
@@ -478,43 +347,34 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="getAppointments"><span class="type-signature"></span>getAppointments<span class="signature">(ics, thisWeek)</span><span class="type-signature"> &rarr; {array}</span></h4>
     
 
     
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        
-                
-<h4 class="name" id="user">user</h4>
-
 
 
 
 <div class="description">
-    User entity
+    Extracts the events in the target week from one ICS string.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
 
 
 
 
 
-    <h5 class="subsection-title">Properties:</h5>
 
+    <h5>Parameters:</h5>
     
 
-<table class="props">
+<table class="params">
     <thead>
     <tr>
         
@@ -536,13 +396,13 @@
 
         <tr>
             
-                <td class="name"><code>email</code></td>
+                <td class="name"><code>ics</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
             
@@ -552,83 +412,14 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">One ICS string.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>password</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>courseOfStudy</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>yearOfStudy</code></td>
+                <td class="name"><code>thisWeek</code></td>
             
 
             <td class="type">
@@ -644,12 +435,14 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Integer representing the target week.</td>
         </tr>
 
     
     </tbody>
 </table>
+
+
 
 
 
@@ -683,7 +476,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="register.js.html">register.js</a>, <a href="register.js.html#line16">line 16</a>
+        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line124">line 124</a>
     </li></ul></dd>
     
 
@@ -699,7 +492,227 @@
 
 
 
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    An array of appointments happening in the target week.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
             
+
+    
+
+    
+    <h4 class="name" id="return_appointments"><span class="type-signature">(async) </span>return_appointments<span class="signature">()</span><span class="type-signature"> &rarr; {array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Main function called by the frontend.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.icsList</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of ICS strings.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>req.body.week</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Integer representing the current week.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="IcsToAppointConverter.js.html">IcsToAppointConverter.js</a>, <a href="IcsToAppointConverter.js.html#line52">line 52</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    res - [result1, result2] : array result1 holds appointment arrays for ics files in the current week;                                           array result2 holds appointment arrays for ics files in the next week.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
     
 
     
@@ -713,13 +726,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#bcrypt">bcrypt</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#UserModal">UserModal</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-the.html">the</a></li></ul><h3>Global</h3><ul><li><a href="global.html#findForWeek">findForWeek</a></li><li><a href="global.html#getAppointments">getAppointments</a></li><li><a href="global.html#ical">ical</a></li><li><a href="global.html#return_appointments">return_appointments</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 17 2021 01:23:07 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 17 2021 11:16:02 GMT+0800 (Singapore Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
