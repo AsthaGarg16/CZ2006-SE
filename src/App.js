@@ -17,18 +17,35 @@ import { AppContextProvider, useApp } from "./context/AppContextProvider";
 import SavedTimetables from "./pages/SavedTimetables";
 import axios from "axios";
 
+/**
+ * This function uses the context created by the AppContexttProvider.
+ * The context contains the states which serve as variables that can be changed throughout a session
+ * The context also contains functions that can be used to change the states.
+ * @returns
+ */
 function AppContextConsumer() {
-  const [courses, setCourses] = useState([]);
   const appContext = useApp();
   const setToken = appContext.setToken;
 
-  function fetchAllCourse(values) {
+  function fetchAllCourse() {
     axios
       .get("/sendCourseList/getCourseList", {})
       .then((response) => {
         console.log(response);
         sessionStorage.setItem("discuss", JSON.stringify(response.data));
-        // setCourses(response.data); //Change to all courses afterward
+      })
+      .catch(function (error) {
+        if (error.response) {
+          alert(error.response.data.message);
+        }
+      });
+  }
+
+  function fetchAllCourseTimes() {
+    axios
+      .get("/sendAllCourses/getAllCourses", {})
+      .then((response) => {
+        console.log(response);
       })
       .catch(function (error) {
         if (error.response) {
@@ -38,8 +55,11 @@ function AppContextConsumer() {
   }
 
   useEffect(() => {
-    console.log("FETCHING all courses");
+    console.log(
+      "FETCHING all courses for discussion forum and course schedules"
+    );
     fetchAllCourse();
+    fetchAllCourseTimes();
   }, []);
 
   return (
@@ -52,11 +72,7 @@ function AppContextConsumer() {
             path="/login"
             component={() => <Login setToken={setToken} />}
           />
-          <Route
-            exact
-            path="/discuss"
-            component={() => <Discuss courses={courses} />}
-          />
+          <Route exact path="/discuss" component={() => <Discuss />} />
           <Route path="/discuss/:courseCode" component={DiscussionDetail} />
           <Route path="/findcommon" component={Common} />
           <Route path="/planner" component={Planner} />

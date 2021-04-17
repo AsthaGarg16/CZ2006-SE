@@ -12,10 +12,15 @@ import {
 } from "../context/PlanTimetableContextProvider";
 import axios from "axios";
 
-/** This class Uses the context created by the Plantimetablecontextprovider. 
+
+/**
+ * This function uses the context created by the PlanTimetableContextProvider. 
  * The context contains the states which serve as variables that can be changed throughout a session
- * The context also contains functions that can be used to change the states*/
-function PlanTimetableContextConsumer(props) {
+ * The context also contains functions that can be used to change the states.
+ * @param {*} param0 -course object
+ * @returns component which include other components needed for plan timetable page
+ */
+function PlanTimetableContextConsumer({course}) {
   const planTimetableContext = usePlanTimetable();
 
   const combinations = planTimetableContext.combinations;
@@ -29,7 +34,9 @@ function PlanTimetableContextConsumer(props) {
     setCurrentTimeTablePage(tempPage);
   };
 
-  //call backend
+  /**
+   * This function save current Timetable to the user's account.
+   */
   const saveCurrentTT = () => {
     if (!sessionStorage.getItem("token")) {
       alert("Please login before saving timetable.");
@@ -75,6 +82,11 @@ function PlanTimetableContextConsumer(props) {
     });
   };
 
+  /**
+   * This function converts array of time slots into array of appointments. The appointments format is 
+   * @param {Object[]} userTimeSlots 
+   * @returns array of appointments
+   */
   const convertUserDefinedTimeSlotstoAppointments = (userTimeSlots) => {
     return userTimeSlots.map((item) => {
       const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -90,6 +102,9 @@ function PlanTimetableContextConsumer(props) {
     });
   };
 
+  /**
+   * Download current timetable as icsfile.
+   */
   const downloadfile = () => {
     const FileDownload = require("js-file-download");
     console.log(occupiedTimeSlots);
@@ -118,7 +133,7 @@ function PlanTimetableContextConsumer(props) {
   return (
     <div className="row">
       <div className="col-2">
-        <PlannerIndexComponent course={props.course} />
+        <PlannerIndexComponent course={course} />
       </div>
       <div className="col-10">
         <div className="row justify-content-md-center" align="center">
@@ -154,7 +169,10 @@ function PlanTimetableContextConsumer(props) {
   );
 }
 
-/** This function is used for rendering the plan timetable page. */
+/**
+ * This function is used for rendering the plan timetable page.
+ * @returns the plan timetable page
+ */
 export default function PlanTimetable() {
   const [value, setValue] = useState(null);
   const [data, setData] = useState([]);

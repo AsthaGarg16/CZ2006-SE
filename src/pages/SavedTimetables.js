@@ -24,7 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/** This function is used for rendering the saved items page. */
+/**
+ * This function is used for rendering the saved items page.
+ * @returns saved items page
+ */
 export default function SavedTimetables() {
   const history = useHistory();
   const location = useLocation();
@@ -167,15 +170,9 @@ export default function SavedTimetables() {
       .then((response) => {
         console.log(response.data);
         fetchSavedCourses();
-        // setTimeout(function () {
-        //   alert(response.data);
-        // }, 1);
-
-        // alert(response.data.message);
       })
       .catch(function (error) {
         if (error.response) {
-          // alert(error.response.data.message);
         }
       });
   };

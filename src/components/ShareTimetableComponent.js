@@ -50,32 +50,6 @@ export default function ShareTimetableComponent(props) {
     return reqbody;
   };
 
-  function subShareTimetableComponent() {
-    return (
-      <div className="share-timetable">
-        <p>Choose a timetable page to share</p>
-        <FormControl>
-          <InputLabel htmlFor="page-native-simple">Page</InputLabel>
-          <Select
-            value={selectedPage}
-            native
-            onChange={(event) => setSelectedPage(event.target.value)}
-          >
-            <option key={0} value={currentTimeTablePage}>
-              Current Timetable page
-            </option>
-            {pages.map((page) => {
-              return (
-                <option key={page} value={page}>
-                  {page}
-                </option>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </div>
-    );
-  }
 
   const generateLink = () => {
     console.log(returnCurrentTT());
@@ -105,8 +79,7 @@ export default function ShareTimetableComponent(props) {
           <h2>Share Timetable</h2>
         </ModalHeader>
         <ModalBody class="modal fade bd-example-modal-lg">
-          {subShareTimetableComponent()}
-          <Button onClick={generateLink}>Share</Button>
+          <Button onClick={generateLink}>Generate Link</Button>
           <a
             href={link}
             target="_blank"

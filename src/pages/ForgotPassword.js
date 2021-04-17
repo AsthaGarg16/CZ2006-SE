@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { LeakAddTwoTone, LiveTvTwoTone } from "@material-ui/icons";
+
 import axios from "axios";
 
-/** This function is used for rendering the forgot password page. */
+/**
+ * This function is used for rendering the forgot password page.
+ * @returns the forgot password page.
+ */
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");

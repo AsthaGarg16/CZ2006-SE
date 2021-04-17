@@ -1,10 +1,14 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-/** This function is used for rendering the register new account page. */
+/**
+ * This function is used for rendering the register new account page.
+ * @param {*} param0
+ * @returns the regsiter new account page
+ */
 export default function Register({ setToken }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -62,73 +66,78 @@ export default function Register({ setToken }) {
   }
 
   return (
-    <div className='createContainer'>
-    <h3 className = 'register' >Create Account</h3>
+    <div className="createContainer">
+      <h3 className="register">Create Account</h3>
       <Form onSubmit={handleSubmit}>
-      <div className = 'form-control2'>
-        <Form.Group size="lg" controlId="email">
-          <label>Email</label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-          />
-        </Form.Group> </div>
-        <div className = 'form-control2'>
-        <Form.Group size="lg" controlId="username">
-          <label>Username</label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter username"
-          />
-         </Form.Group>  </div>
-        <div className = 'form-control2'>
-        <Form.Group size="lg" controlId="cos">
-          <label>Course of study</label>
-          <Form.Control
-            type="text"
-            value={cos}
-            onChange={(e) => setCos(e.target.value)}
-            placeholder="Enter Course of study"
-          />
-        </Form.Group> 
+        <div className="form-control2">
+          <Form.Group size="lg" controlId="email">
+            <label>Email</label>
+            <Form.Control
+              autoFocus
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email"
+            />
+          </Form.Group>{" "}
         </div>
-        <div className = 'form-control2'>
-        <Form.Group size="lg" controlId="yos">
-          <label>Year of study (number)</label>
-          <Form.Control
-            type="number"
-            value={yos}
-            onChange={(e) => setYos(e.target.value)}
-            placeholder="Enter Year of study"
-          />
-        </Form.Group> 
+        <div className="form-control2">
+          <Form.Group size="lg" controlId="username">
+            <label>Username</label>
+            <Form.Control
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter username"
+            />
+          </Form.Group>{" "}
         </div>
-        <div className = 'form-control2'>
-        <Form.Group size="lg" controlId="password">
-          <label>Password</label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
-        </Form.Group></div>
-        <div className = 'form-control2'>
-        <Form.Group size="lg" controlId="password">
-          <label>Confirm Password</label>
-          <Form.Control
-            type="password"
-            value={cpassword}
-            onChange={(e) => setcPassword(e.target.value)}
-            placeholder="Confirm password"
-          />
-        </Form.Group></div>
-        <Button className = 'btn btn2-block'
+        <div className="form-control2">
+          <Form.Group size="lg" controlId="cos">
+            <label>Course of study</label>
+            <Form.Control
+              type="text"
+              value={cos}
+              onChange={(e) => setCos(e.target.value)}
+              placeholder="Enter Course of study"
+            />
+          </Form.Group>
+        </div>
+        <div className="form-control2">
+          <Form.Group size="lg" controlId="yos">
+            <label>Year of study (number)</label>
+            <Form.Control
+              type="number"
+              value={yos}
+              onChange={(e) => setYos(e.target.value)}
+              placeholder="Enter Year of study"
+            />
+          </Form.Group>
+        </div>
+        <div className="form-control2">
+          <Form.Group size="lg" controlId="password">
+            <label>Password</label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+            />
+          </Form.Group>
+        </div>
+        <div className="form-control2">
+          <Form.Group size="lg" controlId="password">
+            <label>Confirm Password</label>
+            <Form.Control
+              type="password"
+              value={cpassword}
+              onChange={(e) => setcPassword(e.target.value)}
+              placeholder="Confirm password"
+            />
+          </Form.Group>
+        </div>
+        <Button
+          className="btn btn2-block"
           block
           size="lg"
           type="submit"

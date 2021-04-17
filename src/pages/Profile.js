@@ -20,7 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/** This function is used for rendering the profile page. */
+/**
+ * This function is used for rendering the profile page.
+ * @returns the profile page
+ */
 export default function Profile() {
   const userData = JSON.parse(sessionStorage.getItem("userData"));
   const userName = userData.name;

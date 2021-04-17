@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { AddAlertRounded } from "@material-ui/icons";
 
-/** This function is used for rendering the login page. */
+/**
+ * This function is used for rendering the login page.
+ * @param {*} param0 setTOken function
+ * @returns the login page
+ */
 export default function Login({ setToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,12 +18,9 @@ export default function Login({ setToken }) {
   }
 
   function handleSubmit(event) {
-    // alert(email + " " + password);
     event.preventDefault();
     axios
       .post("/user/login", {
-        // email: "astha@gmail.com",
-        // password: "astha123",
         email: email,
         password: password,
       })

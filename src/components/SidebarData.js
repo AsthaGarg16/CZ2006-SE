@@ -22,12 +22,6 @@ export const SidebarData = [
     icon: <EventIcon style={{ margin: 10 }} />,
     cName: "nav-text",
   },
-  // {
-  //   title: 'Share Time Table',
-  //   path: '/share',
-  //   icon: <IoIcons.IoMdPeople />,
-  //   cName: 'nav-text'
-  // },
   {
     title: "Find Common Free Time Slots",
     path: "/findcommon",

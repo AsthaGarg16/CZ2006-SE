@@ -1,7 +1,10 @@
 import React from "react";
 import SimpleCarousel from "simple-react-carousel";
 
-/** This function is used for rendering the homepage. */
+/**
+ * This function is used for rendering the homepage.
+ * @returns the homepage
+ */
 function Home() {
   return (
     <div className="background">

@@ -11,8 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 /** This function is used for rendering the discussion forum page. */
-function DiscussionForum(props) {
-
+function DiscussionForum() {
   const [courses, setCourses] = useState(
     sessionStorage.getItem("discuss")
       ? JSON.parse(sessionStorage.getItem("discuss"))
@@ -28,7 +27,7 @@ function DiscussionForum(props) {
       .get("/sendCourseList/getCourseList", {})
       .then((response) => {
         console.log(response);
-        setCourses(response.data); 
+        setCourses(response.data);
       })
       .catch(function (error) {
         if (error.response) {
@@ -38,7 +37,7 @@ function DiscussionForum(props) {
   }
 
   useEffect(() => {
-    if (props.courses.length === 0) {
+    if (courses.length === 0) {
       console.log("FETCHING all courses");
       fetchAllCourse();
     }
@@ -81,11 +80,7 @@ function DiscussionForum(props) {
   const topRatedCourse = topCourses
     ? topCourses.map((course) => {
         return (
-          <Card
-            tag="li"
-            key={course.id}
-            className="col-12 mt-1"
-          >
+          <Card tag="li" key={course.id} className="col-12 mt-1">
             <CardBody>
               <Link to={`/discuss/${course.courseCode}`}>
                 <div className="row">
@@ -193,8 +188,9 @@ function DiscussionForum(props) {
           </div>
         </div>
         <div className="row">
-
-           <div className="col-10 top-rated-course mt-3"><b>Top Rated Courses</b></div>
+          <div className="col-10 top-rated-course mt-3">
+            <b>Top Rated Courses</b>
+          </div>
           <div className="col-2">
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="school-native-simple">Programme</InputLabel>
