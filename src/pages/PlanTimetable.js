@@ -12,15 +12,14 @@ import {
 } from "../context/PlanTimetableContextProvider";
 import axios from "axios";
 
-
 /**
- * This function uses the context created by the PlanTimetableContextProvider. 
+ * This function uses the context created by the PlanTimetableContextProvider.
  * The context contains the states which serve as variables that can be changed throughout a session
  * The context also contains functions that can be used to change the states.
  * @param {*} param0 -course object
  * @returns component which include other components needed for plan timetable page
  */
-function PlanTimetableContextConsumer({course}) {
+function PlanTimetableContextConsumer({ course }) {
   const planTimetableContext = usePlanTimetable();
 
   const combinations = planTimetableContext.combinations;
@@ -83,8 +82,8 @@ function PlanTimetableContextConsumer({course}) {
   };
 
   /**
-   * This function converts array of time slots into array of appointments. The appointments format is 
-   * @param {Object[]} userTimeSlots 
+   * This function converts array of time slots into array of appointments. The appointments format is
+   * @param {Object[]} userTimeSlots
    * @returns array of appointments
    */
   const convertUserDefinedTimeSlotstoAppointments = (userTimeSlots) => {
@@ -114,7 +113,7 @@ function PlanTimetableContextConsumer({course}) {
         "Access-Control-Allow-Origin": "*",
       },
     };
-    console.log(typeof occupiedTimeSlots[0].startDate);
+
     const udtsAppointments = convertUserDefinedTimeSlotstoAppointments(
       userDefinedTimeSlots
     );
@@ -122,12 +121,16 @@ function PlanTimetableContextConsumer({course}) {
       appointments: [...occupiedTimeSlots, ...udtsAppointments],
     };
     console.log(reqbody);
-    axios
-      .post("/icsString/get_ics_string", reqbody, axiosConfig)
-      .then((response) => {
-        console.log(response);
-        FileDownload(response.data, "testing3.ics");
-      });
+    if (reqbody.appointments.length !== 0) {
+      axios
+        .post("/icsString/get_ics_string", reqbody, axiosConfig)
+        .then((response) => {
+          console.log(response);
+          FileDownload(response.data, "MyCal.ics");
+        });
+    } else {
+      alert("You haven't planned a timetable yet.");
+    }
   };
 
   return (
